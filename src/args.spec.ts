@@ -44,7 +44,7 @@ describe('Args', () => {
       expect(spy.calls.first().object).toBe(defaultThis);
     });
     it('calls a function with this argument', () => {
-      expect(Args.invoke(spy, Args.of('first', 'second').withThis(thisArg)));
+      expect(Args.invoke(spy, Args.withThis(thisArg, 'first', 'second')));
       expect(spy).toHaveBeenCalledWith('first', 'second');
       expect(spy.calls.first().object).toBe(thisArg);
     });

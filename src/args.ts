@@ -5,7 +5,7 @@
  * When previous function in chain returns an `Args` instance, the next one will be called with returned arguments.
  * Otherwise the next function will be called with single argument containing a value returned.
  *
- * An `Args.of()` function is used to construct `Args`.
+ * An `Args.of()` and `Args.withThis()` functions can be used to construct `Args` instance.
  *
  * @param T A type of `this` argument passed to the function.
  * @param P A type of arguments tuple.
@@ -22,18 +22,8 @@ export type Args<T, P extends any[]> = P & {
    */
   thisArg: T;
 
-  /**
-   * Updates a `this` argument to pass to the function.
-   *
-   * @param thisArg New `this` argument value.
-   *
-   * @return This instance with update `thisArg` property value.
-   */
-  withThis<T2>(thisArg: T2): Args<T2, P>;
-
 };
 
-/* istanbul ignore next */
 export namespace Args {
 
   /**
@@ -67,12 +57,25 @@ export namespace Args {
     const call = args as Args<void, P>;
 
     call[Args.symbol] = undefined;
-    call.withThis = function <T2>(this: Args<T2, P>, thisArg: T2): Args<T2, P> {
-      this.thisArg = thisArg;
-      return this;
-    };
 
     return call;
+  }
+
+  /**
+   * Constructs a function call arguments with the given `this` argument.
+   *
+   * @param thisArg `this` argument value.
+   * @param args Call arguments.
+   *
+   * @return A new function call arguments instance.
+   */
+  export function withThis<T, P extends any[]>(thisArg: T, ...args: P): Args<T, P> {
+
+    const result: Args<T, P> = of.apply(null, args);
+
+    result.thisArg = thisArg;
+
+    return result;
   }
 
   /**
