@@ -13,14 +13,11 @@
 export type Args<T, P extends any[]> = P & {
 
   /**
-   * A marker symbol of this call.
-   */
-  [Args.symbol]: void;
-
-  /**
    * A `this` argument to pass to the function.
+   *
+   * This is also a marker property to distinguish the arguments from plain tuples. So it is required to present.
    */
-  thisArg: T;
+  [Args.thisKey]: T;
 
 };
 
@@ -41,7 +38,7 @@ export namespace Args {
    *
    * A tuple should contain a property with this key to be considered a call.
    */
-  export const symbol = Symbol('call');
+  export const thisKey = Symbol('this');
 
   /**
    * Constructs a function call arguments.
@@ -54,11 +51,11 @@ export namespace Args {
    */
   export function of<P extends any[]>(...args: P): Args<void, P> {
 
-    const call = args as Args<void, P>;
+    const result = args as Args<void, P>;
 
-    call[Args.symbol] = undefined;
+    result[thisKey] = undefined;
 
-    return call;
+    return result;
   }
 
   /**
@@ -71,9 +68,9 @@ export namespace Args {
    */
   export function withThis<T, P extends any[]>(thisArg: T, ...args: P): Args<T, P> {
 
-    const result: Args<T, P> = of.apply(null, args);
+    const result = args as Args<T, P>;
 
-    result.thisArg = thisArg;
+    result[thisKey] = thisArg;
 
     return result;
   }
@@ -97,7 +94,7 @@ export namespace Args {
   export function is<T, P extends any[]>(target: any): target is Args<T, P>;
 
   export function is<T, P extends any[]>(target: any): target is Args<T, P> {
-    return Array.isArray(target) && symbol in target;
+    return Array.isArray(target) && thisKey in target;
   }
 
   /**
@@ -128,7 +125,7 @@ export namespace Args {
       fn: (this: This<P>, ...args: Tuple<P>) => R,
       args: Args<This<P>, Tuple<P>>): R {
     if (is(args)) {
-      return fn.apply(args.thisArg, args);
+      return fn.apply(args[thisKey], args);
     }
     return fn.call(null, args);
   }
