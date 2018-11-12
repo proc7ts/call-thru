@@ -34,7 +34,7 @@ describe('callThru', () => {
   });
   it('chains functions with more than one argument', () => {
 
-    const fn1: Spy & ((arg1: string, arg2: string) => Args<typeof thisArg, [string, string]>) =
+    const fn1: Spy & ((arg1: string, arg2: string) => Args<typeof thisArg, [string, string], string>) =
         jasmine.createSpy('fn').and.returnValue(Args.withThis(thisArg, 'arg3', 'arg4'));
     const fn2: Spy & ((arg1: string, arg2: string) => string) = jasmine.createSpy('fn').and.returnValue('result');
 
