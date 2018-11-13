@@ -5,11 +5,11 @@ import { nextCall, NextCall } from '../next-call';
  *
  * The `this` argument of constructed function is void.
  *
- * @param args Call arguments.
+ * @param args Next function call arguments.
  *
  * @return A next function call with the given arguments.
  */
-export function nextArgs<Arguments extends any[], Ret, Out>(...args: Arguments): NextCall<void, Arguments, Ret, Out> {
+export function nextArgs<NextArgs extends any[], Ret, Out>(...args: NextArgs): NextCall<void, NextArgs, Ret, Out> {
   return nextCall(callee => callee.apply(undefined, args));
 }
 
