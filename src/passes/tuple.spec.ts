@@ -1,15 +1,15 @@
 import { callThru } from '../call-thru';
 import { nextArgs } from './args';
-import { nextTuple } from './tuple';
+import { passTuple } from './tuple';
 
-describe('nextTuple', () => {
+describe('passTuple', () => {
   it('passes arguments to the next function in chain', () => {
 
     let result: string[] = [];
     const expected = ['a', 'b', 'c'];
 
     expect(callThru(
-        nextTuple(),
+        passTuple(),
         (arg: string[]) => result = arg,
         () => 9,
     )('a', 'b', 'c')).toEqual(9);
@@ -17,18 +17,18 @@ describe('nextTuple', () => {
     expect(result).toEqual(expected);
   });
   it('extracts arguments tuple', () => {
-    expect(callThru(nextTuple())('a', 2, false)).toEqual(['a', 2, false]);
+    expect(callThru(passTuple())('a', 2, false)).toEqual(['a', 2, false]);
   });
   it('extracts replaced arguments tuple', () => {
     expect(callThru(
         nextArgs('a', 'b'),
         nextArgs('arg1', 'arg2', 'arg3'),
-        nextTuple(),
+        passTuple(),
     )()).toEqual(['arg1', 'arg2', 'arg3']);
   });
   it('does not replace later outcome', () => {
     expect(callThru(
-        nextTuple(),
+        passTuple(),
         nextArgs('a', 'b', 'c'),
     )(1, 2)).toEqual('a');
   });

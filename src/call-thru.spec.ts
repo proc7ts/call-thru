@@ -1,5 +1,5 @@
 import { callThru } from './call-thru';
-import { nextThisAndArgs } from './next';
+import { nextThisAndArgs } from './passes';
 import { NextCall } from './next-call';
 import Spy = jasmine.Spy;
 
