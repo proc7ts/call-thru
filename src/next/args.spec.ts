@@ -1,7 +1,7 @@
-import { Args } from './args';
 import Spy = jasmine.Spy;
+import { nextArgs, nextThisAndArgs } from './args';
 
-describe('Args', () => {
+describe('Next args', () => {
 
   let calleeSpy: Spy;
   let defaultThis: any;
@@ -12,14 +12,14 @@ describe('Args', () => {
     jasmine.createSpy('test').and.callFake(function (this: any) { defaultThis = this; }).call(undefined);
   });
 
-  describe('of', () => {
+  describe('nextArgs', () => {
     it('calls the callee with the given arguments', () => {
-      expect(Args.of('a', 'b', 3)(calleeSpy)).toBe('result');
+      expect(nextArgs('a', 'b', 3)(calleeSpy)).toBe('result');
       expect(calleeSpy).toHaveBeenCalledWith('a', 'b', 3);
       expect(calleeSpy.calls.first().object).toBe(defaultThis);
     });
   });
-  describe('withThis', () => {
+  describe('nextThisAndArgs', () => {
 
     let thisArg: any;
 
@@ -27,7 +27,7 @@ describe('Args', () => {
       thisArg = { name: 'this' };
     });
     it('calls the callee with the given arguments', () => {
-      expect(Args.withThis(thisArg, 'a', 'b', 3)(calleeSpy)).toBe('result');
+      expect(nextThisAndArgs(thisArg, 'a', 'b', 3)(calleeSpy)).toBe('result');
       expect(calleeSpy).toHaveBeenCalledWith('a', 'b', 3);
       expect(calleeSpy.calls.first().object).toBe(thisArg);
     });

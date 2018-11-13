@@ -1,5 +1,6 @@
-import { Args } from './args';
 import { callThru } from './call-thru';
+import { nextThisAndArgs } from './next';
+import { NextCall } from './next-call';
 import Spy = jasmine.Spy;
 
 describe('callThru', () => {
@@ -34,8 +35,8 @@ describe('callThru', () => {
   });
   it('chains functions with more than one argument', () => {
 
-    const fn1: Spy & ((arg1: string, arg2: string) => Args<typeof thisArg, [string, string], string>) =
-        jasmine.createSpy('fn').and.returnValue(Args.withThis(thisArg, 'arg3', 'arg4'));
+    const fn1: Spy & ((arg1: string, arg2: string) => NextCall<typeof thisArg, [string, string], string, string>) =
+        jasmine.createSpy('fn').and.returnValue(nextThisAndArgs(thisArg, 'arg3', 'arg4'));
     const fn2: Spy & ((arg1: string, arg2: string) => string) = jasmine.createSpy('fn').and.returnValue('result');
 
     expect(callThru(fn1, fn2)('arg1', 'arg2')).toBe('result');
