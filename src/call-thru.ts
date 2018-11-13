@@ -47,10 +47,16 @@ export function callThru<T extends void, P extends any[], R1, R2, R3, R4, R5>(
 export function callThru<R>(...fns: ((...args: any[]) => any)[]): (...args: any[]) => R {
 
   function callNext(idx: number, prev: any) {
-    if (idx >= fns.length) {
+
+    const len = fns.length;
+
+    if (idx >= len) {
       return prev;
     }
-    return NextCall.of(prev)[NextCall.call](fns[idx]);
+
+    return NextCall.of(prev)[NextCall.call](function (this: any, ...args: any[]) {
+      return callNext(idx + 1, fns[idx].apply(this, args));
+    });
   }
 
   return function (this: any, ...args: any[]) {
