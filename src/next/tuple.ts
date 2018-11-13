@@ -7,9 +7,8 @@ import { nextCall, NextCall } from '../next-call';
  * When used as a last function in chain the outcome of the function chain will be the last arguments tuple.
  */
 export function nextTuple<NextArgs extends any[]>():
-    (this: void, ...args: NextArgs) => NextCall<void, [NextArgs], any, NextArgs> {
+    (this: void, ...args: NextArgs) => NextCall<'default', void, [NextArgs], any> {
   return (...args: NextArgs) => nextCall(callee => {
-    callee(args);
-    return args;
+    return callee(args);
   });
 }

@@ -9,7 +9,8 @@ import { nextCall, NextCall } from '../next-call';
  *
  * @return A next function call with the given arguments.
  */
-export function nextArgs<NextArgs extends any[], Ret, Out>(...args: NextArgs): NextCall<void, NextArgs, Ret, Out> {
+export function nextArgs<NextArgs extends any[], NextReturn, Out>(...args: NextArgs):
+    NextCall<'default', void, NextArgs, NextReturn, Out> {
   return nextCall(callee => callee.apply(undefined, args));
 }
 
@@ -21,7 +22,9 @@ export function nextArgs<NextArgs extends any[], Ret, Out>(...args: NextArgs): N
  *
  * @return A next function call with the given arguments, including `this` one.
  */
-export function nextThisAndArgs<This, Arguments extends any[], Return, Out>(thisArg: This, ...args: Arguments):
-    NextCall<This, Arguments, Return, Out> {
+export function nextThisAndArgs<This, Arguments extends any[], NextReturn>(
+    thisArg: This,
+    ...args: Arguments):
+    NextCall<'default', This, Arguments, NextReturn> {
   return nextCall(callee => callee.apply(thisArg, args));
 }

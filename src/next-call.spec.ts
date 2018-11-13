@@ -20,8 +20,7 @@ describe('Next call', () => {
   describe('NextCall', () => {
     describe('is', () => {
       it('detects next function call', () => {
-        expect(NextCall.is(nextCall(() => {
-        }))).toBe(true);
+        expect(NextCall.is(nextCall(() => {}))).toBe(true);
       });
       it('rejects plain function', () => {
         expect(NextCall.is(() => {

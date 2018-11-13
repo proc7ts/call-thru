@@ -10,8 +10,9 @@ describe('nextTuple', () => {
 
     expect(callThru(
         nextTuple(),
-        (arg: string[]) => { result = arg; },
-    )('a', 'b', 'c')).toEqual(expected);
+        (arg: string[]) => result = arg,
+        () => 9,
+    )('a', 'b', 'c')).toEqual(9);
 
     expect(result).toEqual(expected);
   });
@@ -24,5 +25,11 @@ describe('nextTuple', () => {
         nextArgs('arg1', 'arg2', 'arg3'),
         nextTuple(),
     )()).toEqual(['arg1', 'arg2', 'arg3']);
+  });
+  it('does not replace later outcome', () => {
+    expect(callThru(
+        nextTuple(),
+        nextArgs('a', 'b', 'c'),
+    )(1, 2)).toEqual('a');
   });
 });
