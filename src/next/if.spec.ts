@@ -1,11 +1,11 @@
 import { callThru } from '../call-thru';
-import { thruIf } from './if';
+import { nextIf } from './if';
 
-describe('thruIf', () => {
+describe('nextIf', () => {
   it('returns arguments when test passed', () => {
-    expect(callThru(thruIf((a: number, b: number) => a < b))(1, 2)).toBe(1);
+    expect(callThru(nextIf((a: number, b: number) => a < b))(1, 2)).toBe(1);
   });
   it('returns undefined when test failed', () => {
-    expect(callThru(thruIf((a: number, b: number) => a > b))(1, 2)).toBeUndefined();
+    expect(callThru(nextIf((a: number, b: number) => a > b))(1, 2)).toBeUndefined();
   });
 });

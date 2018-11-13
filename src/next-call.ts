@@ -1,9 +1,11 @@
 /**
  * A call of the next function in chain.
  *
- * This is basically a function with a marker property, which is treated specially by call chaining functions.
+ * This is basically a function with additional method, which is treated specially by call chaining functions.
  * When previous function in chain returns a `NextCall` instance, it will be used to call the next function in chain.
  * Otherwise the next function will be called with single argument containing a value returned.
+ *
+ * A `NextCall` is a function returning itself. So it can be chained like any other function.
  *
  * A `nextCall()` function can be used to construct a next call.
  *
@@ -15,25 +17,24 @@
 export interface NextCall<NextThis, NextArgs extends any[], NextReturn, Out = NextReturn> {
 
   /**
+   * Returns itself to add it to functions chain.
+   */
+  (): NextCall<NextThis, NextArgs, NextReturn, Out>;
+
+  /**
    * Calls the `callee` function.
    *
    * @param callee A function to call.
-   *
-   * @returns A call result.
    */
-  (this: void, callee: (this: NextThis, ...args: NextArgs) => NextReturn): Out;
-
-  /**
-   * A marker property to distinguish next function calls from plain functions.
-   *
-   * It is required to present, but its value is ignored.
-   */
-  [NextCall.mark]: void;
+  [NextCall.call](this: void, callee: (this: NextThis, ...args: NextArgs) => NextReturn): Out;
 
 }
 
 export namespace NextCall {
 
+  /**
+   * Any call of the next function.
+   */
   export type Any = NextCall<any, any[], any, any>;
 
   export namespace Callee {
@@ -71,11 +72,11 @@ export namespace NextCall {
           : V;
 
   /**
-   * A marker symbol to distinguish next function calls from plain functions.
+   * A symbol of a `NextCall` method responsible for calling the next function in chain.
    *
    * A function should contain a property with this key to be considered a next function call.
    */
-  export const mark = Symbol('next-call');
+  export const call = Symbol('call-next');
 
   /**
    * Checks whether the given function is a next function call.
@@ -84,9 +85,9 @@ export namespace NextCall {
    *
    * @return `true` if the `target` function has a `[NextCall.mark]` property, or `false` otherwise.
    */
-  export function is<This, Args extends any[], Return, Out = Return>(
-      target: (this: void, callee: (this: This, ...args: Args) => Return) => Out):
-      target is NextCall<This, Args, Return, Out>;
+  export function is<NextThis, NextArgs extends any[], NextReturn, Out = NextReturn>(
+      target: NextCall<NextThis, NextArgs, NextReturn, Out>):
+      target is NextCall<NextThis, NextArgs, NextReturn, Out>;
 
   /**
    * Detects whether the given value is a next function call.
@@ -98,7 +99,7 @@ export namespace NextCall {
   export function is(target: any): target is NextCall<any, any, any, any>;
 
   export function is(target: any): target is NextCall<any, any, any, any> {
-    return typeof target === 'function' && mark in target;
+    return typeof target === 'function' && call in target;
   }
 
   /**
@@ -108,7 +109,7 @@ export namespace NextCall {
    *
    * @returns A `nextCall` itself.
    */
-  export function of<V extends NextCall<any, any[], any, any>>(nextCall: V): V;
+  export function of<V extends Any>(nextCall: V): V;
 
   /**
    * Converts a value returned from previous chained function call to the call of the next function in chain.
@@ -138,12 +139,13 @@ export namespace NextCall {
  *
  * @returns A next function call performed by the given `callNext` function.
  */
-export function nextCall<This, Args extends any[], Return, Out = Return>(
-    callNext: (this: void, callee: (this: This, ...args: Args) => Return) => Out): NextCall<This, Args, Return, Out> {
+export function nextCall<NextThis, NextArgs extends any[], NextReturn, Out = NextReturn>(
+    callNext: (this: void, callee: (this: NextThis, ...args: NextArgs) => NextReturn) => Out):
+    NextCall<NextThis, NextArgs, NextReturn, Out> {
 
-  const result = (callee => callNext(callee)) as NextCall<This, Args, Return, Out>;
+  const result = (() => result) as NextCall<NextThis, NextArgs, NextReturn, Out>;
 
-  result[NextCall.mark] = undefined;
+  result[NextCall.call] = callee => callNext(callee);
 
   return result;
 }

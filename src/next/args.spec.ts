@@ -1,4 +1,6 @@
 import Spy = jasmine.Spy;
+import { callThru } from '../call-thru';
+import { NextCall } from '../next-call';
 import { nextArgs, nextThisAndArgs } from './args';
 
 describe('Next args', () => {
@@ -14,7 +16,15 @@ describe('Next args', () => {
 
   describe('nextArgs', () => {
     it('calls the callee with the given arguments', () => {
-      expect(nextArgs('a', 'b', 3)(calleeSpy)).toBe('result');
+      expect(nextArgs('a', 'b', 3)[NextCall.call](calleeSpy)).toBe('result');
+      expect(calleeSpy).toHaveBeenCalledWith('a', 'b', 3);
+      expect(calleeSpy.calls.first().object).toBe(defaultThis);
+    });
+    it('replaces arguments when chained', () => {
+      expect(callThru(
+          nextArgs('a', 'b', 3),
+          calleeSpy,
+      )()).toBe('result');
       expect(calleeSpy).toHaveBeenCalledWith('a', 'b', 3);
       expect(calleeSpy.calls.first().object).toBe(defaultThis);
     });
@@ -27,7 +37,15 @@ describe('Next args', () => {
       thisArg = { name: 'this' };
     });
     it('calls the callee with the given arguments', () => {
-      expect(nextThisAndArgs(thisArg, 'a', 'b', 3)(calleeSpy)).toBe('result');
+      expect(nextThisAndArgs(thisArg, 'a', 'b', 3)[NextCall.call](calleeSpy)).toBe('result');
+      expect(calleeSpy).toHaveBeenCalledWith('a', 'b', 3);
+      expect(calleeSpy.calls.first().object).toBe(thisArg);
+    });
+    it('replaces arguments when chained', () => {
+      expect(callThru(
+          nextThisAndArgs(thisArg, 'a', 'b', 3),
+          calleeSpy,
+      )()).toBe('result');
       expect(calleeSpy).toHaveBeenCalledWith('a', 'b', 3);
       expect(calleeSpy.calls.first().object).toBe(thisArg);
     });

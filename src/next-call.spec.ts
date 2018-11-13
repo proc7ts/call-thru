@@ -13,7 +13,7 @@ describe('Next call', () => {
       const next = NextCall.of('some');
       const calleeSpy = jasmine.createSpy('callee').and.returnValue('result');
 
-      expect(next(calleeSpy)).toBe('result');
+      expect(next[NextCall.call](calleeSpy)).toBe('result');
       expect(calleeSpy).toHaveBeenCalledWith('some');
     });
   });
