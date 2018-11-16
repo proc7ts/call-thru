@@ -1,3 +1,4 @@
+import { noop } from '../misc';
 import { nextCall, NextCall } from '../next-call';
 
 declare module '../call-outcome' {
@@ -13,7 +14,7 @@ declare module '../call-outcome' {
   }
 }
 
-const SKIP: NextCall<'skip', any[], any, undefined> = nextCall(() => undefined);
+const SKIP: NextCall<'skip', any[], any, undefined> = nextCall(noop);
 
 /**
  * Returns a skipped call to the next function in chain.
