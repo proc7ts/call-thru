@@ -31,7 +31,5 @@ export type AsyncResult<T> = Promise<Promised<T>>;
  */
 export function passAsync<NextArgs extends any[], NextReturn>():
     (this: void, ...args: NextArgs) => NextCall<'async', void, NextArgs, NextReturn, AsyncResult<NextReturn>> {
-  return (...args: NextArgs) => nextCall(callee => new Promise<Promised<NextReturn>>(resolve => {
-    resolve(callee.apply(null, args));
-  }));
+  return (...args) => nextCall(callee => new Promise(resolve => resolve(callee.apply(null, args))));
 }

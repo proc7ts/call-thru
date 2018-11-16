@@ -25,5 +25,5 @@ declare module '../call-outcome' {
 export function passIf<NextArgs extends any[], NextReturn, Out>(
     test: (...args: NextArgs) => boolean):
     (this: void, ...args: NextArgs) => NextCall<'if', void, NextArgs, NextReturn, NextReturn | undefined> {
-  return (...args: NextArgs) => test.apply(null, args) ? nextCall(callee => callee(...args)) : nextSkip();
+  return (...args) => test.apply(null, args) ? nextCall(callee => callee(...args)) : nextSkip();
 }

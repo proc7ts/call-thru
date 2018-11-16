@@ -7,7 +7,5 @@ import { nextCall, NextCall } from '../next-call';
  */
 export function passTuple<NextArgs extends any[]>():
     (this: void, ...args: NextArgs) => NextCall<'default', void, [NextArgs], any> {
-  return (...args: NextArgs) => nextCall(callee => {
-    return callee(args);
-  });
+  return (...args) => nextCall(callee => callee(args));
 }
