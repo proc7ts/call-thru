@@ -46,6 +46,13 @@ export namespace NextCall {
    */
   export type Any = NextCall<any, any, any, any>;
 
+  /**
+   * A next call that the last function in chain may return.
+   *
+   * It is expected to accept a callee with single parameter an returning it as is.
+   */
+  export type Last<OutKind extends CallOutcome.Kind, Return, Out> = NextCall<OutKind, [Return], Return, Out>;
+
   export namespace Callee {
 
     /**
@@ -68,15 +75,11 @@ export namespace NextCall {
       : Return;
 
   /**
-   * A type of last call outcome. Either extracted from `NextCall`, or the value itself.
-   *
-   * A next call instance returned from the last function in chain is expected to accept a callee with single parameter.
+   * A type of last call outcome. Either extracted from the last call, or the value itself.
    */
   export type LastOutcome<V> =
-      V extends Any
-          ? (V extends NextCall<infer OutKind, [infer FirstArg, ...any[]], infer FirstArg, infer Out>
+      V extends Last<infer OutKind, infer FirstArg, infer Out>
           ? CallOutcome.OfKind<OutKind, FirstArg, Out>
-          : never)
           : V;
 
   /**
@@ -87,26 +90,20 @@ export namespace NextCall {
   export const call = Symbol('call-next');
 
   /**
-   * Checks whether the given function is a next function call.
-   *
-   * @param target A function to check.
-   *
-   * @return `true` if the `target` function has a `[NextCall.mark]` property, or `false` otherwise.
-   */
-  export function is<
-      OutKind extends CallOutcome.Kind,
-      NextArgs extends any[],
-      NextReturn,
-      Out>(
-      target: NextCall<OutKind, NextArgs, NextReturn, Out>):
-      target is NextCall<OutKind, NextArgs, NextReturn, Out>;
-
-  /**
-   * Detects whether the given value is a next function call.
+   * Checks whether the `target` value is a next function call.
    *
    * @param target A value to check.
    *
-   * @return `true` if the `target` value is a function with a `[NextCall.mark]` property, or `false` otherwise.
+   * @returns `true`.
+   */
+  export function is<V extends Any>(target: V): target is V;
+
+  /**
+   * Detects whether the `target` value is a next function call.
+   *
+   * @param target A value to check.
+   *
+   * @returns `true` if the `target` value is a function with a `[NextCall.mark]` property, or `false` otherwise.
    */
   export function is(target: any): target is Any;
 
