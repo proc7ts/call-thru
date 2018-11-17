@@ -7,7 +7,7 @@ import { nextCall, NextCall } from '../next-call';
  *
  * @return A next function call with the given arguments.
  */
-export function nextArgs<NextArgs extends any[], NextReturn, Out>(...args: NextArgs):
-    NextCall<'default', NextArgs, NextReturn, Out> {
-  return nextCall(callee => callee.apply(undefined, args));
+export function nextArgs<NextArgs extends any[], NextReturn>(...args: NextArgs):
+    NextCall<'default', NextArgs, NextReturn> {
+  return nextCall(callee => callee.apply(null, args));
 }

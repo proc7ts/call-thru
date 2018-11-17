@@ -22,8 +22,8 @@ declare module '../call-outcome' {
  *
  * @param test A test function accepting this pass arguments and returning `true` to go on or `false` to abort.
  */
-export function passIf<NextArgs extends any[], NextReturn, Out>(
+export function passIf<NextArgs extends any[], NextReturn>(
     test: (this: void, ...args: NextArgs) => boolean):
     (this: void, ...args: NextArgs) => NextCall<'if', NextArgs, NextReturn, NextReturn | undefined> {
-  return (...args) => test.apply(null, args) ? nextCall(callee => callee(...args)) : nextSkip();
+  return (...args) => test.apply(null, args) ? nextCall(callee => callee.apply(null, args)) : nextSkip();
 }
