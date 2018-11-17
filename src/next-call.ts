@@ -46,13 +46,6 @@ export namespace NextCall {
    */
   export type Any = NextCall<any, any, any, any>;
 
-  /**
-   * A next call that the last function in chain may return.
-   *
-   * It is expected to accept a callee with single parameter an returning it as is.
-   */
-  export type Last<OutKind extends CallOutcome.Kind, Return, Out> = NextCall<OutKind, [Return], Return, Out>;
-
   export namespace Callee {
 
     /**
@@ -76,10 +69,12 @@ export namespace NextCall {
 
   /**
    * A type of last call outcome. Either extracted from the last call, or the value itself.
+   *
+   * It is expected the the last call accepts a callee with single argument. This callee returns its argument as is.
    */
   export type LastOutcome<V> =
-      V extends Last<infer OutKind, infer FirstArg, infer Out>
-          ? CallOutcome.OfKind<OutKind, FirstArg, Out>
+      V extends NextCall<infer OutKind, any[], any, infer Out>
+          ? CallOutcome.OfKind<OutKind, Callee.Args<V>[0], Out>
           : V;
 
   /**
