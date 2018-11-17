@@ -3,7 +3,7 @@ import { nextSkip } from './skip';
 
 declare module '../call-outcome' {
   export namespace CallOutcome {
-    export interface Map<Return> {
+    export interface Map<Return, Out> {
 
       /**
        * Conditional outcome type. Either the same as return one or `undefined`.

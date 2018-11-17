@@ -49,25 +49,23 @@ export function callThru<R>(...fns: ((...args: any[]) => any)[]): (...args: any[
 
     const len = fns.length;
 
-    if (idx >= len) {
+    if (idx < len) {
+      if (!NextCall.is(prev)) {
+        return callNext(idx + 1, fns[idx].call(null, prev));
+      }
+      return prev[NextCall.call](function (this: any, ...args: any[]) {
+        return callNext(idx + 1, fns[idx].apply(this, args));
+      });
+    }
+
+    if (!NextCall.is(prev)) {
       return prev;
     }
-    if (!NextCall.is(prev)) {
-      return callNext(idx + 1, fns[idx].call(null, prev));
-    }
-    return prev[NextCall.call](function (this: any, ...args: any[]) {
-      return callNext(idx + 1, fns[idx].apply(this, args));
-    });
+
+    return prev[NextCall.call]((arg: any) => arg);
   }
 
   return function (this: any, ...args: any[]) {
-
-    const result = callNext(1, fns[0].apply(this, args));
-
-    if (!NextCall.is(result)) {
-      return result;
-    }
-
-    return result[NextCall.call]((arg: any) => arg);
+    return callNext(1, fns[0].apply(this, args));
   };
 }

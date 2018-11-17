@@ -2,7 +2,7 @@ import { nextCall, NextCall } from '../next-call';
 
 declare module '../call-outcome' {
   export namespace CallOutcome {
-    export interface Map<Return> {
+    export interface Map<Return, Out> {
 
       /**
        * Async call outcome type. The outcome is a promise of the return type. Unless the return type is already a

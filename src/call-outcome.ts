@@ -13,12 +13,12 @@ export namespace CallOutcome {
    *
    * This is a key of `CallOutcome.Map` type.
    */
-  export type Kind = keyof Map<unknown>;
+  export type Kind = keyof Map<unknown, unknown>;
 
   /**
-   * An type of outcome of the given kind for the given return type.
+   * A type of outcome of the given kind for the given return type of the next function and its call outcome.
    */
-  export type OfKind<OutKind extends Kind, Return> = ReturnType<Map<Return>[OutKind]>;
+  export type OfKind<OutKind extends Kind, Return, Out> = ReturnType<Map<Return, Out>[OutKind]>;
 
   /**
    * A map implementing outcome detection algorithms.
@@ -27,8 +27,9 @@ export namespace CallOutcome {
    * parameter.
    *
    * @param <Return> A return type of the remaining part of call chain. A type of outcome may depend on it somehow.
+   * @param <Out> A type of next call outcome.
    */
-  export interface Map<Return> {
+  export interface Map<Return, Out> {
 
     /**
      * Default outcome type. The same as the return one.

@@ -63,8 +63,8 @@ export namespace NextCall {
   /**
    * A type of next call outcome. Either extracted from `NextCall`, or `Return`.
    */
-  export type Outcome<V, Return> = V extends NextCall<infer OutKind, any[], any, any>
-      ? CallOutcome.OfKind<OutKind, Return>
+  export type Outcome<V, Return> = V extends NextCall<infer OutKind, any[], any, infer Out>
+      ? CallOutcome.OfKind<OutKind, Return, Out>
       : Return;
 
   /**
@@ -74,7 +74,9 @@ export namespace NextCall {
    */
   export type LastOutcome<V> =
       V extends Any
-          ? (V extends NextCall<any, [infer FirstArg], any, any> ? FirstArg : never)
+          ? (V extends NextCall<infer OutKind, [infer FirstArg, ...any[]], infer FirstArg, infer Out>
+          ? CallOutcome.OfKind<OutKind, FirstArg, Out>
+          : never)
           : V;
 
   /**
@@ -153,10 +155,9 @@ export function nextCall<OutKind extends CallOutcome.Kind, NextArgs extends any[
     callNext: (
         this: void,
         callee: (this: void, ...args: NextArgs) => NextReturn) => Out):
-    NextCall<CallOutcome.OfKind<OutKind, NextReturn>, NextArgs, NextReturn, Out> {
+    NextCall<OutKind, NextArgs, NextReturn, Out> {
 
-  const result =
-      (() => result) as NextCall<CallOutcome.OfKind<OutKind, NextReturn>, NextArgs, NextReturn, Out>;
+  const result = (() => result) as NextCall<OutKind, NextArgs, NextReturn, Out>;
 
   result[NextCall.call] = callee => callNext(callee);
 
