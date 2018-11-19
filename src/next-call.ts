@@ -82,8 +82,7 @@ export namespace NextCall {
   /**
    * A type of last call outcome. Either extracted from the last call, or the value itself.
    */
-  export type LastOutcome<V> =
-      V extends NextCall<infer OutKind, any, any, any, infer Last> ? Last : V;
+  export type LastOutcome<V> = V extends NextCall<any, any, any, any, infer Last> ? Last : V;
 
   /**
    * A key of a `NextCall` method responsible for calling the next function in chain.
