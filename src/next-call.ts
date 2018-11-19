@@ -33,9 +33,7 @@ export interface NextCall<
    *
    * @param callee A function to call.
    */
-  [NextCall.call](
-      this: void,
-      callee: (this: void, ...args: NextArgs) => NextReturn): Out;
+  [NextCall.next](callee: (this: void, ...args: NextArgs) => NextReturn): Out;
 
 }
 
@@ -78,11 +76,9 @@ export namespace NextCall {
           : V;
 
   /**
-   * A symbol of a `NextCall` method responsible for calling the next function in chain.
-   *
-   * A function should contain a property with this key to be considered a next function call.
+   * A key of a `NextCall` method responsible for calling the next function in chain.
    */
-  export const call = Symbol('call-next');
+  export const next = Symbol('call-next');
 
   /**
    * Checks whether the `target` value is a next function call.
@@ -103,7 +99,7 @@ export namespace NextCall {
   export function is(target: any): target is Any;
 
   export function is(target: any): target is Any {
-    return typeof target === 'function' && call in target;
+    return typeof target === 'function' && next in target;
   }
 
   /**
@@ -151,7 +147,7 @@ export function nextCall<OutKind extends CallOutcome.Kind, NextArgs extends any[
 
   const result = (() => result) as NextCall<OutKind, NextArgs, NextReturn, Out>;
 
-  result[NextCall.call] = callee => callNext(callee);
+  result[NextCall.next] = callee => callNext(callee);
 
   return result;
 }

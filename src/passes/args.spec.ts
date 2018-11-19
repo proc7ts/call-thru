@@ -12,7 +12,7 @@ describe('nextArgs', () => {
   });
 
   it('calls the callee with the given arguments', () => {
-    expect(nextArgs('a', 'b', 3)[NextCall.call](calleeSpy)).toBe('result');
+    expect(nextArgs('a', 'b', 3)[NextCall.next](calleeSpy)).toBe('result');
     expect(calleeSpy).toHaveBeenCalledWith('a', 'b', 3);
   });
   it('replaces arguments when chained', () => {
