@@ -26,14 +26,18 @@ export function callThru<P extends any[], R1, R2, R3, R4>(
     (this: void, ...args: P) => Out<R1, Out<R2, Out<R3, Last<R4>>>>;
 
 /**
- * Constructs a function that calls chained functions with respect to `NextCall` returned from them.
+ * Constructs a function that invokes the chained passes.
  *
- * - When any function in chain returns a `NextCall`, this instance is used to perform the next function call.
- * - When any function in chain returns a plain value, this value is passed to the next function as the only argument.
- * - If the last function in chain returns a `NextCall`, this function's outcome is returned.
- *   This outcome is extracted by applying the next function call to the function returning a first argument
- *   passed to it.
- * - If the last function in chain returns a plain value, this value is returned.
+ * Each pass is function accepts argument(s) passed from the previous one.
+ *
+ * The value returned from the pass is treated the following way:
+ *
+ * - When a `NextCall` is returned, this instance is used to perform the next function call.
+ * - When plain value returned, this value is passed to the next function as the only argument.
+ * - When a `NextCall` is returned by the last pass, it is used to construct the outcome.
+ * - When a plain value is returned by the last pass, it is used as outcome.
+ *
+ * A `NextCall` instance returned the pass is responsible for next function call and may modify the call outcome.
  */
 export function callThru<P extends any[], R1, R2, R3, R4, R5>(
     fn1: (this: void, ...args: P) => R1,

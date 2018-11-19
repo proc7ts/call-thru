@@ -1,7 +1,9 @@
 import { nextCall, NextCall } from '../next-call';
 
 /**
- * Constructs arguments to the next function call.
+ * Constructs arguments for the next function call.
+ *
+ * When returned from the lass pass, the outcome will contain a tuple containing `args`.
  *
  * @param args Next function call arguments.
  *
