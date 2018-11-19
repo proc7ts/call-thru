@@ -22,4 +22,10 @@ describe('nextArgs', () => {
     )()).toBe('result');
     expect(calleeSpy).toHaveBeenCalledWith('a', 'b', 3);
   });
+  it('returns arguments when last', () => {
+    expect(callThru(nextArgs('a', true, 9))()).toEqual(['a', true, 9]);
+  });
+  it('returns arguments when returned by last pass', () => {
+    expect(callThru((a: string) => nextArgs(a, true, 9))('a')).toEqual(['a', true, 9]);
+  });
 });

@@ -50,6 +50,7 @@ export function callThru<R>(...fns: ((...args: any[]) => any)[]): (...args: any[
     const len = fns.length;
 
     if (idx < len) {
+      // There is a next pass in chain
       if (!NextCall.is(prev)) {
         return callNext(idx + 1, fns[idx].call(null, prev));
       }
@@ -58,11 +59,12 @@ export function callThru<R>(...fns: ((...args: any[]) => any)[]): (...args: any[
       });
     }
 
+    // Last in chain
     if (!NextCall.is(prev)) {
       return prev;
     }
 
-    return prev[NextCall.next]((arg: any) => arg);
+    return prev[NextCall.last]();
   }
 
   return function (this: any, ...args: any[]) {
