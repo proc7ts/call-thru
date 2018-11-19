@@ -13,6 +13,16 @@ declare module '../call-outcome' {
   }
 }
 
+/**
+ * Constructs flattening call chain pass.
+ *
+ * The next pass is expected to return an iterable of iterables. This pass then converts it to plain iterable.
+ */
+export function passFlat<NextArgs extends any[], NextItem>():
+    (...args: NextArgs) => NextCall<'flat', NextArgs, Iterable<Iterable<NextItem>>, Iterable<NextItem>, never[]> {
+  return _passFlat;
+}
+
 function _passFlat<NextArgs extends any[], NextItem>(...args: NextArgs): NextCall<
     'flat',
     NextArgs,
@@ -29,14 +39,4 @@ function _passFlat<NextArgs extends any[], NextItem>(...args: NextArgs): NextCal
       }),
       () => [],
   );
-}
-
-/**
- * Constructs flattening call chain pass.
- *
- * The next pass is expected to return an iterable of iterables. This pass then converts it to plain iterable.
- */
-export function passFlat<NextArgs extends any[], NextItem>():
-    (...args: NextArgs) => NextCall<'flat', NextArgs, Iterable<Iterable<NextItem>>, Iterable<NextItem>, never[]> {
-  return _passFlat;
 }
