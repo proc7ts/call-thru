@@ -24,8 +24,10 @@ export type Promised<T> = T extends Promise<infer V> ? V : T;
  */
 export type AsyncResult<T> = Promise<Promised<T>>;
 
-const PASS_ASYNC: (this: void, ...args: any[]) => NextCall<'async', any[], any, AsyncResult<any>> =
-    (...args) => nextCall(callee => new Promise(resolve => resolve(callee.apply(null, args))));
+function _passAsync<NextArgs extends any[], NextReturn>(...args: NextArgs):
+    NextCall<'async', NextArgs, NextReturn, AsyncResult<any>> {
+  return nextCall(callee => new Promise(resolve => resolve(callee.apply(null, args))));
+}
 
 /**
  * Constructs asynchronous call chain pass.
@@ -34,5 +36,5 @@ const PASS_ASYNC: (this: void, ...args: any[]) => NextCall<'async', any[], any, 
  */
 export function passAsync<NextArgs extends any[], NextReturn>():
     (this: void, ...args: NextArgs) => NextCall<'async', NextArgs, NextReturn, AsyncResult<NextReturn>> {
-  return PASS_ASYNC as any;
+  return _passAsync;
 }
