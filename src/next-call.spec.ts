@@ -11,7 +11,7 @@ describe('Next call', () => {
     it('builds a value returning next call', () => {
 
       const next = NextCall.of('some');
-      const calleeSpy = jasmine.createSpy('callee').and.returnValue('result');
+      const calleeSpy = jest.fn(() => 'result');
 
       expect(next[NextCall.next](calleeSpy)).toBe('result');
       expect(calleeSpy).toHaveBeenCalledWith('some');
