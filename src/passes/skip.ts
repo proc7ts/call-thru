@@ -17,9 +17,9 @@ declare module '../call-outcome' {
 const SKIP: NextCall<'skip', any[], any, undefined> = nextCall(noop);
 
 /**
- * Returns a skipped call to the next function in chain.
+ * Constructs a next call that skips the rest of the chain.
  *
- * Returning this from previous function in chain prevent all subsequent functions in the same chain from being called.
+ * This has the same effect as `nextReturn(undefined)`.
  */
 export function nextSkip<NextArgs extends any[], NextReturn>():
     NextCall<'skip', NextArgs, NextReturn, undefined> {

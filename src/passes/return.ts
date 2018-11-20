@@ -14,9 +14,7 @@ declare module '../call-outcome' {
 }
 
 /**
- * Returns a call that skips the next pass and returns the given value.
- *
- * Returning this from previous pass in chain prevent all subsequent functions in the same chain from being called.
+ * Constructs a next call that skips the rest of the chain and returns the given value.
  *
  * @param result A result to return.
  */
