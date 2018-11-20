@@ -10,14 +10,14 @@ describe('nextSkip()', () => {
   });
   it('prevents subsequent functions from being called', () => {
 
-    const nextSpy = jasmine.createSpy('next');
+    const nextSpy = jest.fn();
 
     expect(callThru(() => nextSkip(), nextSpy)()).toBeUndefined();
     expect(nextSpy).not.toHaveBeenCalled();
   });
   it('prevents subsequent functions from being called when chained', () => {
 
-    const nextSpy = jasmine.createSpy('next');
+    const nextSpy = jest.fn();
 
     expect(callThru(nextSkip(), nextSpy)()).toBeUndefined();
     expect(nextSpy).not.toHaveBeenCalled();

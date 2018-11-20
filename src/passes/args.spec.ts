@@ -1,14 +1,14 @@
-import Spy = jasmine.Spy;
 import { callThru } from '../call-thru';
 import { NextCall } from '../next-call';
 import { nextArgs } from './args';
+import Mock = jest.Mock;
 
 describe('nextArgs', () => {
 
-  let calleeSpy: Spy;
+  let calleeSpy: Mock<string>;
 
   beforeEach(() => {
-    calleeSpy = jasmine.createSpy('callee').and.returnValue('result');
+    calleeSpy = jest.fn(() => 'result');
   });
 
   it('calls the callee with the given arguments', () => {

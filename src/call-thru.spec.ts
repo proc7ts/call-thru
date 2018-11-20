@@ -5,15 +5,15 @@ describe('callThru', () => {
 
   it('calls a single function', () => {
 
-    const fn = jasmine.createSpy('fn').and.returnValue('result');
+    const fn = jest.fn(() => 'result');
 
     expect(callThru(fn)('arg1', 'arg2')).toBe('result');
     expect(fn).toHaveBeenCalledWith('arg1', 'arg2');
   });
   it('chains 2 functions', () => {
 
-    const fn1 = jasmine.createSpy('fn1').and.returnValue('arg3');
-    const fn2 = jasmine.createSpy('fn2').and.returnValue('result');
+    const fn1 = jest.fn(() => 'arg3');
+    const fn2 = jest.fn(() => 'result');
 
     expect(callThru(fn1, fn2)('arg1', 'arg2')).toBe('result');
     expect(fn1).toHaveBeenCalledWith('arg1', 'arg2');
@@ -21,9 +21,9 @@ describe('callThru', () => {
   });
   it('chains 3 functions', () => {
 
-    const fn1 = jasmine.createSpy('fn1').and.returnValue('result1');
-    const fn2 = jasmine.createSpy('fn2').and.returnValue('result2');
-    const fn3 = jasmine.createSpy('fn3').and.returnValue('result3');
+    const fn1 = jest.fn(() => 'result1');
+    const fn2 = jest.fn(() => 'result2');
+    const fn3 = jest.fn(() => 'result3');
 
     expect(callThru(fn1, fn2, fn3)('arg1', 'arg2')).toBe('result3');
     expect(fn1).toHaveBeenCalledWith('arg1', 'arg2');
@@ -32,8 +32,8 @@ describe('callThru', () => {
   });
   it('chains functions with more than one argument', () => {
 
-    const fn1 = jasmine.createSpy('fn1').and.returnValue(nextArgs('arg3', 'arg4'));
-    const fn2 = jasmine.createSpy('fn2').and.returnValue('result');
+    const fn1 = jest.fn(() => nextArgs('arg3', 'arg4'));
+    const fn2 = jest.fn(() => 'result');
 
     expect(callThru(fn1, fn2)('arg1', 'arg2')).toBe('result');
     expect(fn1).toHaveBeenCalledWith('arg1', 'arg2');
