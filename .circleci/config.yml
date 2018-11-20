@@ -36,7 +36,7 @@ jobs:
 
     - run:
         name: Run tests
-        command: yarn test --ci --reporters="jest-junit"
+        command: yarn test --ci
 
     - store_artifacts:
         name: Store test results
