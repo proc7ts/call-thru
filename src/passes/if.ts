@@ -14,6 +14,15 @@ declare module '../call-outcome' {
   }
 }
 
+export interface NextIf<NextArgs extends any[], NextReturn>
+    extends NextCall<'if', NextArgs, NextReturn, NextReturn | undefined> {
+
+  (): NextIf<NextArgs, NextReturn>;
+
+  [NextCall.next](callee: (this: void, ...args: NextArgs) => NextReturn): NextReturn | undefined;
+
+}
+
 /**
  * Constructs conditional call chain pass.
  *
@@ -24,6 +33,6 @@ declare module '../call-outcome' {
  */
 export function passIf<NextArgs extends any[], NextReturn>(
     test: (this: void, ...args: NextArgs) => boolean):
-    (this: void, ...args: NextArgs) => NextCall<'if', NextArgs, NextReturn, NextReturn | undefined> {
+    (this: void, ...args: NextArgs) => NextIf<NextArgs, NextReturn> {
   return (...args) => test.apply(null, args) ? nextCall(callee => callee.apply(null, args)) : nextSkip();
 }

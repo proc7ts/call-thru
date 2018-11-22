@@ -13,6 +13,21 @@ declare module '../call-outcome' {
   }
 }
 
+export interface NextEach<NextItem, NextReturn> extends NextCall<
+    'each',
+    NextCall.Callee.Args<NextItem>,
+    NextReturn,
+    Iterable<NextReturn>,
+    Iterable<NextCall.LastOutcome<NextItem>>> {
+
+  (): NextEach<NextItem, NextReturn>;
+
+  [NextCall.next](callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => NextReturn): Iterable<NextReturn>;
+
+  [NextCall.last](): Iterable<NextCall.LastOutcome<NextItem>>;
+
+}
+
 /**
  * Creates an next call that invokes subsequent passes for each item in the given iterable.
  *
@@ -23,13 +38,7 @@ declare module '../call-outcome' {
  *
  * @param items An iterable of items to invoke the passes for.
  */
-export function nextEach<NextItem, NextReturn>(items: Iterable<NextItem>):
-    NextCall<
-        'each',
-        NextCall.Callee.Args<NextItem>,
-        NextReturn,
-        Iterable<NextReturn>,
-        Iterable<NextCall.LastOutcome<NextItem>>> {
+export function nextEach<NextItem, NextReturn>(items: Iterable<NextItem>): NextEach<NextItem, NextReturn> {
   return nextCall(
       callee => ({
         * [Symbol.iterator]() {

@@ -1,5 +1,16 @@
 import { nextCall, NextCall } from '../next-call';
 
+export interface NextArgs<Args extends any[], NextReturn>
+    extends NextCall<'default', Args, NextReturn, NextReturn, Args> {
+
+  (): NextArgs<Args, NextReturn>;
+
+  [NextCall.next](callee: (this: void, ...args: Args) => NextReturn): NextReturn;
+
+  [NextCall.last](): Args;
+
+}
+
 /**
  * Constructs arguments for the next function call.
  *
@@ -9,7 +20,6 @@ import { nextCall, NextCall } from '../next-call';
  *
  * @return A next function call with the given arguments.
  */
-export function nextArgs<NextArgs extends any[], NextReturn>(...args: NextArgs):
-    NextCall<'default', NextArgs, NextReturn, NextReturn, NextArgs> {
+export function nextArgs<Args extends any[], NextReturn>(...args: Args): NextArgs<Args, NextReturn> {
   return nextCall(callee => callee.apply(null, args), () => args);
 }
