@@ -14,11 +14,13 @@ declare module '../call-outcome' {
 }
 
 export interface NextReturn<NextArgs extends any[], Return, Out>
-    extends NextCall<'return', NextArgs, Return, Out> {
+    extends NextCall<'return', NextArgs, Return, Out, Out> {
 
   (): NextReturn<NextArgs, Return, Out>;
 
   [NextCall.next](callee: (this: void, ...args: NextArgs) => Return): Out;
+
+  [NextCall.last](): Out;
 
 }
 
@@ -28,5 +30,8 @@ export interface NextReturn<NextArgs extends any[], Return, Out>
  * @param result A result to return.
  */
 export function nextReturn<NextArgs extends any[], Return, Out>(result: Out): NextReturn<NextArgs, Return, Out> {
-  return nextCall(() => result);
+
+  const returnResult = () => result;
+
+  return nextCall(returnResult, returnResult);
 }
