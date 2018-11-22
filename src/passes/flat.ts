@@ -13,22 +13,27 @@ declare module '../call-outcome' {
   }
 }
 
+export interface NextFlat<NextArgs extends any[], NextItem>
+    extends NextCall<'flat', NextArgs, Iterable<Iterable<NextItem>>, Iterable<NextItem>, never[]> {
+
+  (): NextFlat<NextArgs, NextItem>;
+
+  [NextCall.next](callee: (this: void, ...args: NextArgs) => Iterable<Iterable<NextItem>>): Iterable<NextItem>;
+
+  [NextCall.last](): never[];
+
+}
+
 /**
  * Constructs flattening call chain pass.
  *
  * The next pass is expected to return an iterable of iterables. This pass then converts it to plain iterable.
  */
-export function passFlat<NextArgs extends any[], NextItem>():
-    (...args: NextArgs) => NextCall<'flat', NextArgs, Iterable<Iterable<NextItem>>, Iterable<NextItem>, never[]> {
+export function passFlat<NextArgs extends any[], NextItem>(): (...args: NextArgs) => NextFlat<NextArgs, NextItem> {
   return _passFlat;
 }
 
-function _passFlat<NextArgs extends any[], NextItem>(...args: NextArgs): NextCall<
-    'flat',
-    NextArgs,
-    Iterable<Iterable<NextItem>>,
-    Iterable<NextItem>,
-    never[]> {
+function _passFlat<NextArgs extends any[], NextItem>(...args: NextArgs): NextFlat<NextArgs, NextItem> {
   return nextCall(
       callee => ({
         * [Symbol.iterator]() {

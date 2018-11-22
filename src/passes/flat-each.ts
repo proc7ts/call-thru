@@ -1,5 +1,22 @@
 import { nextCall, NextCall } from '../next-call';
 
+export interface NextFlatEach<NextItem, NextReturn> extends NextCall<
+    'default',
+    NextCall.Callee.Args<NextItem>,
+    Iterable<NextReturn>,
+    Iterable<NextReturn>,
+    Iterable<NextCall.LastOutcome<NextItem>>> {
+
+  (): NextFlatEach<NextItem, NextReturn>;
+
+  [NextCall.next](
+      callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => Iterable<NextReturn>):
+      Iterable<NextReturn>;
+
+  [NextCall.last](): Iterable<NextCall.LastOutcome<NextItem>>;
+
+}
+
 /**
  * Creates an next call that invokes subsequent passes for each item in the given iterable and flattens the result.
  *
@@ -14,13 +31,7 @@ import { nextCall, NextCall } from '../next-call';
  *
  * @param items An iterable of items to invoke the passes for.
  */
-export function nextFlatEach<NextItem, NextReturn>(items: Iterable<NextItem>):
-    NextCall<
-        'default',
-        NextCall.Callee.Args<NextItem>,
-        Iterable<NextReturn>,
-        Iterable<NextReturn>,
-        Iterable<NextCall.LastOutcome<NextItem>>> {
+export function nextFlatEach<NextItem, NextReturn>(items: Iterable<NextItem>): NextFlatEach<NextItem, NextReturn> {
   return nextCall(
       callee => ({
         * [Symbol.iterator]() {
