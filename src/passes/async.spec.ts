@@ -11,4 +11,7 @@ describe('passAsync', () => {
 
     expect(await callThru(passAsync(), () => { throw error; })().catch(err => err)).toBe(error);
   });
+  it('produces resolved promise when last', async () => {
+    expect(await callThru(passAsync())()).toBeUndefined();
+  });
 });

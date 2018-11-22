@@ -25,11 +25,13 @@ export type Promised<T> = T extends Promise<infer V> ? V : T;
 export type AsyncResult<T> = Promise<Promised<T>>;
 
 export interface NextAsync<NextArgs extends any[], NextReturn>
-    extends NextCall<'async', NextArgs, NextReturn, AsyncResult<NextReturn>> {
+    extends NextCall<'async', NextArgs, NextReturn, AsyncResult<NextReturn>, Promise<void>> {
 
   (): NextAsync<NextArgs, NextReturn>;
 
   [NextCall.next](callee: (this: void, ...args: NextArgs) => NextReturn): AsyncResult<NextReturn>;
+
+  [NextCall.last](): Promise<void>;
 
 }
 
@@ -43,6 +45,14 @@ export function passAsync<NextArgs extends any[], NextReturn>():
   return _passAsync;
 }
 
+const resolved = Promise.resolve();
+
+function resolvePromise(): Promise<void> {
+  return resolved;
+}
+
 function _passAsync<NextArgs extends any[], NextReturn>(...args: NextArgs): NextAsync<NextArgs, NextReturn> {
-  return nextCall(callee => new Promise(resolve => resolve(callee.apply(null, args))));
+  return nextCall(
+      callee => new Promise(resolve => resolve(callee.apply(null, args))),
+      resolvePromise);
 }
