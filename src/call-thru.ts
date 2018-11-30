@@ -1,4 +1,5 @@
 import { NextCall } from './next-call';
+import { PassedThru } from './passed-thru';
 import Args = NextCall.Callee.Args;
 import Last = NextCall.LastOutcome;
 import Out = NextCall.Outcome;
@@ -183,6 +184,6 @@ export function callThru<R>(...fns: ((...args: any[]) => any)[]): (...args: any[
   }
 
   return function (this: any, ...args: any[]) {
-    return callNext(1, fns[0].apply(this, args));
+    return PassedThru.get(callNext(1, fns[0].apply(this, args)));
   };
 }

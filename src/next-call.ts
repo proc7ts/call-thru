@@ -1,4 +1,5 @@
 import { CallOutcome } from './call-outcome';
+import { PassedThru } from './passed-thru';
 
 /**
  * A call of the next function in chain.
@@ -82,7 +83,7 @@ export namespace NextCall {
   /**
    * A type of last call outcome. Either extracted from the last call, or the value itself.
    */
-  export type LastOutcome<V> = V extends NextCall<any, any, any, any, infer Last> ? Last : V;
+  export type LastOutcome<V> = PassedThru.Value<V extends NextCall<any, any, any, any, infer Last> ? Last : V>;
 
   /**
    * A key of a `NextCall` method responsible for calling the next function in chain.
@@ -104,7 +105,7 @@ export namespace NextCall {
   export function is<V extends Any>(target: V): target is V;
 
   /**
-   * Detects whether the `target` value is a next function call.
+   * Checks whether the `target` value is a next function call.
    *
    * @param target A value to check.
    *
