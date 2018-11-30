@@ -1,4 +1,5 @@
 import { nextCall, NextCall } from '../next-call';
+import { PassedThru } from '../passed-thru';
 
 declare module '../call-outcome' {
   export namespace CallOutcome {
@@ -17,14 +18,15 @@ export interface NextEach<NextItem, NextReturn> extends NextCall<
     'each',
     NextCall.Callee.Args<NextItem>,
     NextReturn,
-    Iterable<NextReturn>,
-    Iterable<NextCall.LastOutcome<NextItem>>> {
+    Iterable<PassedThru.Item<NextReturn>>,
+    Iterable<NextCall.LastItem<NextItem>>> {
 
   (): NextEach<NextItem, NextReturn>;
 
-  [NextCall.next](callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => NextReturn): Iterable<NextReturn>;
+  [NextCall.next](callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => NextReturn):
+      Iterable<PassedThru.Item<NextReturn>>;
 
-  [NextCall.last](): Iterable<NextCall.LastOutcome<NextItem>>;
+  [NextCall.last](): Iterable<NextCall.LastItem<NextItem>>;
 
 }
 
@@ -43,24 +45,21 @@ export function nextEach<NextItem, NextReturn>(items: Iterable<NextItem>): NextE
       callee => ({
         * [Symbol.iterator]() {
           for (const item of items) {
-            if (NextCall.is(item)) {
-              yield item[NextCall.next](callee);
-            } else {
-              const c = callee as (arg: NextItem) => NextReturn;
-              yield c(item);
-            }
+            yield* PassedThru.items(
+                NextCall.is(item)
+                    ? item[NextCall.next](callee)
+                    : (callee as (arg: NextItem) => NextReturn)(item));
           }
-        }
+        },
       }),
       () => ({
         * [Symbol.iterator]() {
           for (const item of items) {
-            if (NextCall.is(item)) {
-              yield item[NextCall.last]();
-            } else {
-              yield item;
-            }
+            yield* PassedThru.items(
+                NextCall.is(item)
+                    ? item[NextCall.last]()
+                    : item);
           }
-        }
+        },
       }));
 }

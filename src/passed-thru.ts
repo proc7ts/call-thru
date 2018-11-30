@@ -55,11 +55,38 @@ export namespace PassedThru {
     return typeof target === 'object' && as in target;
   }
 
+  /**
+   * Extracts the passed through value.
+   *
+   * @param outcome The outcome to extract the value from.
+   *
+   * @returns A `[PassedThru.as]` property value is the given `outcome` is a `PassedThru` instance, or `outcome` itself
+   * otherwise.
+   */
   export function get<V>(outcome: V): Value<V> {
     if (is<V>(outcome)) {
       return outcome[as] as Value<V>;
     }
     return outcome as Value<V>;
+  }
+
+  /**
+   * Extracts the passed through items.
+   *
+   * @param outcome The outcome to extract the items from.
+   *
+   * @return An iterable of passed through items if the the given `outcome` is a `PassedThru` instance, or an iterable
+   * containing the `outcome` itself otherwise.
+   */
+  export function items<V>(outcome: V): Iterable<Item<V>> {
+    if (is<V>(outcome)) {
+      return outcome;
+    }
+    return {
+      * [Symbol.iterator]() {
+        yield outcome as Item<V>;
+      }
+    };
   }
 
 }

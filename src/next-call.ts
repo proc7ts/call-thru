@@ -86,6 +86,11 @@ export namespace NextCall {
   export type LastOutcome<V> = PassedThru.Value<V extends NextCall<any, any, any, any, infer Last> ? Last : V>;
 
   /**
+   * A type of last call outcome item. Either extracted from the last call, or the value itself.
+   */
+  export type LastItem<V> = PassedThru.Item<V extends NextCall<any, any, any, any, infer Last> ? Last : V>;
+
+  /**
    * A key of a `NextCall` method responsible for calling the next function in chain.
    */
   export const next = Symbol('call-next');

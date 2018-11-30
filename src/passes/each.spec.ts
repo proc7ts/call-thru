@@ -1,6 +1,7 @@
 import { callThru } from '../call-thru';
 import { nextArgs } from './args';
 import { nextEach } from './each';
+import { passIf } from './if';
 
 describe('nextEach', () => {
   it('calls the next pass for each item when chained', () => {
@@ -34,5 +35,14 @@ describe('nextEach', () => {
             nextArgs(3, 4),
           ]))()
     ]).toEqual([[1, 2], [3, 4]]);
+  });
+  it('excludes the skipped items', () => {
+    expect([
+      ...callThru(
+          nextEach([1, 2, 3]),
+          n => n + 1,
+          passIf(n => n > 2),
+      )()
+    ]).toEqual([3, 4]);
   });
 });
