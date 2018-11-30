@@ -23,7 +23,7 @@ export type Promised<T> = T extends Promise<infer V> ? V : T;
 /**
  * Asynchronous result is either a promise of the given type, or the type itself if is a promise.
  */
-export type AsyncResult<T> = Promise<Promised<T>>;
+export type AsyncResult<T> = Promise<PassedThru.Value<Promised<T>>>;
 
 export interface NextAsync<NextArgs extends any[], NextReturn>
     extends NextCall<'async', NextArgs, NextReturn, AsyncResult<NextReturn>, Promise<void>> {

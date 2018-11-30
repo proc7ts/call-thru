@@ -21,7 +21,12 @@ export namespace PassedThru {
   /**
    * A type of the passed though value.
    */
-  export type Value<V> = V extends PassedThru<infer T> ? T : V;
+  export type Value<V> = V extends PassedThru<infer T, any> ? T : V;
+
+  /**
+   * A type of the passed though item.
+   */
+  export type Item<V> = V extends PassedThru<any, infer I> ? I : V;
 
   /**
    * A key of a `PassedThru` property containing the actual outcome value.
@@ -35,7 +40,7 @@ export namespace PassedThru {
    *
    * @returns `true`.
    */
-  export function is<V extends PassedThru<any>>(target: V): target is V;
+  export function is<V extends PassedThru<any, any>>(target: V): target is V;
 
   /**
    * Checks whether `target` value is a `PassedThru` instance.
@@ -44,17 +49,17 @@ export namespace PassedThru {
    *
    * @returns `true` if the `target` value is an object with a `[PassedThru.as]` property, or `false` otherwise.
    */
-  export function is<V>(target: any): target is PassedThru<V>;
+  export function is<V>(target: any): target is PassedThru<V, any>;
 
-  export function is(target: any): target is PassedThru<any> {
+  export function is(target: any): target is PassedThru<any, any> {
     return typeof target === 'object' && as in target;
   }
 
-  export function get<V>(outcome: V | PassedThru<V>): V {
+  export function get<V>(outcome: V): Value<V> {
     if (is<V>(outcome)) {
-      return outcome[as];
+      return outcome[as] as Value<V>;
     }
-    return outcome;
+    return outcome as Value<V>;
   }
 
 }
