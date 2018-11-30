@@ -5,10 +5,10 @@ Functions chaining library
 [![CircleCI][ci-image]][ci-url]
 [![codecov][codecov-image]][codecov-url]
 
-A `callThru()` function is able to chains several functions (aka passes). Each pass is a function. The result of
-preceding function call is used as argument(s) to the next one.
+A `callThru()` function chains several passes. Each pass is a function to call. Each pass produces arguments for the
+next function call.
 
-Normally, the value returned by function is passed as a single argument to next function call:
+Normally, the value returned from function call is passed as a single argument to the next one:
 
 ```TypeScript
 import { callThru } from 'call-thru';
@@ -19,7 +19,7 @@ callThru(
 )(2, 9); // The sum is 11
 ```
 
-Instead of plain result a pass may return a `NextCall` instance that will be used to call the next function in chain.
+Additionally, a pass may return a `NextCall` instance that is responsible for calling the next pass.
 
 There are several `NextCall` implementations available. For example, a `nextArgs()` one can be used to pass multiple
 arguments to the next function:
@@ -32,7 +32,7 @@ callThru(
 )('foo', 'bar'); // ['bar', 'foo']
 ``` 
 
-A `NextCall` instance is a no-arg function returning itself. This is can be chained as a pass:
+A `NextCall` instance is a no-arg function returning itself. Thus is can be chained as a pass:
 
 ```TypeScript
 import { callThru, nextArgs } from 'call-thru';
