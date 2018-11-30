@@ -53,6 +53,6 @@ function resolvePromise(): Promise<void> {
 
 function _passAsync<NextArgs extends any[], NextReturn>(...args: NextArgs): NextAsync<NextArgs, NextReturn> {
   return nextCall(
-      callee => new Promise(resolve => resolve(callee.apply(null, args))),
+      callee => new Promise((resolve: any) => resolve(callee.apply(undefined, args))),
       resolvePromise);
 }

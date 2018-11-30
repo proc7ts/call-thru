@@ -135,13 +135,11 @@ export namespace NextCall {
    */
   export function of<V, Out>(value: V): NextCall<'default', [V], Out, Out, Out>;
 
-  export function of<V, Out, Last>(value: V): NextCall<any, Callee.Args<V>, Callee.Return<V>, Out, Last> {
+  export function of<V, NextReturn>(value: V): NextCall<any, Callee.Args<V>, NextReturn> {
     if (is(value)) {
       return value;
     }
-    return nextCall(function (this: void, callee) {
-      return callee.call(null, value);
-    });
+    return nextCall((callee: any) => callee(value));
   }
 
 }

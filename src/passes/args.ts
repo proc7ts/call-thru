@@ -21,5 +21,5 @@ export interface NextArgs<Args extends any[], NextReturn>
  * @return A next function call with the given arguments.
  */
 export function nextArgs<Args extends any[], NextReturn>(...args: Args): NextArgs<Args, NextReturn> {
-  return nextCall(callee => callee.apply(null, args), () => args);
+  return nextCall(callee => callee.apply(undefined, args), () => args);
 }
