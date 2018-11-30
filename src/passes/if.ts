@@ -1,5 +1,5 @@
 import { nextCall, NextCall } from '../next-call';
-import { nextSkip } from './skip';
+import { nextSkip, SkippedThru } from './skip';
 
 declare module '../call-outcome' {
   export namespace CallOutcome {
@@ -8,18 +8,18 @@ declare module '../call-outcome' {
       /**
        * Conditional outcome type. Either the same as return one or `undefined`.
        */
-      if(): Return | undefined;
+      if(): Return | SkippedThru;
 
     }
   }
 }
 
 export interface NextIf<NextArgs extends any[], NextReturn>
-    extends NextCall<'if', NextArgs, NextReturn, NextReturn | undefined> {
+    extends NextCall<'if', NextArgs, NextReturn, NextReturn | SkippedThru> {
 
   (): NextIf<NextArgs, NextReturn>;
 
-  [NextCall.next](callee: (this: void, ...args: NextArgs) => NextReturn): NextReturn | undefined;
+  [NextCall.next](callee: (this: void, ...args: NextArgs) => NextReturn): NextReturn | SkippedThru;
 
 }
 

@@ -1,4 +1,5 @@
 import { nextCall, NextCall } from '../next-call';
+import { PassedThru } from '../passed-thru';
 
 declare module '../call-outcome' {
   export namespace CallOutcome {
@@ -8,7 +9,7 @@ declare module '../call-outcome' {
        * Async call outcome type. The outcome is a promise of the return type. Unless the return type is already a
        * promise.
        */
-      async(): AsyncResult<Return>;
+      async(): AsyncResult<PassedThru.Value<Return>>;
 
     }
   }
@@ -53,6 +54,7 @@ function resolvePromise(): Promise<void> {
 
 function _passAsync<NextArgs extends any[], NextReturn>(...args: NextArgs): NextAsync<NextArgs, NextReturn> {
   return nextCall(
-      callee => new Promise((resolve: any) => resolve(callee.apply(undefined, args))),
+      callee => new Promise<Promised<NextReturn>>((resolve: any) => resolve(callee.apply(undefined, args)))
+          .then(PassedThru.get),
       resolvePromise);
 }

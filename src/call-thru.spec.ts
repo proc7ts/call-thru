@@ -1,5 +1,5 @@
 import { callThru } from './call-thru';
-import { nextArgs, passAsync, passIf } from './passes';
+import { nextArgs, passAsync, passIf, SkippedThru } from './passes';
 
 describe('callThru', () => {
 
@@ -53,7 +53,7 @@ describe('callThru', () => {
     });
     it('combines `if` then `async`', async () => {
 
-      const fn: (a: number, b: number) => Promise<string> | undefined = callThru(
+      const fn: (a: number, b: number) => Promise<string> | SkippedThru = callThru(
           passIf((a: number, b: number) => a < b),
           passAsync(),
           () => 'ok',
