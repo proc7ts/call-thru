@@ -1,5 +1,6 @@
 import { nextCall, NextCall } from '../next-call';
 import { PassedThru } from '../passed-thru';
+import { flatItems } from './iteration';
 
 declare module '../call-outcome' {
   export namespace CallOutcome {
@@ -28,7 +29,7 @@ export interface NextFlat<NextArgs extends any[], NextReturn>
 
 export namespace NextFlat {
 
-  export type Flattened<T> = Iterable<Item<Item<PassedThru.Item<T>>>>;
+  export type Flattened<T> = Iterable<Item<Item<PassedThru.Item<NextCall.Callee.Return<T>>>>>;
 
   export type Item<T> = T extends Iterable<infer I> ? I : T;
 
@@ -47,30 +48,9 @@ function _passFlat<NextArgs extends any[], NextReturn>(...args: NextArgs): NextF
   return nextCall(
       callee => ({
         [Symbol.iterator]() {
-          return flat(PassedThru.items(callee(...args)), 2);
+          return flatItems(PassedThru.items(callee(...args)), 2);
         }
       }),
       () => [],
   );
-}
-
-function isIterable<I>(value: any): value is Iterable<I> {
-
-  const type = typeof value;
-
-  return (type === 'object' || type === 'function') && Symbol.iterator in value;
-}
-
-function *flat<I>(items: Iterable<unknown>, depth: number): IterableIterator<any> {
-  if (!depth) {
-    yield *items;
-    return;
-  }
-  for (const item of items) {
-    if (isIterable(item)) {
-      yield *flat(item, depth - 1);
-    } else {
-      yield item;
-    }
-  }
 }
