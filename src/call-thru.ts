@@ -3,10 +3,7 @@ import { PassedThru } from './passed-thru';
 import Last = NextCall.LastOutcome;
 import Out = NextCall.Outcome;
 
-export type CallPass<I, O> =
-    I extends NextCall<any, infer NextArgs, any, any, any>
-        ? (this: void, ...args: NextCall.Callee.Args<I>) => O
-        : (this: void, arg: I) => O;
+export type CallPass<I, O> = (this: void, ...args: NextCall.Callee.Args<I>) => O;
 
 export function callThru<P extends any[], R>(
     fn: (this: void, ...args: P) => R):
