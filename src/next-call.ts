@@ -1,4 +1,5 @@
 import { CallOutcome } from './call-outcome';
+import { PassedThru } from './passed-thru';
 
 /**
  * A call of the next function in chain.
@@ -104,7 +105,7 @@ export namespace NextCall {
   export function is<V extends Any>(target: V): target is V;
 
   /**
-   * Detects whether the `target` value is a next function call.
+   * Checks whether the `target` value is a next function call.
    *
    * @param target A value to check.
    *
@@ -135,13 +136,11 @@ export namespace NextCall {
    */
   export function of<V, Out>(value: V): NextCall<'default', [V], Out, Out, Out>;
 
-  export function of<V, Out, Last>(value: V): NextCall<any, Callee.Args<V>, Callee.Return<V>, Out, Last> {
+  export function of<V, NextReturn>(value: V): NextCall<any, Callee.Args<V>, NextReturn> {
     if (is(value)) {
       return value;
     }
-    return nextCall(function (this: void, callee) {
-      return callee.call(null, value);
-    });
+    return nextCall((callee: any) => callee(value));
   }
 
 }

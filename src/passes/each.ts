@@ -1,4 +1,6 @@
 import { nextCall, NextCall } from '../next-call';
+import { PassedThru } from '../passed-thru';
+import { forEachItem, lastItems } from './iteration';
 
 declare module '../call-outcome' {
   export namespace CallOutcome {
@@ -7,7 +9,7 @@ declare module '../call-outcome' {
       /**
        * Iterable outcome type.
        */
-      each(): Iterable<Return>;
+      each(): Iterable<PassedThru.Item<NextCall.Callee.Return<Return>>>;
 
     }
   }
@@ -17,14 +19,15 @@ export interface NextEach<NextItem, NextReturn> extends NextCall<
     'each',
     NextCall.Callee.Args<NextItem>,
     NextReturn,
-    Iterable<NextReturn>,
-    Iterable<NextCall.LastOutcome<NextItem>>> {
+    Iterable<PassedThru.Item<NextCall.Callee.Return<NextReturn>>>,
+    Iterable<PassedThru.Item<NextCall.LastOutcome<NextItem>>>> {
 
   (): NextEach<NextItem, NextReturn>;
 
-  [NextCall.next](callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => NextReturn): Iterable<NextReturn>;
+  [NextCall.next](callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => NextReturn):
+      Iterable<PassedThru.Item<NextCall.Callee.Return<NextReturn>>>;
 
-  [NextCall.last](): Iterable<NextCall.LastOutcome<NextItem>>;
+  [NextCall.last](): Iterable<PassedThru.Item<NextCall.LastOutcome<NextItem>>>;
 
 }
 
@@ -41,26 +44,13 @@ export interface NextEach<NextItem, NextReturn> extends NextCall<
 export function nextEach<NextItem, NextReturn>(items: Iterable<NextItem>): NextEach<NextItem, NextReturn> {
   return nextCall(
       callee => ({
-        * [Symbol.iterator]() {
-          for (const item of items) {
-            if (NextCall.is(item)) {
-              yield item[NextCall.next](callee);
-            } else {
-              const c = callee as (arg: NextItem) => NextReturn;
-              yield c(item);
-            }
-          }
-        }
+        [Symbol.iterator]() {
+          return forEachItem(items, callee);
+        },
       }),
       () => ({
-        * [Symbol.iterator]() {
-          for (const item of items) {
-            if (NextCall.is(item)) {
-              yield item[NextCall.last]();
-            } else {
-              yield item;
-            }
-          }
-        }
+        [Symbol.iterator]() {
+          return lastItems(items);
+        },
       }));
 }

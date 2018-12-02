@@ -1,4 +1,5 @@
 import { callThru } from './call-thru';
+import { PassedThru } from './passed-thru';
 import { nextArgs, passAsync, passIf } from './passes';
 
 describe('callThru', () => {
@@ -38,6 +39,17 @@ describe('callThru', () => {
     expect(callThru(fn1, fn2)('arg1', 'arg2')).toBe('result');
     expect(fn1).toHaveBeenCalledWith('arg1', 'arg2');
     expect(fn2).toHaveBeenCalledWith('arg3', 'arg4');
+  });
+  it('extracts the passed through value', () => {
+
+    // noinspection JSMismatchedCollectionQueryUpdate
+    const passed: PassedThru<string, number> = {
+      [PassedThru.as]: 'foo',
+      * [Symbol.iterator]() { yield 13; }
+    };
+    const outcome: string = callThru(() => passed)();
+
+    expect(outcome).toBe('foo');
   });
   describe('Combining', () => {
     it('combines`async` then `if`', async () => {

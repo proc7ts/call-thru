@@ -1,19 +1,41 @@
 import { nextCall, NextCall } from '../next-call';
+import { PassedThru } from '../passed-thru';
+import { NextFlat } from './flat';
+import { flatItems, forEachItem, lastItems } from './iteration';
+
+declare module '../call-outcome' {
+  export namespace CallOutcome {
+    export interface Map<Return, Out> {
+
+      /**
+       * Iterable outcome type.
+       */
+      flatEach(): NextFlatEach.Flattened<Return>;
+
+    }
+  }
+}
 
 export interface NextFlatEach<NextItem, NextReturn> extends NextCall<
-    'default',
+    'flatEach',
     NextCall.Callee.Args<NextItem>,
-    Iterable<NextReturn>,
-    Iterable<NextReturn>,
-    Iterable<NextCall.LastOutcome<NextItem>>> {
+    NextReturn,
+    NextFlatEach.Flattened<NextReturn>,
+    Iterable<PassedThru.Item<NextCall.LastOutcome<NextItem>>>> {
 
   (): NextFlatEach<NextItem, NextReturn>;
 
   [NextCall.next](
-      callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => Iterable<NextReturn>):
-      Iterable<NextReturn>;
+      callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => NextReturn):
+      NextFlatEach.Flattened<NextReturn>;
 
-  [NextCall.last](): Iterable<NextCall.LastOutcome<NextItem>>;
+  [NextCall.last](): Iterable<PassedThru.Item<NextCall.LastOutcome<NextItem>>>;
+
+}
+
+export namespace NextFlatEach {
+
+  export type Flattened<T> = Iterable<NextFlat.Item<PassedThru.Item<NextCall.Callee.Return<T>>>>;
 
 }
 
@@ -34,28 +56,13 @@ export interface NextFlatEach<NextItem, NextReturn> extends NextCall<
 export function nextFlatEach<NextItem, NextReturn>(items: Iterable<NextItem>): NextFlatEach<NextItem, NextReturn> {
   return nextCall(
       callee => ({
-        * [Symbol.iterator]() {
-          for (const item of items) {
-            if (NextCall.is(item)) {
-              yield *item[NextCall.next](callee);
-            } else {
-
-              const c = callee as (arg: NextItem) => Iterable<NextReturn>;
-
-              yield *c(item);
-            }
-          }
+        [Symbol.iterator]() {
+          return flatItems(forEachItem(items, callee), 2);
         }
       }),
       () => ({
-        * [Symbol.iterator]() {
-          for (const item of items) {
-            if (NextCall.is(item)) {
-              yield item[NextCall.last]();
-            } else {
-              yield item;
-            }
-          }
+        [Symbol.iterator]() {
+          return lastItems(items);
         }
       }),
   );

@@ -1,26 +1,37 @@
 import { nextCall, NextCall } from '../next-call';
+import { PassedThru } from '../passed-thru';
+import { flatItems } from './iteration';
 
 declare module '../call-outcome' {
   export namespace CallOutcome {
+
     export interface Map<Return, Out> {
 
       /**
        * Flattened iterable outcome type.
        */
-      flat(): Return extends Iterable<Iterable<infer Item>> ? Iterable<Item> : never;
+      flat(): NextFlat.Flattened<Return>;
 
     }
   }
 }
 
-export interface NextFlat<NextArgs extends any[], NextItem>
-    extends NextCall<'flat', NextArgs, Iterable<Iterable<NextItem>>, Iterable<NextItem>, never[]> {
+export interface NextFlat<NextArgs extends any[], NextReturn>
+    extends NextCall<'flat', NextArgs, NextReturn, NextFlat.Flattened<NextReturn>, never[]> {
 
-  (): NextFlat<NextArgs, NextItem>;
+  (): NextFlat<NextArgs, NextReturn>;
 
-  [NextCall.next](callee: (this: void, ...args: NextArgs) => Iterable<Iterable<NextItem>>): Iterable<NextItem>;
+  [NextCall.next](callee: (this: void, ...args: NextArgs) => NextReturn): NextFlat.Flattened<NextReturn>;
 
   [NextCall.last](): never[];
+
+}
+
+export namespace NextFlat {
+
+  export type Flattened<T> = Iterable<Item<Item<PassedThru.Item<NextCall.Callee.Return<T>>>>>;
+
+  export type Item<T> = T extends Iterable<infer I> ? I : T;
 
 }
 
@@ -33,13 +44,11 @@ export function passFlat<NextArgs extends any[], NextItem>(): (...args: NextArgs
   return _passFlat;
 }
 
-function _passFlat<NextArgs extends any[], NextItem>(...args: NextArgs): NextFlat<NextArgs, NextItem> {
+function _passFlat<NextArgs extends any[], NextReturn>(...args: NextArgs): NextFlat<NextArgs, NextReturn> {
   return nextCall(
       callee => ({
-        * [Symbol.iterator]() {
-          for (const item of callee(...args)) {
-            yield* item;
-          }
+        [Symbol.iterator]() {
+          return flatItems(PassedThru.items(callee(...args)), 2);
         }
       }),
       () => [],
