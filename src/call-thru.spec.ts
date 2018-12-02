@@ -1,5 +1,6 @@
 import { callThru } from './call-thru';
-import { nextArgs, passAsync, passIf, SkippedThru } from './passes';
+import { PassedThru } from './passed-thru';
+import { nextArgs, passAsync, passIf } from './passes';
 
 describe('callThru', () => {
 
@@ -39,6 +40,17 @@ describe('callThru', () => {
     expect(fn1).toHaveBeenCalledWith('arg1', 'arg2');
     expect(fn2).toHaveBeenCalledWith('arg3', 'arg4');
   });
+  it('extracts the passed through value', () => {
+
+    // noinspection JSMismatchedCollectionQueryUpdate
+    const passed: PassedThru<string, number> = {
+      [PassedThru.as]: 'foo',
+      * [Symbol.iterator]() { yield 13; }
+    };
+    const outcome: string = callThru(() => passed)();
+
+    expect(outcome).toBe('foo');
+  });
   describe('Combining', () => {
     it('combines`async` then `if`', async () => {
 
@@ -53,7 +65,7 @@ describe('callThru', () => {
     });
     it('combines `if` then `async`', async () => {
 
-      const fn: (a: number, b: number) => Promise<string> | SkippedThru = callThru(
+      const fn: (a: number, b: number) => Promise<string> | undefined = callThru(
           passIf((a: number, b: number) => a < b),
           passAsync(),
           () => 'ok',

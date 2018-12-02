@@ -1,4 +1,5 @@
 import { callThru } from '../call-thru';
+import { PassedThru } from '../passed-thru';
 import { nextArgs } from './args';
 import { nextEach } from './each';
 import { passIf } from './if';
@@ -17,32 +18,50 @@ describe('nextEach', () => {
     expect([...callThru(nextEach(items))()]).toEqual(items);
   });
   it('calls the next pass with next call items', () => {
-    expect([
-      ...callThru(
-          nextEach([
-            nextArgs(1, 2),
-            nextArgs(3, 4),
-          ]),
-          (a, b) => a + b,
-      )()
-    ]).toEqual([3, 7]);
+
+    const outcome: Iterable<number> = callThru(
+        nextEach([
+          nextArgs(1, 2),
+          nextArgs(3, 4),
+        ]),
+        (a, b) => a + b,
+    )();
+
+    expect([...outcome]).toEqual([3, 7]);
   });
-  it('returns an iterable of last outcomes when returned from the last pass', () => {
-    expect([
-      ...callThru(
-          nextEach([
-            nextArgs(1, 2),
-            nextArgs(3, 4),
-          ]))()
-    ]).toEqual([[1, 2], [3, 4]]);
+  it('builds an iterable of last outcomes when returned from the last pass', () => {
+
+    const outcome: Iterable<[number, number]> = callThru(
+        nextEach([
+          nextArgs(1, 2),
+          nextArgs(3, 4),
+        ])
+    )();
+
+    expect([...outcome]).toEqual([[1, 2], [3, 4]]);
   });
   it('excludes the skipped items', () => {
-    expect([
-      ...callThru(
-          nextEach([1, 2, 3]),
-          n => n + 1,
-          passIf(n => n > 2),
-      )()
-    ]).toEqual([3, 4]);
+
+    const outcome: Iterable<number> = callThru(
+        nextEach([1, 2, 3]),
+        passIf((n: number) => n > 1),
+        n => n + 1,
+    )();
+
+    expect([...outcome]).toEqual([3, 4]);
+  });
+  it('builds an iterable of passed through values when returned from the last pass', () => {
+
+    const passed: PassedThru<string, number> = {
+      [PassedThru.as]: 'foo',
+      * [Symbol.iterator]() { yield 13; }
+    };
+    const outcome: Iterable<number> = callThru(
+        nextEach([
+          passed,
+        ])
+    )();
+
+    expect([...outcome]).toEqual([13]);
   });
 });

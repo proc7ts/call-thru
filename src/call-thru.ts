@@ -6,14 +6,14 @@ import Out = NextCall.Outcome;
 
 export function callThru<P1 extends any[], R>(
     fn: (this: void, ...args: P1) => R):
-    (this: void, ...args: P1) => Last<R>;
+    (this: void, ...args: P1) => PassedThru.Value<Last<R>>;
 
 export function callThru<
     P1 extends any[], R1,
     P2 extends Args<R1>, R2>(
     fn1: (this: void, ...args: P1) => R1,
     fn2: (this: void, ...args: P2) => R2):
-    (this: void, ...args: P1) => Out<R1, Last<R2>>;
+    (this: void, ...args: P1) => PassedThru.Value<Out<R1, Last<R2>>>;
 
 export function callThru<
     P1 extends any[], R1,
@@ -22,7 +22,7 @@ export function callThru<
     fn1: (this: void, ...args: P1) => R1,
     fn2: (this: void, ...args: P2) => R2,
     fn3: (this: void, ...args: P3) => R3):
-    (this: void, ...args: P1) => Out<R1, Out<R2, Last<R3>>>;
+    (this: void, ...args: P1) => PassedThru.Value<Out<R1, Out<R2, Last<R3>>>>;
 
 export function callThru<
     P1 extends any[], R1,
@@ -33,7 +33,7 @@ export function callThru<
     fn2: (this: void, ...args: P2) => R2,
     fn3: (this: void, ...args: P3) => R3,
     fn4: (this: void, ...args: P4) => R4):
-    (this: void, ...args: P1) => Out<R1, Out<R2, Out<R3, Last<R4>>>>;
+    (this: void, ...args: P1) => PassedThru.Value<Out<R1, Out<R2, Out<R3, Last<R4>>>>>;
 
 export function callThru<
     P1 extends any[], R1,
@@ -46,7 +46,7 @@ export function callThru<
     fn3: (this: void, ...args: P3) => R3,
     fn4: (this: void, ...args: P4) => R4,
     fn5: (this: void, ...args: P5) => R5):
-    (this: void, ...args: P1) => Out<R1, Out<R2, Out<R3, Out<R4, Last<R5>>>>>;
+    (this: void, ...args: P1) => PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4, Last<R5>>>>>>;
 
 export function callThru<
     P1 extends any[], R1,
@@ -61,8 +61,8 @@ export function callThru<
     fn4: (this: void, ...args: P4) => R4,
     fn5: (this: void, ...args: P5) => R5,
     fn6: (this: void, ...args: P6) => R6):
-    (this: void, ...args: P1) => Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
-        Last<R6>>>>>>;
+    (this: void, ...args: P1) => PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
+        Last<R6>>>>>>>;
 
 export function callThru<
     P1 extends any[], R1,
@@ -79,8 +79,8 @@ export function callThru<
     fn5: (this: void, ...args: P5) => R5,
     fn6: (this: void, ...args: P6) => R6,
     fn7: (this: void, ...args: P7) => R7):
-    (this: void, ...args: P1) => Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
-        Out<R6, Last<R7>>>>>>>;
+    (this: void, ...args: P1) => PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
+        Out<R6, Last<R7>>>>>>>>;
 
 export function callThru<
     P1 extends any[], R1,
@@ -99,8 +99,8 @@ export function callThru<
     fn6: (this: void, ...args: P6) => R6,
     fn7: (this: void, ...args: P7) => R7,
     fn8: (this: void, ...args: P8) => R8):
-    (this: void, ...args: P1) => Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
-        Out<R6, Out<R7, Last<R8>>>>>>>>;
+    (this: void, ...args: P1) => PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
+        Out<R6, Out<R7, Last<R8>>>>>>>>>;
 
 export function callThru<
     P1 extends any[], R1,
@@ -121,7 +121,8 @@ export function callThru<
     fn7: (this: void, ...args: P7) => R7,
     fn8: (this: void, ...args: P8) => R8,
     fn9: (this: void, ...args: P9) => R9):
-    (this: void, ...args: P1) => Out<R1, Out<R2, Out<R3, Out<R4, Out<R5, Out<R6, Out<R7, Out<R8, Last<R9>>>>>>>>>;
+    (this: void, ...args: P1) => PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
+        Out<R6, Out<R7, Out<R8, Last<R9>>>>>>>>>>;
 
 export function callThru<
     P1 extends any[], R1,
@@ -144,8 +145,8 @@ export function callThru<
     fn8: (this: void, ...args: P8) => R8,
     fn9: (this: void, ...args: P9) => R9,
     fn10: (this: void, ...args: P10) => R10):
-    (this: void, ...args: P1) => Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
-        Out<R6, Out<R7, Out<R8, Out<R9, Last<R10>>>>>>>>>>;
+    (this: void, ...args: P1) => PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
+        Out<R6, Out<R7, Out<R8, Out<R9, Last<R10>>>>>>>>>>>;
 
 export function callThru<
     P1 extends any[], R1,
@@ -170,9 +171,9 @@ export function callThru<
     fn9: (this: void, ...args: P9) => R9,
     fn10: (this: void, ...args: P10) => R10,
     fn11: (this: void, ...args: P11) => R11):
-    (this: void, ...args: P1) => Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
+    (this: void, ...args: P1) => PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
         Out<R6, Out<R7, Out<R8, Out<R9, Out<R10,
-            Last<R11>>>>>>>>>>>;
+            Last<R11>>>>>>>>>>>>;
 
 export function callThru<
     P1 extends any[], R1,
@@ -199,9 +200,9 @@ export function callThru<
     fn10: (this: void, ...args: P10) => R10,
     fn11: (this: void, ...args: P11) => R11,
     fn12: (this: void, ...args: P12) => R12):
-    (this: void, ...args: P1) => Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
+    (this: void, ...args: P1) => PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
         Out<R6, Out<R7, Out<R8, Out<R9, Out<R10,
-            Out<R11, Last<R12>>>>>>>>>>>>;
+            Out<R11, Last<R12>>>>>>>>>>>>>;
 
 /**
  * Constructs a function that invokes the chained passes.
@@ -244,9 +245,9 @@ export function callThru<
     fn11: (this: void, ...args: P11) => R11,
     fn12: (this: void, ...args: P12) => R12,
     fn13: (this: void, ...args: P13) => R13):
-    (this: void, ...args: P1) => Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
+    (this: void, ...args: P1) => PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
         Out<R6, Out<R7, Out<R8, Out<R9, Out<R10,
-            Out<R11, Out<R12, Last<R13>>>>>>>>>>>>>;
+            Out<R11, Out<R12, Last<R13>>>>>>>>>>>>>>;
 
 export function callThru<R>(...fns: ((...args: any[]) => any)[]): (...args: any[]) => R {
 

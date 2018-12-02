@@ -8,7 +8,7 @@ declare module '../call-outcome' {
       /**
        * Iterable outcome type.
        */
-      each(): Iterable<Return>;
+      each(): Iterable<PassedThru.Item<Return>>;
 
     }
   }
@@ -19,14 +19,14 @@ export interface NextEach<NextItem, NextReturn> extends NextCall<
     NextCall.Callee.Args<NextItem>,
     NextReturn,
     Iterable<PassedThru.Item<NextReturn>>,
-    Iterable<NextCall.LastItem<NextItem>>> {
+    Iterable<PassedThru.Item<NextCall.LastOutcome<NextItem>>>> {
 
   (): NextEach<NextItem, NextReturn>;
 
   [NextCall.next](callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => NextReturn):
       Iterable<PassedThru.Item<NextReturn>>;
 
-  [NextCall.last](): Iterable<NextCall.LastItem<NextItem>>;
+  [NextCall.last](): Iterable<PassedThru.Item<NextCall.LastOutcome<NextItem>>>;
 
 }
 
