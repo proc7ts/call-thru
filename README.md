@@ -93,9 +93,23 @@ import { callThru, nextEach } from 'call-thru';
 
 for (const n of callThru(
     (...args) => nextEach(args),
-    n => n * n
+    n => n * n,
   )(1, 2, 3)) {
   console.log(n); // 1, 4, 9
+}
+```
+
+This can be combined with e.g. [passIf()]:
+
+```TypeScript
+import { callThru, nextEach, passIf } from 'call-thru';
+
+for (const n of callThru(
+    (...args) => nextEach(args),
+    passIf((n: number) => n > 1),
+    n => n * n,
+  )(1, 2, 3)) {
+  console.log(n); // 4, 9
 }
 ```
 
@@ -142,6 +156,8 @@ for (const n of callThru(
 
 passIf()
 --------
+
+[passIf()]: #passif
 
 Constructs conditional call chain pass.
 
