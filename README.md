@@ -10,7 +10,7 @@ next function call.
 
 Normally, the value returned from function call is passed as a single argument to the next one:
 
-```TypeScript
+```typescript
 import { callThru } from 'call-thru';
 
 callThru(
@@ -23,7 +23,7 @@ Additionally, a pass may return a `NextCall` instance that is responsible for ca
 
 There are several `NextCall` implementations available. For example, a `nextArgs()` one can be used to pass multiple
 arguments to the next function:
-```TypeScript
+```typescript
 import { callThru, nextArgs } from 'call-thru';
 
 callThru(
@@ -34,7 +34,7 @@ callThru(
 
 A `NextCall` instance is a no-arg function returning itself. Thus is can be chained as a pass:
 
-```TypeScript
+```typescript
 import { callThru, nextArgs } from 'call-thru';
 
 callThru(
@@ -56,7 +56,7 @@ nextArgs()
 
 Constructs arguments for the next function call.
 
-```TypeScript
+```typescript
 import { callThru, nextArgs } from 'call-thru';
 
 callThru(
@@ -71,7 +71,7 @@ passAsync()
 
 Constructs asynchronous call chain pass.
 
-```TypeScript
+```typescript
 import { callThru, passAsync } from 'call-thru';
 
 callThru(
@@ -88,7 +88,7 @@ nextEach()
 
 Creates an next call that invokes subsequent passes for each item in the given iterable.
 
-```TypeScript
+```typescript
 import { callThru, nextEach } from 'call-thru';
 
 for (const n of callThru(
@@ -101,7 +101,7 @@ for (const n of callThru(
 
 This can be combined with e.g. [passIf()]:
 
-```TypeScript
+```typescript
 import { callThru, nextEach, passIf } from 'call-thru';
 
 for (const n of callThru(
@@ -121,7 +121,7 @@ Constructs flattening call chain pass.
 
 The next pass is expected to return an iterable of iterables. This pass then converts it to plain iterable.
 
-```TypeScript
+```typescript
 import { callThru, nextEach, passFlat } from 'call-thru';
 
 for (const n of callThru(
@@ -143,7 +143,7 @@ The next pass is expected to return an iterable for each of the `items`.
 
 This is an equivalent of `passFlat()` followed by a pass returning `nextEach()`.
 
-```TypeScript
+```typescript
 import { callThru, nextFlatEach } from 'call-thru';
 
 for (const n of callThru(
@@ -164,7 +164,7 @@ Constructs conditional call chain pass.
 If the given `test` function fails the rest of the passes in chain would be skipped and the final call chain outcome
 will be `undefined`. Otherwise the next pass in chain will be called with the same arguments.
 
-```TypeScript
+```typescript
 import { callThru, passIf } from 'call-thru';
 
 const confirmGreater = callThru(
@@ -182,7 +182,7 @@ nextReturn()
 
 Constructs a next call that skips the rest of the chain and returns the given value.
 
-```TypeScript
+```typescript
 import { callThru, nextReturn } from 'call-thru';
 
 const confirmGreater = callThru(
@@ -201,7 +201,7 @@ Constructs a next call that skips the rest of the chain.
 
 This has the same effect as `nextReturn(undefined)`.
 
-```TypeScript
+```typescript
 import { callThru, nextSkip } from 'call-thru';
 
 const confirmGreater = callThru(
