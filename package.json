@@ -1,6 +1,6 @@
 {
   "name": "call-thru",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Function chaining library",
   "keywords": [
     "chain",
@@ -14,13 +14,14 @@
     "url": "git+https://github.com/surol/call-thru.git"
   },
   "license": "MIT",
-  "author": "Ruslan Lopatin<ruslan.lopatin@gmail.com>",
+  "author": "Ruslan Lopatin <ruslan.lopatin@gmail.com>",
   "bugs": {
     "url": "https://github.com/surol/a-iterable/issues"
   },
-  "main": "dist/call-thru.umd.js",
-  "module": "dist/call-thru.esm5.js",
-  "es2015": "dist/call-thru.esm2015.js",
+  "main": "dist/call-thru.js",
+  "browser": "dist/call-thru.umd.js",
+  "module": "dist/call-thru.mjs",
+  "esm5": "dist/call-thru.esm5.js",
   "typings": "index.d.ts",
   "dependencies": {
     "tslib": "^1.9.0"
@@ -32,7 +33,7 @@
     "fs-extra": "^7.0.0",
     "jest": "^23.6.0",
     "jest-junit": "^5.2.0",
-    "rollup": "^0.68.0",
+    "rollup": "^0.68.1",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
@@ -40,7 +41,7 @@
     "rollup-plugin-typescript2": "^0.18.1",
     "rollup-plugin-uglify": "^6.0.0",
     "ts-jest": "^23.10.5",
-    "tslint": "^5.11.0",
+    "tslint": "^5.12.0",
     "typescript": "^3.2.2"
   },
   "scripts": {
