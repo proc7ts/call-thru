@@ -19,7 +19,6 @@
     "url": "https://github.com/surol/a-iterable/issues"
   },
   "main": "dist/call-thru.js",
-  "browser": "dist/call-thru.umd.js",
   "module": "dist/call-thru.mjs",
   "esm5": "dist/call-thru.esm5.js",
   "typings": "index.d.ts",
@@ -37,9 +36,7 @@
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
-    "rollup-plugin-terser": "^3.0.0",
     "rollup-plugin-typescript2": "^0.18.1",
-    "rollup-plugin-uglify": "^6.0.0",
     "ts-jest": "^23.10.5",
     "tslint": "^5.12.0",
     "typescript": "^3.2.2"
