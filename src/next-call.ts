@@ -3,12 +3,12 @@ import { CallOutcome } from './call-outcome';
 /**
  * A key of a `NextCall` method responsible for calling the next function in chain.
  */
-export const nextCallKey = Symbol('call-next');
+export const nextCallKey = /*#__PURE__*/ Symbol('call-next');
 
 /**
  * A key of a `NextCall` method responsible for returning the outcome of the las pass in chain.
  */
-export const lastOutcomeKey = Symbol('last-outcome');
+export const lastOutcomeKey = /*#__PURE__*/ Symbol('last-outcome');
 
 /**
  * A call of the next function in chain.
