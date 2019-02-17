@@ -1,5 +1,14 @@
 import { CallOutcome } from './call-outcome';
-import { PassedThru } from './passed-thru';
+
+/**
+ * A key of a `NextCall` method responsible for calling the next function in chain.
+ */
+export const nextCallKey = /*#__PURE__*/ Symbol('call-next');
+
+/**
+ * A key of a `NextCall` method responsible for returning the outcome of the las pass in chain.
+ */
+export const lastOutcomeKey = /*#__PURE__*/ Symbol('last-outcome');
 
 /**
  * A call of the next function in chain.
@@ -19,6 +28,82 @@ import { PassedThru } from './passed-thru';
  * @param <Out> A type of the next function call outcome.
  * @param <Last> A type of the outcome of the next call returned from the last pass in chain.
  */
+export abstract class NextCall<
+    OutKind extends CallOutcome.Kind,
+    NextArgs extends any[],
+    NextReturn,
+    Out = NextReturn,
+    Last = CallOutcome.OfKind<OutKind, NextArgs[0], Out>> extends Function {
+
+  /**
+   * Checks whether the `target` value is a next function call.
+   *
+   * @param target A value to check.
+   *
+   * @returns `true`.
+   */
+  static is<V extends NextCall.Any>(target: V): target is V;
+
+  /**
+   * Checks whether the `target` value is a next function call.
+   *
+   * @param target A value to check.
+   *
+   * @returns `true` if the `target` value is a function with a `[NextCall.mark]` property, or `false` otherwise.
+   */
+  static is(target: any): target is NextCall.Any;
+
+  static is(target: any): target is NextCall.Any {
+    return typeof target === 'function' && nextCallKey in target;
+  }
+
+  /**
+   * Converts a value returned from previous chained function call to the call of the next function in chain.
+   *
+   * @param nextCall A next function call to return.
+   *
+   * @returns A `nextCall` itself.
+   */
+  static of<V extends NextCall.Any>(nextCall: V): V;
+
+  /**
+   * Converts a value returned from previous chained function call to the call of the next function in chain.
+   *
+   * @param value A value to convert.
+   *
+   * @returns Either a `value` itself if it is a next function call, or a new next function call instance that passes
+   * a `value` as the only argument to the callee.
+   */
+  static of<V, Out>(value: V): NextCall<'default', [V], Out, Out, Out>;
+
+  static of<V, NextReturn>(value: V): NextCall<any, NextCall.Callee.Args<V>, NextReturn> {
+    if (NextCall.is(value)) {
+      return value;
+    }
+    return nextCall((callee: any) => callee(value));
+  }
+
+  /**
+   * Calls the next function in chain.
+   *
+   * This is invoked only when there _is_ a next function. When next call is returned by the last pass a
+   * `[lastOutcomeKey]()` is invoked instead.
+   *
+   * @param callee A function to call.
+   *
+   * @returns A call outcome.
+   */
+  abstract [nextCallKey](callee: (this: void, ...args: NextArgs) => NextReturn): Out;
+
+  /**
+   * Builds an outcome of the last pass in chain.
+   *
+   * This is invoked for the last pass in chain only. If there is a next pass a `[nextCallKey]()` is invoked instead.
+   */
+  abstract [lastOutcomeKey](): Last;
+
+}
+
 export interface NextCall<
     OutKind extends CallOutcome.Kind,
     NextArgs extends any[],
@@ -29,26 +114,7 @@ export interface NextCall<
   /**
    * Returns itself to add it to functions chain.
    */
-  (): NextCall<OutKind, NextArgs, NextReturn, Out, Last>;
-
-  /**
-   * Calls the next function in chain.
-   *
-   * This is invoked only when there _is_ a next function. When next call is returned by the last pass a
-   * `[NextCall.last]()` is invoked instead.
-   *
-   * @param callee A function to call.
-   *
-   * @returns A call outcome.
-   */
-  [NextCall.next](callee: (this: void, ...args: NextArgs) => NextReturn): Out;
-
-  /**
-   * Builds an outcome of the last pass in chain.
-   *
-   * This is invoked for the last pass in chain only. If there is a next pass a `[NextCall.next]()` is invoked instead.
-   */
-  [NextCall.last](): Last;
+  (): NextCall<OutKind, NextArgs, NextReturn, Out, Last>; // tslint:disable-line:callable-types
 
 }
 
@@ -84,64 +150,6 @@ export namespace NextCall {
    * A type of last call outcome. Either extracted from the last call, or the value itself.
    */
   export type LastOutcome<V> = V extends NextCall<any, any, any, any, infer Last> ? Last : V;
-
-  /**
-   * A key of a `NextCall` method responsible for calling the next function in chain.
-   */
-  export const next = Symbol('call-next');
-
-  /**
-   * A key of a `NextCall` method responsible for returning the outcome of the las pass in chain.
-   */
-  export const last = Symbol('last-outcome');
-
-  /**
-   * Checks whether the `target` value is a next function call.
-   *
-   * @param target A value to check.
-   *
-   * @returns `true`.
-   */
-  export function is<V extends Any>(target: V): target is V;
-
-  /**
-   * Checks whether the `target` value is a next function call.
-   *
-   * @param target A value to check.
-   *
-   * @returns `true` if the `target` value is a function with a `[NextCall.mark]` property, or `false` otherwise.
-   */
-  export function is(target: any): target is Any;
-
-  export function is(target: any): target is Any {
-    return typeof target === 'function' && next in target;
-  }
-
-  /**
-   * Converts a value returned from previous chained function call to the call of the next function in chain.
-   *
-   * @param nextCall A next function call to return.
-   *
-   * @returns A `nextCall` itself.
-   */
-  export function of<V extends Any>(nextCall: V): V;
-
-  /**
-   * Converts a value returned from previous chained function call to the call of the next function in chain.
-   *
-   * @param value A value to convert.
-   *
-   * @returns Either a `value` itself if it is a next function call, or a new next function call instance that passes
-   * a `value` as the only argument to the callee.
-   */
-  export function of<V, Out>(value: V): NextCall<'default', [V], Out, Out, Out>;
-
-  export function of<V, NextReturn>(value: V): NextCall<any, Callee.Args<V>, NextReturn> {
-    if (is(value)) {
-      return value;
-    }
-    return nextCall((callee: any) => callee(value));
-  }
 
 }
 
@@ -180,8 +188,8 @@ export function nextCall<OutKind extends CallOutcome.Kind, NextArgs extends any[
 
   const result = (() => result) as NextCall<OutKind, NextArgs, NextReturn, Out, Last>;
 
-  result[NextCall.next] = callee => callNext(callee);
-  result[NextCall.last] = lastOutcome;
+  result[nextCallKey] = callee => callNext(callee);
+  result[lastOutcomeKey] = lastOutcome;
 
   return result;
 }

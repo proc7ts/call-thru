@@ -1,5 +1,5 @@
 import { callThru } from '../call-thru';
-import { PassedThru } from '../passed-thru';
+import { PassedThru, passedThruKey } from '../passed-thru';
 import { nextArgs } from './args';
 import { nextEach } from './each';
 import { passIf } from './if';
@@ -53,7 +53,7 @@ describe('nextEach', () => {
   it('builds an iterable of passed through values when returned from the last pass', () => {
 
     const passed: PassedThru<string, number> = {
-      [PassedThru.as]: 'foo',
+      [passedThruKey]: 'foo',
       * [Symbol.iterator]() { yield 13; }
     };
     const outcome: Iterable<number> = callThru(

@@ -1,4 +1,4 @@
-import { nextCall, NextCall } from '../next-call';
+import { lastOutcomeKey, NextCall, nextCall, nextCallKey } from '../next-call';
 import { PassedThru } from '../passed-thru';
 import { forEachItem, lastItems } from './iteration';
 
@@ -24,10 +24,10 @@ export interface NextEach<NextItem, NextReturn> extends NextCall<
 
   (): NextEach<NextItem, NextReturn>;
 
-  [NextCall.next](callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => NextReturn):
+  [nextCallKey](callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => NextReturn):
       Iterable<PassedThru.Item<NextCall.Callee.Return<NextReturn>>>;
 
-  [NextCall.last](): Iterable<PassedThru.Item<NextCall.LastOutcome<NextItem>>>;
+  [lastOutcomeKey](): Iterable<PassedThru.Item<NextCall.LastOutcome<NextItem>>>;
 
 }
 

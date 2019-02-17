@@ -1,5 +1,5 @@
 import { callThru } from './call-thru';
-import { PassedThru } from './passed-thru';
+import { PassedThru, passedThruKey } from './passed-thru';
 import { nextArgs, passAsync, passIf } from './passes';
 
 describe('callThru', () => {
@@ -44,7 +44,7 @@ describe('callThru', () => {
 
     // noinspection JSMismatchedCollectionQueryUpdate
     const passed: PassedThru<string, number> = {
-      [PassedThru.as]: 'foo',
+      [passedThruKey]: 'foo',
       * [Symbol.iterator]() { yield 13; }
     };
     const outcome: string = callThru(() => passed)();

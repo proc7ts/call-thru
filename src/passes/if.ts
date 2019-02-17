@@ -1,4 +1,4 @@
-import { nextCall, NextCall } from '../next-call';
+import { nextCall, NextCall, nextCallKey } from '../next-call';
 import { nextSkip, SkippedThru } from './skip';
 
 declare module '../call-outcome' {
@@ -19,7 +19,7 @@ export interface NextIf<NextArgs extends any[], NextReturn>
 
   (): NextIf<NextArgs, NextReturn>;
 
-  [NextCall.next](callee: (this: void, ...args: NextArgs) => NextReturn): NextReturn | SkippedThru;
+  [nextCallKey](callee: (this: void, ...args: NextArgs) => NextReturn): NextReturn | SkippedThru;
 
 }
 

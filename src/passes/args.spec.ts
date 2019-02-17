@@ -1,5 +1,5 @@
 import { callThru } from '../call-thru';
-import { NextCall } from '../next-call';
+import { nextCallKey } from '../next-call';
 import { nextArgs } from './args';
 import Mock = jest.Mock;
 
@@ -12,7 +12,7 @@ describe('nextArgs', () => {
   });
 
   it('calls the callee with the given arguments', () => {
-    expect(nextArgs('a', 'b', 3)[NextCall.next](calleeSpy)).toBe('result');
+    expect(nextArgs('a', 'b', 3)[nextCallKey](calleeSpy)).toBe('result');
     expect(calleeSpy).toHaveBeenCalledWith('a', 'b', 3);
   });
   it('replaces arguments when chained', () => {

@@ -1,4 +1,4 @@
-import { nextCall, NextCall } from '../next-call';
+import { lastOutcomeKey, NextCall, nextCall, nextCallKey } from '../next-call';
 
 declare module '../call-outcome' {
   export namespace CallOutcome {
@@ -18,9 +18,9 @@ export interface NextReturn<NextArgs extends any[], Return, Out>
 
   (): NextReturn<NextArgs, Return, Out>;
 
-  [NextCall.next](callee: (this: void, ...args: NextArgs) => Return): Out;
+  [nextCallKey](callee: (this: void, ...args: NextArgs) => Return): Out;
 
-  [NextCall.last](): Out;
+  [lastOutcomeKey](): Out;
 
 }
 

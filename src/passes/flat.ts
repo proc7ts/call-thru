@@ -1,4 +1,4 @@
-import { nextCall, NextCall } from '../next-call';
+import { lastOutcomeKey, NextCall, nextCall, nextCallKey } from '../next-call';
 import { PassedThru } from '../passed-thru';
 import { flatItems } from './iteration';
 
@@ -21,9 +21,9 @@ export interface NextFlat<NextArgs extends any[], NextReturn>
 
   (): NextFlat<NextArgs, NextReturn>;
 
-  [NextCall.next](callee: (this: void, ...args: NextArgs) => NextReturn): NextFlat.Flattened<NextReturn>;
+  [nextCallKey](callee: (this: void, ...args: NextArgs) => NextReturn): NextFlat.Flattened<NextReturn>;
 
-  [NextCall.last](): never[];
+  [lastOutcomeKey](): never[];
 
 }
 
