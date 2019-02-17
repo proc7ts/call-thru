@@ -1,4 +1,4 @@
-import { nextCall, NextCall } from '../next-call';
+import { lastOutcomeKey, NextCall, nextCall, nextCallKey } from '../next-call';
 import { PassedThru } from '../passed-thru';
 
 declare module '../call-outcome' {
@@ -21,9 +21,9 @@ export interface NextSkip<NextArgs extends any[], NextReturn>
 
   (): NextSkip<NextArgs, NextReturn>;
 
-  [NextCall.next](callee: (this: void, ...args: NextArgs) => NextReturn): SkippedThru;
+  [nextCallKey](callee: (this: void, ...args: NextArgs) => NextReturn): SkippedThru;
 
-  [NextCall.last](): SkippedThru;
+  [lastOutcomeKey](): SkippedThru;
 
 }
 

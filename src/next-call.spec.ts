@@ -1,4 +1,4 @@
-import { nextCall, NextCall } from './next-call';
+import { nextCall, NextCall, nextCallKey } from './next-call';
 
 describe('Next call', () => {
   describe('nextCall', () => {
@@ -13,7 +13,7 @@ describe('Next call', () => {
       const next = NextCall.of('some');
       const calleeSpy = jest.fn(() => 'result');
 
-      expect(next[NextCall.next](calleeSpy)).toBe('result');
+      expect(next[nextCallKey](calleeSpy)).toBe('result');
       expect(calleeSpy).toHaveBeenCalledWith('some');
     });
   });
