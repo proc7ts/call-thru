@@ -1,6 +1,6 @@
 {
   "name": "call-thru",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "Function chaining library",
   "keywords": [
     "chain",
