@@ -1,4 +1,4 @@
-import { lastOutcomeKey, NextCall, nextCall, nextCallKey } from '../next-call';
+import { NextCall, nextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
 import { PassedThru } from '../passed-thru';
 import { NextFlat } from './flat';
 import { flatItems, forEachItem, lastItems } from './iteration';
@@ -25,11 +25,11 @@ export interface NextFlatEach<NextItem, NextReturn> extends NextCall<
 
   (): NextFlatEach<NextItem, NextReturn>;
 
-  [nextCallKey](
+  [NextCall__symbol](
       callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => NextReturn):
       NextFlatEach.Flattened<NextReturn>;
 
-  [lastOutcomeKey](): Iterable<PassedThru.Item<NextCall.LastOutcome<NextItem>>>;
+  [NextCall_lastOutcome__symbol](): Iterable<PassedThru.Item<NextCall.LastOutcome<NextItem>>>;
 
 }
 

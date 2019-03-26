@@ -1,4 +1,4 @@
-import { lastOutcomeKey, NextCall, nextCallKey } from './next-call';
+import { NextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from './next-call';
 import { PassedThru } from './passed-thru';
 import Args = NextCall.Callee.Args;
 import Last = NextCall.LastOutcome;
@@ -260,7 +260,7 @@ export function callThru<R>(...fns: ((...args: any[]) => any)[]): (...args: any[
       if (!NextCall.is(prev)) {
         return callNext(idx + 1, fns[idx].call(null, prev));
       }
-      return prev[nextCallKey](function (this: any, ...args: any[]) {
+      return prev[NextCall__symbol](function (this: any, ...args: any[]) {
         return callNext(idx + 1, fns[idx].apply(this, args));
       });
     }
@@ -270,7 +270,7 @@ export function callThru<R>(...fns: ((...args: any[]) => any)[]): (...args: any[
       return prev;
     }
 
-    return prev[lastOutcomeKey]();
+    return prev[NextCall_lastOutcome__symbol]();
   }
 
   return function (this: any, ...args: any[]) {

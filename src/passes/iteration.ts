@@ -1,4 +1,4 @@
-import { lastOutcomeKey, NextCall, nextCallKey } from '../next-call';
+import { NextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
 import { PassedThru } from '../passed-thru';
 
 export function *forEachItem<NextItem, NextReturn>(
@@ -7,7 +7,7 @@ export function *forEachItem<NextItem, NextReturn>(
   for (const item of items) {
     yield* PassedThru.items(
         NextCall.is(item)
-            ? item[nextCallKey](callee)
+            ? item[NextCall__symbol](callee)
             : (callee as (arg: NextItem) => NextReturn)(item));
   }
 }
@@ -16,7 +16,7 @@ export function *lastItems<NextItem>(items: Iterable<NextItem>) {
   for (const item of items) {
     yield* PassedThru.items(
         NextCall.is(item)
-            ? item[lastOutcomeKey]()
+            ? item[NextCall_lastOutcome__symbol]()
             : item);
   }
 }

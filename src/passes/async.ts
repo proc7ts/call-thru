@@ -1,4 +1,4 @@
-import { lastOutcomeKey, NextCall, nextCall, nextCallKey } from '../next-call';
+import { NextCall, nextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
 import { PassedThru } from '../passed-thru';
 
 declare module '../call-outcome' {
@@ -30,9 +30,9 @@ export interface NextAsync<NextArgs extends any[], NextReturn>
 
   (): NextAsync<NextArgs, NextReturn>;
 
-  [nextCallKey](callee: (this: void, ...args: NextArgs) => NextReturn): AsyncResult<NextReturn>;
+  [NextCall__symbol](callee: (this: void, ...args: NextArgs) => NextReturn): AsyncResult<NextReturn>;
 
-  [lastOutcomeKey](): Promise<void>;
+  [NextCall_lastOutcome__symbol](): Promise<void>;
 
 }
 

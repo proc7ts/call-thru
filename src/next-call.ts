@@ -3,12 +3,12 @@ import { CallOutcome } from './call-outcome';
 /**
  * A key of a `NextCall` method responsible for calling the next function in chain.
  */
-export const nextCallKey = /*#__PURE__*/ Symbol('call-next');
+export const NextCall__symbol = /*#__PURE__*/ Symbol('next-call');
 
 /**
  * A key of a `NextCall` method responsible for returning the outcome of the las pass in chain.
  */
-export const lastOutcomeKey = /*#__PURE__*/ Symbol('last-outcome');
+export const NextCall_lastOutcome__symbol = /*#__PURE__*/ Symbol('next-call:last-outcome');
 
 /**
  * A call of the next function in chain.
@@ -54,7 +54,7 @@ export abstract class NextCall<
   static is(target: any): target is NextCall.Any;
 
   static is(target: any): target is NextCall.Any {
-    return typeof target === 'function' && nextCallKey in target;
+    return typeof target === 'function' && NextCall__symbol in target;
   }
 
   /**
@@ -87,20 +87,21 @@ export abstract class NextCall<
    * Calls the next function in chain.
    *
    * This is invoked only when there _is_ a next function. When next call is returned by the last pass a
-   * `[lastOutcomeKey]()` is invoked instead.
+   * `[NextCall_lastOutcome__symbol]()` is invoked instead.
    *
    * @param callee A function to call.
    *
    * @returns A call outcome.
    */
-  abstract [nextCallKey](callee: (this: void, ...args: NextArgs) => NextReturn): Out;
+  abstract [NextCall__symbol](callee: (this: void, ...args: NextArgs) => NextReturn): Out;
 
   /**
    * Builds an outcome of the last pass in chain.
    *
-   * This is invoked for the last pass in chain only. If there is a next pass a `[nextCallKey]()` is invoked instead.
+   * This is invoked for the last pass in chain only. If there is the next pass, a `[NextCall__symbol]()` is invoked
+   * instead.
    */
-  abstract [lastOutcomeKey](): Last;
+  abstract [NextCall_lastOutcome__symbol](): Last;
 
 }
 
@@ -188,8 +189,8 @@ export function nextCall<OutKind extends CallOutcome.Kind, NextArgs extends any[
 
   const result = (() => result) as NextCall<OutKind, NextArgs, NextReturn, Out, Last>;
 
-  result[nextCallKey] = callee => callNext(callee);
-  result[lastOutcomeKey] = lastOutcome;
+  result[NextCall__symbol] = callee => callNext(callee);
+  result[NextCall_lastOutcome__symbol] = lastOutcome;
 
   return result;
 }

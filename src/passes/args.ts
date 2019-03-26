@@ -1,13 +1,13 @@
-import { lastOutcomeKey, NextCall, nextCall, nextCallKey } from '../next-call';
+import { NextCall, nextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
 
 export interface NextArgs<Args extends any[], NextReturn>
     extends NextCall<'default', Args, NextReturn, NextReturn, Args> {
 
   (): NextArgs<Args, NextReturn>;
 
-  [nextCallKey](callee: (this: void, ...args: Args) => NextReturn): NextReturn;
+  [NextCall__symbol](callee: (this: void, ...args: Args) => NextReturn): NextReturn;
 
-  [lastOutcomeKey](): Args;
+  [NextCall_lastOutcome__symbol](): Args;
 
 }
 

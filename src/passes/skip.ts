@@ -1,5 +1,5 @@
-import { lastOutcomeKey, NextCall, nextCall, nextCallKey } from '../next-call';
-import { PassedThru, passedThruKey } from '../passed-thru';
+import { NextCall, nextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
+import { PassedThru, PassedThru__symbol } from '../passed-thru';
 
 declare module '../call-outcome' {
   export namespace CallOutcome {
@@ -21,14 +21,14 @@ export interface NextSkip<NextArgs extends any[], NextReturn>
 
   (): NextSkip<NextArgs, NextReturn>;
 
-  [nextCallKey](callee: (this: void, ...args: NextArgs) => NextReturn): SkippedThru;
+  [NextCall__symbol](callee: (this: void, ...args: NextArgs) => NextReturn): SkippedThru;
 
-  [lastOutcomeKey](): SkippedThru;
+  [NextCall_lastOutcome__symbol](): SkippedThru;
 
 }
 
 const SKIP: SkippedThru = {
-  [passedThruKey]: undefined,
+  [PassedThru__symbol]: undefined,
   * [Symbol.iterator](): Iterator<never> {},
 };
 
