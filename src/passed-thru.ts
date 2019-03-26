@@ -46,8 +46,8 @@ export abstract class PassedThru<V, I = V> implements Iterable<I> {
    *
    * @param outcome The outcome to extract the value from.
    *
-   * @returns A `[PassedThru__symbol]` property value is the given `outcome` is a `PassedThru` instance, or `outcome` itself
-   * otherwise.
+   * @returns A `[PassedThru__symbol]` property value is the given `outcome` is a `PassedThru` instance, or `outcome`
+   * itself otherwise.
    */
   static get<V>(outcome: V): PassedThru.Value<V> {
     if (PassedThru.is<V>(outcome)) {
