@@ -6,10 +6,20 @@ import { passIf } from './if';
 
 describe('nextEach', () => {
   it('calls the next pass for each item when chained', () => {
-    expect([...callThru(() => nextEach([1, 2, 3]), n => n + 1)()]).toEqual([2, 3, 4]);
+    expect([
+      ...callThru(
+          () => nextEach([1, 2, 3]),
+          n => n + 1
+      )()
+    ]).toEqual([2, 3, 4]);
   });
   it('calls the next pass for each item when chained', () => {
-    expect([...callThru(nextEach([1, 2, 3]), n => n + 1)()]).toEqual([2, 3, 4]);
+    expect([
+      ...callThru(
+          nextEach([1, 2, 3]),
+          (n: number) => n + 1
+      )()
+    ]).toEqual([2, 3, 4]);
   });
   it('returns the same items when returned from the last pass', () => {
 
@@ -44,8 +54,8 @@ describe('nextEach', () => {
 
     const outcome: Iterable<number> = callThru(
         nextEach([1, 2, 3]),
-        passIf((n: number) => n > 1),
-        n => n + 1,
+        passIf(n => n > 1),
+        (n: number) => n + 1,
     )();
 
     expect([...outcome]).toEqual([3, 4]);

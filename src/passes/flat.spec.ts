@@ -10,7 +10,7 @@ describe('passFlat', () => {
     const outcome: Iterable<string> = callThru(
         passFlat(),
         nextEach([1, 2]),
-        n => Array<string>(n).fill(`${n}`),
+        (n: number) => Array<string>(n).fill(`${n}`),
     )();
 
     expect([...outcome]).toEqual(['1', '2', '2']);
@@ -23,8 +23,8 @@ describe('passFlat', () => {
     const outcome: Iterable<string> = callThru(
         passFlat(),
         nextEach([1, 2, 3]),
-        passIf((n: number) => n > 1),
-        n => Array<string>(n).fill(`${n}`),
+        passIf(n => n > 1),
+        (n: number) => Array<string>(n).fill(`${n}`),
     )();
 
     expect([...outcome]).toEqual(['2', '2', '3', '3', '3']);

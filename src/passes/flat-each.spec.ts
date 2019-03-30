@@ -6,9 +6,9 @@ describe('nextFlatEach', () => {
   it('flattens the next iterable', () => {
     expect([
       ...callThru(
-        nextFlatEach([1, 2, 3]),
-        n => Array<string>(n).fill(`${n}`),
-    )()
+          nextFlatEach([1, 2, 3]),
+          (n: number) => Array<string>(n).fill(`${n}`),
+      )()
     ]).toEqual(['1', '2', '2', '3', '3', '3']);
   });
   it('returns the same items when returned from the last pass', () => {
