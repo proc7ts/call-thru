@@ -21,7 +21,7 @@ export function valueProvider<T>(value: T): (this: void) => T {
  *
  * @returns A function that returns `values` tuple.
  */
-export function valuesProvider<T extends any[]>(...values: T): (this: void) => T {
+export function valuesProvider<T extends readonly any[]>(...values: T): (this: void) => T {
   // Functions are faster than lambdas in Firefox
   return function () {
     return values;
