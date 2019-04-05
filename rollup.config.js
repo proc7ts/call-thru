@@ -34,8 +34,8 @@ function makeConfig(baseConfig, ...configs) {
       (prev, config) => ({
         ...prev,
         ...config,
-        plugins: config.plugins ? [ ...prev.plugins, ...config.plugins ] : prev.plugins,
-        output: { ...prev.output, ...config.output },
+        plugins: [ ...(prev.plugins || []), ...(config.plugins || []) ],
+        output: { ...(prev.output || {}), ...(config.output || {}) },
       }),
       baseConfig);
 }
@@ -57,9 +57,7 @@ function baseConfig(tsconfig) {
       }),
       sourcemaps(),
     ],
-    external: [
-      'tslib',
-    ],
+    external: Object.keys(pkg.dependencies),
     input: './src/index.ts',
     output: {
       format: 'esm',
@@ -67,7 +65,6 @@ function baseConfig(tsconfig) {
     },
   };
 }
-
 
 export default [
   mainConfig,
