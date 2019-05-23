@@ -1,20 +1,20 @@
 import { callThru } from './call-thru';
 import { PassedThru, PassedThru__symbol } from './passed-thru';
-import { nextArgs, passAsync, passIf } from './passes';
+import { NextArgs, nextArgs, passAsync, passIf } from './passes';
 
 describe('callThru', () => {
 
   it('calls a single function', () => {
 
-    const fn = jest.fn((arg1: string, arg2: string) => 'result');
+    const fn = jest.fn<string, [string, string]>((_arg1, _arg2) => 'result');
 
     expect(callThru(fn)('arg1', 'arg2')).toBe('result');
     expect(fn).toHaveBeenCalledWith('arg1', 'arg2');
   });
   it('chains 2 functions', () => {
 
-    const fn1 = jest.fn((arg1: string, arg2: string) => 'arg3');
-    const fn2 = jest.fn((arg: string) => 'result');
+    const fn1 = jest.fn<string, [string, string]>((arg1, arg2) => 'arg3');
+    const fn2 = jest.fn<string, [string]>(arg => 'result');
 
     expect(callThru(fn1, fn2)('arg1', 'arg2')).toBe('result');
     expect(fn1).toHaveBeenCalledWith('arg1', 'arg2');
@@ -22,9 +22,10 @@ describe('callThru', () => {
   });
   it('chains 3 functions', () => {
 
-    const fn1 = jest.fn((arg1: string, arg2: string) => 'result1');
-    const fn2 = jest.fn((arg: string) => 'result2');
-    const fn3 = jest.fn((arg: string) => 'result3');
+    const fn1 = jest.fn<string, [string, string]>(
+        (_arg1, _arg2) => 'result1');
+    const fn2 = jest.fn<string, [string]>(arg => 'result2');
+    const fn3 = jest.fn<string, [string]>(arg => 'result3');
 
     expect(callThru(fn1, fn2, fn3)('arg1', 'arg2')).toBe('result3');
     expect(fn1).toHaveBeenCalledWith('arg1', 'arg2');
@@ -33,8 +34,9 @@ describe('callThru', () => {
   });
   it('chains functions with more than one argument', () => {
 
-    const fn1 = jest.fn((arg1: string, arg2: string) => nextArgs('arg3', 'arg4'));
-    const fn2 = jest.fn((arg1: string, arg2: string) => 'result');
+    const fn1 = jest.fn<NextArgs<[string, string], string>, [string, string]>(
+        (_arg1, _arg2) => nextArgs('arg3', 'arg4'));
+    const fn2 = jest.fn<string, [string, string]>((_arg1, _arg2) => 'result');
 
     expect(callThru(fn1, fn2)('arg1', 'arg2')).toBe('result');
     expect(fn1).toHaveBeenCalledWith('arg1', 'arg2');

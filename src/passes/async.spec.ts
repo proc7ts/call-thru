@@ -1,5 +1,6 @@
 import { callThru } from '../call-thru';
 import { passAsync } from './async';
+import { asis } from '../misc';
 
 describe('passAsync', () => {
   it('resolves the outcome asynchronously', async () => {
@@ -9,7 +10,7 @@ describe('passAsync', () => {
 
     const error = new Error('Rejected');
 
-    expect(await callThru(passAsync(), () => { throw error; })().catch(err => err)).toBe(error);
+    expect(await callThru(passAsync(), () => { throw error; })().catch(asis)).toBe(error);
   });
   it('produces resolved promise when last', async () => {
     expect(await callThru(passAsync())()).toBeUndefined();
