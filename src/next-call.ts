@@ -152,6 +152,12 @@ export namespace NextCall {
    */
   export type LastOutcome<V> = V extends NextCall<any, any, any, any, infer Last> ? Last : V;
 
+  export type CallResult<NextArgs extends any[], NextResult> =
+      NextResult | NextCall<any, NextArgs, NextResult, any, any>;
+
+  export type LastResult<R> =
+      R | NextCall<any, any, any, any, R>;
+
 }
 
 const firstArg: (...args: any[]) => any = (arg: any) => arg;
