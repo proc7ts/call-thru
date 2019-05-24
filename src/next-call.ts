@@ -21,12 +21,12 @@ export const NextCall_lastOutcome__symbol = /*#__PURE__*/ Symbol('next-call:last
  *
  * A `nextCall()` function can be used to construct a next call.
  *
- * @param <OutKind> A kind of the call outcome.
- * @param <NextThis> A type of `this` context object reference of the next function.
- * @param <NextArgs> A type of argument tuple of the next function.
- * @param <NextReturn> A return type of the next function.
- * @param <Out> A type of the next function call outcome.
- * @param <Last> A type of the outcome of the next call returned from the last pass in chain.
+ * @typeparam OutKind A kind of the call outcome.
+ * @typeparam NextThis A type of `this` context object reference of the next function.
+ * @typeparam NextArgs A type of argument tuple of the next function.
+ * @typeparam NextReturn A return type of the next function.
+ * @typeparam Out A type of the next function call outcome.
+ * @typeparam Last A type of the outcome of the next call returned from the last pass in chain.
  */
 export abstract class NextCall<
     OutKind extends CallOutcome.Kind,
@@ -152,11 +152,34 @@ export namespace NextCall {
    */
   export type LastOutcome<V> = V extends NextCall<any, any, any, any, infer Last> ? Last : V;
 
-  export type CallResult<NextArgs extends any[], NextResult> =
-      NextResult | NextCall<any, NextArgs, NextResult, any, any>;
+  /**
+   * A type of the result returned from chained function call, except for the last one.
+   *
+   * This may be either a `NextCall` instance, or single value.
+   *
+   * In any case the result provides arguments for the next pass in chain and thus should be compatible with next
+   * function signature.
+   *
+   * @typeparam NextArgs A type of argument tuple of the next function in chain.
+   */
+  export type CallResult<NextArgs extends any[]> =
+      NextArgs extends [infer Result]
+          // Next function expects single argument.
+          // So the previous one may return either a single value, or a `NextCall` with compatible argument.
+          ? (Result | NextCall<any, NextArgs, any, any, any>)
+          // Next function expects multiple arguments.
+          // So the previous one should always return a `NextCall` instance with compatible arguments.
+          : NextCall<any, NextArgs, any, any, any>;
 
-  export type LastResult<R> =
-      R | NextCall<any, any, any, any, R>;
+  /**
+   * A result returned by last function in chain.
+   *
+   * This may be either a `NextCall` instance, or single value.
+   *
+   * @typeparam Last A type of outcome of the last pass in chain.
+   */
+  export type LastResult<Last> =
+      Last | NextCall<any, any, any, any, Last>;
 
 }
 

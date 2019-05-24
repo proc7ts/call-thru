@@ -3,18 +3,17 @@ import { PassedThru, PassedThru__symbol } from './passed-thru';
 import { NextArgs, nextArgs, passAsync, passIf } from './passes';
 
 describe('callThru', () => {
-
   it('calls a single function', () => {
 
-    const fn = jest.fn<string, [string, string]>((_arg1, _arg2) => 'result');
+    const fn = jest.fn<string, [string, string]>(() => 'result');
 
     expect(callThru(fn)('arg1', 'arg2')).toBe('result');
     expect(fn).toHaveBeenCalledWith('arg1', 'arg2');
   });
   it('chains 2 functions', () => {
 
-    const fn1 = jest.fn<string, [string, string]>((arg1, arg2) => 'arg3');
-    const fn2 = jest.fn<string, [string]>(arg => 'result');
+    const fn1 = jest.fn<string, [string, string]>(() => 'arg3');
+    const fn2 = jest.fn<string, [string]>(() => 'result');
 
     expect(callThru(fn1, fn2)('arg1', 'arg2')).toBe('result');
     expect(fn1).toHaveBeenCalledWith('arg1', 'arg2');
@@ -22,25 +21,23 @@ describe('callThru', () => {
   });
   it('chains 3 functions', () => {
 
-    const fn1 = jest.fn<string, [string, string]>(
-        (_arg1, _arg2) => 'result1');
-    const fn2 = jest.fn<string, [string]>(arg => 'result2');
-    const fn3 = jest.fn<string, [string]>(arg => 'result3');
+    const fn1 = jest.fn<'a' | 'b', [string, string]>(() => 'a');
+    const fn2 = jest.fn<number, ['a' | 'b' | 'c']>(() => 1);
+    const fn3 = jest.fn<string, [number]>(() => 'result3');
 
     expect(callThru(fn1, fn2, fn3)('arg1', 'arg2')).toBe('result3');
     expect(fn1).toHaveBeenCalledWith('arg1', 'arg2');
-    expect(fn2).toHaveBeenCalledWith('result1');
-    expect(fn3).toHaveBeenCalledWith('result2');
+    expect(fn2).toHaveBeenCalledWith('a');
+    expect(fn3).toHaveBeenCalledWith(1);
   });
   it('chains functions with more than one argument', () => {
 
-    const fn1 = jest.fn<NextArgs<[string, string], string>, [string, string]>(
-        (_arg1, _arg2) => nextArgs('arg3', 'arg4'));
-    const fn2 = jest.fn<string, [string, string]>((_arg1, _arg2) => 'result');
+    const fn1 = jest.fn<NextArgs<[boolean, string], string>, [string, string]>(() => nextArgs(false, 'arg4'));
+    const fn2 = jest.fn<string, [boolean, string]>(() => 'result');
 
     expect(callThru(fn1, fn2)('arg1', 'arg2')).toBe('result');
     expect(fn1).toHaveBeenCalledWith('arg1', 'arg2');
-    expect(fn2).toHaveBeenCalledWith('arg3', 'arg4');
+    expect(fn2).toHaveBeenCalledWith(false, 'arg4');
   });
   it('extracts the passed through value', () => {
 

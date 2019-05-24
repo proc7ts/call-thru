@@ -10,7 +10,7 @@ export function callThru<P extends any[], R>(
     PassedThru.Value<R>;
 
 export function callThru<
-    P1 extends any[], R1 extends Result<P2, R2>,
+    P1 extends any[], R1 extends Result<P2>,
     P2 extends any[], R2>(
     fn1: (this: void, ...args: P1) => R1,
     fn2: (this: void, ...args: P2) => Last<R2>,
@@ -18,8 +18,8 @@ export function callThru<
     PassedThru.Value<Out<R1, R2>>;
 
 export function callThru<
-    P1 extends any[], R1 extends Result<P2, R2>,
-    P2 extends any[], R2 extends Result<P3, R3>,
+    P1 extends any[], R1 extends Result<P2>,
+    P2 extends any[], R2 extends Result<P3>,
     P3 extends any[], R3>(
     fn1: (this: void, ...args: P1) => R1,
     fn2: (this: void, ...args: P2) => R2,
@@ -28,9 +28,9 @@ export function callThru<
     PassedThru.Value<Out<R1, Out<R2, R3>>>;
 
 export function callThru<
-    P1 extends any[], R1 extends Result<P2, R2>,
-    P2 extends any[], R2 extends Result<P3, R3>,
-    P3 extends any[], R3 extends Result<P4, R4>,
+    P1 extends any[], R1 extends Result<P2>,
+    P2 extends any[], R2 extends Result<P3>,
+    P3 extends any[], R3 extends Result<P4>,
     P4 extends any[], R4>(
     fn1: (this: void, ...args: P1) => R1,
     fn2: (this: void, ...args: P2) => R2,
@@ -40,10 +40,10 @@ export function callThru<
     PassedThru.Value<Out<R1, Out<R2, Out<R3, R4>>>>;
 
 export function callThru<
-    P1 extends any[], R1 extends Result<P2, R2>,
-    P2 extends any[], R2 extends Result<P3, R3>,
-    P3 extends any[], R3 extends Result<P4, R4>,
-    P4 extends any[], R4 extends Result<P5, R5>,
+    P1 extends any[], R1 extends Result<P2>,
+    P2 extends any[], R2 extends Result<P3>,
+    P3 extends any[], R3 extends Result<P4>,
+    P4 extends any[], R4 extends Result<P5>,
     P5 extends any[], R5>(
     fn1: (this: void, ...args: P1) => R1,
     fn2: (this: void, ...args: P2) => R2,
@@ -54,11 +54,11 @@ export function callThru<
     PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4, R5>>>>>;
 
 export function callThru<
-    P1 extends any[], R1 extends Result<P2, R2>,
-    P2 extends any[], R2 extends Result<P3, R3>,
-    P3 extends any[], R3 extends Result<P4, R4>,
-    P4 extends any[], R4 extends Result<P5, R5>,
-    P5 extends any[], R5 extends Result<P6, R6>,
+    P1 extends any[], R1 extends Result<P2>,
+    P2 extends any[], R2 extends Result<P3>,
+    P3 extends any[], R3 extends Result<P4>,
+    P4 extends any[], R4 extends Result<P5>,
+    P5 extends any[], R5 extends Result<P6>,
     P6 extends any[], R6>(
     fn1: (this: void, ...args: P1) => R1,
     fn2: (this: void, ...args: P2) => R2,
@@ -71,12 +71,12 @@ export function callThru<
         Out<R5, R6>>>>>>;
 
 export function callThru<
-    P1 extends any[], R1 extends Result<P2, R2>,
-    P2 extends any[], R2 extends Result<P3, R3>,
-    P3 extends any[], R3 extends Result<P4, R4>,
-    P4 extends any[], R4 extends Result<P5, R5>,
-    P5 extends any[], R5 extends Result<P6, R6>,
-    P6 extends any[], R6 extends Result<P7, R7>,
+    P1 extends any[], R1 extends Result<P2>,
+    P2 extends any[], R2 extends Result<P3>,
+    P3 extends any[], R3 extends Result<P4>,
+    P4 extends any[], R4 extends Result<P5>,
+    P5 extends any[], R5 extends Result<P6>,
+    P6 extends any[], R6 extends Result<P7>,
     P7 extends any[], R7>(
     fn1: (this: void, ...args: P1) => R1,
     fn2: (this: void, ...args: P2) => R2,
@@ -90,13 +90,13 @@ export function callThru<
         Out<R5, Out<R6, R7>>>>>>>;
 
 export function callThru<
-    P1 extends any[], R1 extends Result<P2, R2>,
-    P2 extends any[], R2 extends Result<P3, R3>,
-    P3 extends any[], R3 extends Result<P4, R4>,
-    P4 extends any[], R4 extends Result<P5, R5>,
-    P5 extends any[], R5 extends Result<P6, R6>,
-    P6 extends any[], R6 extends Result<P7, R7>,
-    P7 extends any[], R7 extends Result<P8, R8>,
+    P1 extends any[], R1 extends Result<P2>,
+    P2 extends any[], R2 extends Result<P3>,
+    P3 extends any[], R3 extends Result<P4>,
+    P4 extends any[], R4 extends Result<P5>,
+    P5 extends any[], R5 extends Result<P6>,
+    P6 extends any[], R6 extends Result<P7>,
+    P7 extends any[], R7 extends Result<P8>,
     P8 extends any[], R8>(
     fn1: (this: void, ...args: P1) => R1,
     fn2: (this: void, ...args: P2) => R2,
@@ -111,14 +111,14 @@ export function callThru<
         Out<R5, Out<R6, Out<R7, R8>>>>>>>>;
 
 export function callThru<
-    P1 extends any[], R1 extends Result<P2, R2>,
-    P2 extends any[], R2 extends Result<P3, R3>,
-    P3 extends any[], R3 extends Result<P4, R4>,
-    P4 extends any[], R4 extends Result<P5, R5>,
-    P5 extends any[], R5 extends Result<P6, R6>,
-    P6 extends any[], R6 extends Result<P7, R7>,
-    P7 extends any[], R7 extends Result<P8, R8>,
-    P8 extends any[], R8 extends Result<P9, R9>,
+    P1 extends any[], R1 extends Result<P2>,
+    P2 extends any[], R2 extends Result<P3>,
+    P3 extends any[], R3 extends Result<P4>,
+    P4 extends any[], R4 extends Result<P5>,
+    P5 extends any[], R5 extends Result<P6>,
+    P6 extends any[], R6 extends Result<P7>,
+    P7 extends any[], R7 extends Result<P8>,
+    P8 extends any[], R8 extends Result<P9>,
     P9 extends any[], R9>(
     fn1: (this: void, ...args: P1) => R1,
     fn2: (this: void, ...args: P2) => R2,
@@ -134,15 +134,15 @@ export function callThru<
         Out<R5, Out<R6, Out<R7, Out<R8, R9>>>>>>>>>;
 
 export function callThru<
-    P1 extends any[], R1 extends Result<P2, R2>,
-    P2 extends any[], R2 extends Result<P3, R3>,
-    P3 extends any[], R3 extends Result<P4, R4>,
-    P4 extends any[], R4 extends Result<P5, R5>,
-    P5 extends any[], R5 extends Result<P6, R6>,
-    P6 extends any[], R6 extends Result<P7, R7>,
-    P7 extends any[], R7 extends Result<P8, R8>,
-    P8 extends any[], R8 extends Result<P9, R9>,
-    P9 extends any[], R9 extends Result<P10, R10>,
+    P1 extends any[], R1 extends Result<P2>,
+    P2 extends any[], R2 extends Result<P3>,
+    P3 extends any[], R3 extends Result<P4>,
+    P4 extends any[], R4 extends Result<P5>,
+    P5 extends any[], R5 extends Result<P6>,
+    P6 extends any[], R6 extends Result<P7>,
+    P7 extends any[], R7 extends Result<P8>,
+    P8 extends any[], R8 extends Result<P9>,
+    P9 extends any[], R9 extends Result<P10>,
     P10 extends any[], R10>(
     fn1: (this: void, ...args: P1) => R1,
     fn2: (this: void, ...args: P2) => R2,
@@ -158,16 +158,16 @@ export function callThru<
         Out<R5, Out<R6, Out<R7, Out<R8, Out<R9, R10>>>>>>>>>>;
 
 export function callThru<
-    P1 extends any[], R1 extends Result<P2, R2>,
-    P2 extends any[], R2 extends Result<P3, R3>,
-    P3 extends any[], R3 extends Result<P4, R4>,
-    P4 extends any[], R4 extends Result<P5, R5>,
-    P5 extends any[], R5 extends Result<P6, R6>,
-    P6 extends any[], R6 extends Result<P7, R7>,
-    P7 extends any[], R7 extends Result<P8, R8>,
-    P8 extends any[], R8 extends Result<P9, R9>,
-    P9 extends any[], R9 extends Result<P10, R10>,
-    P10 extends any[], R10 extends Result<P11, R11>,
+    P1 extends any[], R1 extends Result<P2>,
+    P2 extends any[], R2 extends Result<P3>,
+    P3 extends any[], R3 extends Result<P4>,
+    P4 extends any[], R4 extends Result<P5>,
+    P5 extends any[], R5 extends Result<P6>,
+    P6 extends any[], R6 extends Result<P7>,
+    P7 extends any[], R7 extends Result<P8>,
+    P8 extends any[], R8 extends Result<P9>,
+    P9 extends any[], R9 extends Result<P10>,
+    P10 extends any[], R10 extends Result<P11>,
     P11 extends any[], R11>(
     fn1: (this: void, ...args: P1) => R1,
     fn2: (this: void, ...args: P2) => R2,
@@ -186,17 +186,17 @@ export function callThru<
             Out<R10, R11>>>>>>>>>>>;
 
 export function callThru<
-    P1 extends any[], R1 extends Result<P2, R2>,
-    P2 extends any[], R2 extends Result<P3, R3>,
-    P3 extends any[], R3 extends Result<P4, R4>,
-    P4 extends any[], R4 extends Result<P5, R5>,
-    P5 extends any[], R5 extends Result<P6, R6>,
-    P6 extends any[], R6 extends Result<P7, R7>,
-    P7 extends any[], R7 extends Result<P8, R8>,
-    P8 extends any[], R8 extends Result<P9, R9>,
-    P9 extends any[], R9 extends Result<P10, R10>,
-    P10 extends any[], R10 extends Result<P11, R11>,
-    P11 extends any[], R11 extends Result<P12, R12>,
+    P1 extends any[], R1 extends Result<P2>,
+    P2 extends any[], R2 extends Result<P3>,
+    P3 extends any[], R3 extends Result<P4>,
+    P4 extends any[], R4 extends Result<P5>,
+    P5 extends any[], R5 extends Result<P6>,
+    P6 extends any[], R6 extends Result<P7>,
+    P7 extends any[], R7 extends Result<P8>,
+    P8 extends any[], R8 extends Result<P9>,
+    P9 extends any[], R9 extends Result<P10>,
+    P10 extends any[], R10 extends Result<P11>,
+    P11 extends any[], R11 extends Result<P12>,
     P12 extends any[], R12>(
     fn1: (this: void, ...args: P1) => R1,
     fn2: (this: void, ...args: P2) => R2,
@@ -230,18 +230,18 @@ export function callThru<
  * A `NextCall` instance returned the pass is responsible for next function call and may modify the call outcome.
  */
 export function callThru<
-    P1 extends any[], R1 extends Result<P2, R2>,
-    P2 extends any[], R2 extends Result<P3, R3>,
-    P3 extends any[], R3 extends Result<P4, R4>,
-    P4 extends any[], R4 extends Result<P5, R5>,
-    P5 extends any[], R5 extends Result<P6, R6>,
-    P6 extends any[], R6 extends Result<P7, R7>,
-    P7 extends any[], R7 extends Result<P8, R8>,
-    P8 extends any[], R8 extends Result<P9, R9>,
-    P9 extends any[], R9 extends Result<P10, R10>,
-    P10 extends any[], R10 extends Result<P11, R11>,
-    P11 extends any[], R11 extends Result<P12, R12>,
-    P12 extends any[], R12 extends Result<P13, R13>,
+    P1 extends any[], R1 extends Result<P2>,
+    P2 extends any[], R2 extends Result<P3>,
+    P3 extends any[], R3 extends Result<P4>,
+    P4 extends any[], R4 extends Result<P5>,
+    P5 extends any[], R5 extends Result<P6>,
+    P6 extends any[], R6 extends Result<P7>,
+    P7 extends any[], R7 extends Result<P8>,
+    P8 extends any[], R8 extends Result<P9>,
+    P9 extends any[], R9 extends Result<P10>,
+    P10 extends any[], R10 extends Result<P11>,
+    P11 extends any[], R11 extends Result<P12>,
+    P12 extends any[], R12 extends Result<P13>,
     P13 extends any[], R13>(
     fn1: (this: void, ...args: P1) => R1,
     fn2: (this: void, ...args: P2) => R2,
