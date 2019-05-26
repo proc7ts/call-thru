@@ -5,22 +5,22 @@ import Mock = jest.Mock;
 
 describe('nextArgs', () => {
 
-  let calleeSpy: Mock<string>;
+  let mockCallee: Mock<string, [string, string, number]>;
 
   beforeEach(() => {
-    calleeSpy = jest.fn(() => 'result');
+    mockCallee = jest.fn((_arg0, _arg1, _arg2) => 'result');
   });
 
   it('calls the callee with the given arguments', () => {
-    expect(nextArgs('a', 'b', 3)[NextCall__symbol](calleeSpy)).toBe('result');
-    expect(calleeSpy).toHaveBeenCalledWith('a', 'b', 3);
+    expect(nextArgs('a', 'b', 3)[NextCall__symbol](mockCallee)).toBe('result');
+    expect(mockCallee).toHaveBeenCalledWith('a', 'b', 3);
   });
   it('replaces arguments when chained', () => {
     expect(callThru(
         nextArgs('a', 'b', 3),
-        calleeSpy,
+        mockCallee,
     )()).toBe('result');
-    expect(calleeSpy).toHaveBeenCalledWith('a', 'b', 3);
+    expect(mockCallee).toHaveBeenCalledWith('a', 'b', 3);
   });
   it('returns arguments when last', () => {
     expect(callThru(nextArgs('a', true, 9))()).toEqual(['a', true, 9]);
