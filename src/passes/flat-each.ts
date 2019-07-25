@@ -40,7 +40,7 @@ export namespace NextFlatEach {
 }
 
 /**
- * Creates an next call that invokes subsequent passes for each item in the given iterable and flattens the result.
+ * Creates a next call that invokes subsequent passes for each item in the given iterable and flattens the result.
  *
  * The next pass is expected to return an iterable for each of the `items`.
  *

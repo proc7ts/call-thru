@@ -32,7 +32,7 @@ callThru(
 )('foo', 'bar'); // ['bar', 'foo']
 ``` 
 
-A `NextCall` instance is a no-arg function returning itself. Thus is can be chained as a pass:
+A `NextCall` instance is a no-arg function returning itself. Thus it can be chained as a pass:
 
 ```typescript
 import { callThru, nextArgs } from 'call-thru';
@@ -137,7 +137,7 @@ for (const n of callThru(
 nextFlatEach()
 --------------
 
-Creates an next call that invokes subsequent passes for each item in the given iterable and flattens the result.
+Creates a next call that invokes subsequent passes for each item in the given iterable and flattens the result.
 
 The next pass is expected to return an iterable for each of the `items`.
 
