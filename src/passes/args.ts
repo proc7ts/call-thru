@@ -1,3 +1,6 @@
+/**
+ * @module call-thru
+ */
 import { NextCall, nextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
 
 export interface NextArgs<Args extends any[], NextReturn>
@@ -16,7 +19,7 @@ export interface NextArgs<Args extends any[], NextReturn>
  *
  * When returned from the lass pass, the outcome will contain a tuple containing `args`.
  *
- * @param args Next function call arguments.
+ * @param args  Next function call arguments.
  *
  * @return A next function call with the given arguments.
  */

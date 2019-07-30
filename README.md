@@ -4,6 +4,8 @@ Functions chaining library
 [![NPM][npm-image]][npm-url]
 [![CircleCI][ci-image]][ci-url]
 [![codecov][codecov-image]][codecov-url]
+[![GitHub Project][github-image]][github-url]
+[![API Documentation][api-docs-image]][api-docs-url]
 
 A `callThru()` function chains several passes. Each pass is a function to call. Each pass produces arguments for the
 next function call.
@@ -43,12 +45,16 @@ callThru(
 )(); // ['foo', 'bar']
 ```
 
-[npm-image]: https://img.shields.io/npm/v/call-thru.svg
+[npm-image]: https://img.shields.io/npm/v/call-thru.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/call-thru
-[ci-image]:https://circleci.com/gh/surol/call-thru.svg?style=shield
-[ci-url]:https://circleci.com/gh/surol/call-thru  
+[ci-image]: https://img.shields.io/circleci/build/github/surol/call-thru?logo=circleci
+[ci-url]: https://img.shields.io/codecov/c/github/surol/call-thru?logo=codecov
 [codecov-image]: https://codecov.io/gh/surol/call-thru/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/surol/call-thru
+[github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
+[github-url]: https://github.com/surol/call-thru
+[api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
+[api-docs-url]: https://surol.github.io/call-thru/
 
 
 nextArgs()

@@ -1,3 +1,6 @@
+/**
+ * @module call-thru
+ */
 import { NextCall, nextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
 import { PassedThru } from '../passed-thru';
 import { forEachItem, lastItems } from './iteration';
@@ -34,12 +37,12 @@ export interface NextEach<NextItem, NextReturn> extends NextCall<
 /**
  * Creates an next call that invokes subsequent passes for each item in the given iterable.
  *
- * If `items` are `NextCall` implementations, then the next pass will be processed by them.
+ * If `items` are [[NextCall]] implementations, then the next pass will be processed by them.
  *
  * When returned from the last pass, the chain outcome will be an iterable of the last pass outcomes of the `items`.
- * Or an iterable of `items` if they are not implementing `NextCall`.
+ * Or an iterable of `items` if they are not implementing [[NextCall]].
  *
- * @param items An iterable of items to invoke the passes for.
+ * @param items  An iterable of items to invoke the passes for.
  */
 export function nextEach<NextItem, NextReturn>(items: Iterable<NextItem>): NextEach<NextItem, NextReturn> {
   return nextCall(

@@ -1,15 +1,18 @@
 /**
- * A key of a `PassedThru` property containing the actual outcome value.
+ * @module call-thru
+ */
+/**
+ * A key of a [[PassedThru]] property containing the actual outcome value.
  */
 export const PassedThru__symbol = /*#__PURE__*/ Symbol('passed-thru');
 
 /**
  * An chained pass outcome value wrapping the actual outcome.
  *
- * When the outcome of the last chained pass is a `PassedThru` instance, it is be replaced with the value of its
- * `[PassedThru__symbol]` property.
+ * When the outcome of the last chained pass is a [[PassedThru]] instance, it is be replaced with the value of its
+ * [[PassedThru__symbol]] property.
  *
- * Also extends an `Iterable` interface, so that e.g. `nextEach()` and `nextFlatEach()` unwrap the passed through value
+ * Also extends an `Iterable` interface, so that e.g. [[nextEach]] and [[nextFlatEach]] unwrap the passed through value
  * to convert it to arbitrary number of elements. Including zero, which is the case when `nextSkip()` is returned.
  */
 export abstract class PassedThru<V, I = V> implements Iterable<I> {
@@ -20,20 +23,20 @@ export abstract class PassedThru<V, I = V> implements Iterable<I> {
   abstract readonly [PassedThru__symbol]: V;
 
   /**
-   * Checks whether `target` value is a `PassedThru` instance.
+   * Checks whether `target` value is a [[PassedThru]] instance.
    *
-   * @param target A value to check.
+   * @param target  A value to check.
    *
    * @returns `true`.
    */
   static is<V extends PassedThru<any, any>>(target: V): target is V;
 
   /**
-   * Checks whether `target` value is a `PassedThru` instance.
+   * Checks whether `target` value is a [[PassedThru]] instance.
    *
-   * @param target A value to check.
+   * @param target  A value to check.
    *
-   * @returns `true` if the `target` value is an object with a `[PassedThru__symbol]` property, or `false` otherwise.
+   * @returns `true` if the `target` value is an object with a [[PassedThru__symbol]] property, or `false` otherwise.
    */
   static is<V>(target: any): target is PassedThru<V, any>;
 
@@ -44,9 +47,9 @@ export abstract class PassedThru<V, I = V> implements Iterable<I> {
   /**
    * Extracts the passed through value.
    *
-   * @param outcome The outcome to extract the value from.
+   * @param outcome  The outcome to extract the value from.
    *
-   * @returns A `[PassedThru__symbol]` property value is the given `outcome` is a `PassedThru` instance, or `outcome`
+   * @returns A [[PassedThru__symbol]] property value is the given `outcome` is a [[PassedThru]] instance, or `outcome`
    * itself otherwise.
    */
   static get<V>(outcome: V): PassedThru.Value<V> {
@@ -59,9 +62,9 @@ export abstract class PassedThru<V, I = V> implements Iterable<I> {
   /**
    * Extracts the passed through items.
    *
-   * @param outcome The outcome to extract the items from.
+   * @param outcome  The outcome to extract the items from.
    *
-   * @return An iterable of passed through items if the the given `outcome` is a `PassedThru` instance, or an iterable
+   * @return An iterable of passed through items if the the given `outcome` is a [[PassedThru]] instance, or an iterable
    * containing the `outcome` itself otherwise.
    */
   static items<V>(outcome: V): Iterable<PassedThru.Item<V>> {

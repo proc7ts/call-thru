@@ -1,3 +1,6 @@
+/**
+ * @module call-thru
+ */
 import { NextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
 import { PassedThru } from '../passed-thru';
 

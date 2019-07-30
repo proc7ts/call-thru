@@ -1,9 +1,26 @@
+/**
+ * @module call-thru
+ */
 import { NextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from './next-call';
 import { PassedThru } from './passed-thru';
 import Last = NextCall.LastResult;
 import Out = NextCall.Outcome;
 import Result = NextCall.CallResult;
 
+/**
+ * Constructs a function that invokes the chained passes.
+ *
+ * Each pass is function accepts argument(s) passed from the previous one.
+ *
+ * The value returned from the pass is treated the following way:
+ *
+ * - When a [[NextCall]] is returned, this instance is used to perform the next function call.
+ * - When plain value returned, this value is passed to the next function as the only argument.
+ * - When a [[NextCall]] is returned by the last pass, it is used to construct the outcome.
+ * - When a plain value is returned by the last pass, it is used as outcome.
+ *
+ * A [[NextCall]] instance returned the pass is responsible for next function call and may modify the call outcome.
+ */
 export function callThru<P extends any[], R>(
     fn: (this: void, ...args: P) => Last<R>,
 ): (this: void, ...args: P) =>
@@ -215,20 +232,6 @@ export function callThru<
         Out<R5, Out<R6, Out<R7, Out<R8, Out<R9,
             Out<R10, Out<R11, R12>>>>>>>>>>>>;
 
-/**
- * Constructs a function that invokes the chained passes.
- *
- * Each pass is function accepts argument(s) passed from the previous one.
- *
- * The value returned from the pass is treated the following way:
- *
- * - When a `NextCall` is returned, this instance is used to perform the next function call.
- * - When plain value returned, this value is passed to the next function as the only argument.
- * - When a `NextCall` is returned by the last pass, it is used to construct the outcome.
- * - When a plain value is returned by the last pass, it is used as outcome.
- *
- * A `NextCall` instance returned the pass is responsible for next function call and may modify the call outcome.
- */
 export function callThru<
     P1 extends any[], R1 extends Result<P2>,
     P2 extends any[], R2 extends Result<P3>,

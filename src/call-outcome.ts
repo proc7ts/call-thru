@@ -1,7 +1,10 @@
 /**
+ * @module call-thru
+ */
+/**
  * Call chain outcome detection.
  *
- * A `NextCall` generic has a kind of outcome detection as its a first type parameter extending `CallOutcome.Kind`,
+ * A [[NextCall]] generic has a kind of outcome detection as its a first type parameter extending `CallOutcome.Kind`,
  * which is essentially a key of `CallOutcome.Map` map.
  *
  * To add another outcome detection algorithms augment the `CallOutcome.Map` and add new entry to it.
@@ -26,8 +29,8 @@ export namespace CallOutcome {
    * Each field here is a kind of algorithm. While the value is a type of outcome depending on `<Return>` type
    * parameter.
    *
-   * @typeparam Return A return type of the remaining part of call chain. A type of outcome may depend on it somehow.
-   * @typeparam Out A type of next call outcome.
+   * @typeparam Return  A return type of the remaining part of call chain. A type of outcome may depend on it somehow.
+   * @typeparam Out  A type of next call outcome.
    */
   export interface Map<Return, Out> {
 

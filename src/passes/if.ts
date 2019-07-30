@@ -1,3 +1,6 @@
+/**
+ * @module call-thru
+ */
 import { nextCall, NextCall, NextCall__symbol } from '../next-call';
 import { nextSkip, SkippedThru } from './skip';
 
@@ -29,7 +32,7 @@ export interface NextIf<NextArgs extends any[], NextReturn>
  * If the given `test` function fails the rest of the passes in chain would be skipped and the final call chain outcome
  * will be `undefined`. Otherwise the next pass in chain will be called with the same arguments.
  *
- * @param test A test function accepting this pass arguments and returning `true` to go on or `false` to abort.
+ * @param test  A test function accepting this pass arguments and returning `true` to go on or `false` to abort.
  */
 export function passIf<NextArgs extends any[], NextReturn>(
     test: (this: void, ...args: NextArgs) => boolean):

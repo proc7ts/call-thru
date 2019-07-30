@@ -1,3 +1,6 @@
+/**
+ * @module call-thru
+ */
 import { NextCall, nextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
 import { PassedThru } from '../passed-thru';
 import { NextFlat } from './flat';
@@ -44,14 +47,14 @@ export namespace NextFlatEach {
  *
  * The next pass is expected to return an iterable for each of the `items`.
  *
- * If `items` are `NextCall` implementations, then the next pass will be processed by them.
+ * If `items` are [[NextCall]] implementations, then the next pass will be processed by them.
  *
  * This is an equivalent of `passFlat()` followed by a pass returning `nextEach()`.
  *
  * When returned from the last pass, the chain outcome will be an iterable of the last pass outcomes of the `items`.
- * Or an iterable of `items` if they are not implementing `NextCall`.
+ * Or an iterable of `items` if they are not implementing [[NextCall]].
  *
- * @param items An iterable of items to invoke the passes for.
+ * @param items  An iterable of items to invoke the passes for.
  */
 export function nextFlatEach<NextItem, NextReturn>(items: Iterable<NextItem>): NextFlatEach<NextItem, NextReturn> {
   return nextCall(

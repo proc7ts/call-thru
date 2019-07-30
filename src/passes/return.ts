@@ -1,3 +1,6 @@
+/**
+ * @module call-thru
+ */
 import { NextCall, nextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
 
 declare module '../call-outcome' {
@@ -27,7 +30,7 @@ export interface NextReturn<NextArgs extends any[], Return, Out>
 /**
  * Constructs a next call that skips the rest of the chain and returns the given value.
  *
- * @param result A result to return.
+ * @param result  A result to return.
  */
 export function nextReturn<NextArgs extends any[], Return, Out>(result: Out): NextReturn<NextArgs, Return, Out> {
 
