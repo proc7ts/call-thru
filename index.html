@@ -1,0 +1,411 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Functions chaining library</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">Functions chaining library</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> Functions chaining library</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#functions-chaining-library" id="functions-chaining-library" style="color: inherit; text-decoration: none;">
+					<h1>Functions chaining library</h1>
+				</a>
+				<p><a href="https://www.npmjs.com/package/call-thru"><img src="https://img.shields.io/npm/v/call-thru.svg?logo=npm" alt="NPM"></a>
+					<a href="https://img.shields.io/codecov/c/github/surol/call-thru?logo=codecov"><img src="https://img.shields.io/circleci/build/github/surol/call-thru?logo=circleci" alt="CircleCI"></a>
+					<a href="https://codecov.io/gh/surol/call-thru"><img src="https://codecov.io/gh/surol/call-thru/branch/master/graph/badge.svg" alt="codecov"></a>
+					<a href="https://github.com/surol/call-thru"><img src="https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational" alt="GitHub Project"></a>
+				<a href="https://surol.github.io/call-thru/"><img src="https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational" alt="API Documentation"></a></p>
+				<p>A <code>callThru()</code> function chains several passes. Each pass is a function to call. Each pass produces arguments for the
+				next function call.</p>
+				<p>Normally, the value returned from function call is passed as a single argument to the next one:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru } <span class="hljs-keyword">from</span> <span class="hljs-string">'call-thru'</span>;
+
+callThru(
+    <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a + b,
+    <span class="hljs-function"><span class="hljs-params">sum</span> =&gt;</span> <span class="hljs-string">`The sum is <span class="hljs-subst">${sum}</span>`</span>
+)(<span class="hljs-number">2</span>, <span class="hljs-number">9</span>); <span class="hljs-comment">// The sum is 11</span></code></pre>
+				<p>Additionally, a pass may return a <code>NextCall</code> instance that is responsible for calling the next pass.</p>
+				<p>There are several <code>NextCall</code> implementations available. For example, a <code>nextArgs()</code> one can be used to pass multiple
+				arguments to the next function:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextArgs } <span class="hljs-keyword">from</span> <span class="hljs-string">'call-thru'</span>;
+
+callThru(
+    <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> nextArgs(b, a),
+    <span class="hljs-function">(<span class="hljs-params">b, a</span>) =&gt;</span> [b, a]
+)(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>); <span class="hljs-comment">// ['bar', 'foo']</span></code></pre>
+				<p>A <code>NextCall</code> instance is a no-arg function returning itself. Thus it can be chained as a pass:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextArgs } <span class="hljs-keyword">from</span> <span class="hljs-string">'call-thru'</span>;
+
+callThru(
+    nextArgs(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>),
+    <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> [a, b]
+)(); <span class="hljs-comment">// ['foo', 'bar']</span></code></pre>
+				<a href="#nextargs" id="nextargs" style="color: inherit; text-decoration: none;">
+					<h2>nextArgs()</h2>
+				</a>
+				<p>Constructs arguments for the next function call.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextArgs } <span class="hljs-keyword">from</span> <span class="hljs-string">'call-thru'</span>;
+
+callThru(
+    <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> nextArgs(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>),
+    <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> [a, b]
+)(); <span class="hljs-comment">// ['foo', 'bar']</span></code></pre>
+				<a href="#passasync" id="passasync" style="color: inherit; text-decoration: none;">
+					<h2>passAsync()</h2>
+				</a>
+				<p>Constructs asynchronous call chain pass.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, passAsync } <span class="hljs-keyword">from</span> <span class="hljs-string">'call-thru'</span>;
+
+callThru(
+    passAsync(),
+    <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      <span class="hljs-keyword">throw</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Failed'</span>)
+    }
+)().catch(<span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(e));</code></pre>
+				<a href="#nexteach" id="nexteach" style="color: inherit; text-decoration: none;">
+					<h2>nextEach()</h2>
+				</a>
+				<p>Creates an next call that invokes subsequent passes for each item in the given iterable.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextEach } <span class="hljs-keyword">from</span> <span class="hljs-string">'call-thru'</span>;
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> n of callThru(
+    <span class="hljs-function">(<span class="hljs-params">...args</span>) =&gt;</span> nextEach(args),
+    <span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> n * n,
+  )(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)) {
+  <span class="hljs-built_in">console</span>.log(n); <span class="hljs-comment">// 1, 4, 9</span>
+}</code></pre>
+				<p>This can be combined with e.g. <a href="#passif">passIf()</a>:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextEach, passIf } <span class="hljs-keyword">from</span> <span class="hljs-string">'call-thru'</span>;
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> n of callThru(
+    <span class="hljs-function">(<span class="hljs-params">...args</span>) =&gt;</span> nextEach(args),
+    passIf(<span class="hljs-function">(<span class="hljs-params">n: <span class="hljs-built_in">number</span></span>) =&gt;</span> n &gt; <span class="hljs-number">1</span>),
+    <span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> n * n,
+  )(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)) {
+  <span class="hljs-built_in">console</span>.log(n); <span class="hljs-comment">// 4, 9</span>
+}</code></pre>
+				<a href="#passflat" id="passflat" style="color: inherit; text-decoration: none;">
+					<h2>passFlat()</h2>
+				</a>
+				<p>Constructs flattening call chain pass.</p>
+				<p>The next pass is expected to return an iterable of iterables. This pass then converts it to plain iterable.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextEach, passFlat } <span class="hljs-keyword">from</span> <span class="hljs-string">'call-thru'</span>;
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> n of callThru(
+    passFlat(),
+    <span class="hljs-function">(<span class="hljs-params">...args</span>) =&gt;</span> nextEach(args),
+    <span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> <span class="hljs-built_in">Array</span>&lt;<span class="hljs-built_in">string</span>&gt;(n).fill(<span class="hljs-string">`<span class="hljs-subst">${n}</span>`</span>)
+  )(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)) {
+  <span class="hljs-built_in">console</span>.log(n); <span class="hljs-comment">// '1', '2', '2'</span>
+}</code></pre>
+				<a href="#nextflateach" id="nextflateach" style="color: inherit; text-decoration: none;">
+					<h2>nextFlatEach()</h2>
+				</a>
+				<p>Creates a next call that invokes subsequent passes for each item in the given iterable and flattens the result.</p>
+				<p>The next pass is expected to return an iterable for each of the <code>items</code>.</p>
+				<p>This is an equivalent of <code>passFlat()</code> followed by a pass returning <code>nextEach()</code>.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextFlatEach } <span class="hljs-keyword">from</span> <span class="hljs-string">'call-thru'</span>;
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> n of callThru(
+    <span class="hljs-function">(<span class="hljs-params">...args</span>) =&gt;</span> nextFlatEach(args),
+    <span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> <span class="hljs-built_in">Array</span>&lt;<span class="hljs-built_in">string</span>&gt;(n).fill(<span class="hljs-string">`<span class="hljs-subst">${n}</span>`</span>)
+  )(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)) {
+  <span class="hljs-built_in">console</span>.log(n); <span class="hljs-comment">// '1', '2', '2'</span>
+}</code></pre>
+				<a href="#passif" id="passif" style="color: inherit; text-decoration: none;">
+					<h2>passIf()</h2>
+				</a>
+				<p>Constructs conditional call chain pass.</p>
+				<p>If the given <code>test</code> function fails the rest of the passes in chain would be skipped and the final call chain outcome
+				will be <code>undefined</code>. Otherwise the next pass in chain will be called with the same arguments.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, passIf } <span class="hljs-keyword">from</span> <span class="hljs-string">'call-thru'</span>;
+
+<span class="hljs-keyword">const</span> confirmGreater = callThru(
+    passIf(<span class="hljs-function">(<span class="hljs-params">a: <span class="hljs-built_in">number</span>, b: <span class="hljs-built_in">number</span></span>) =&gt;</span> a &gt; b),
+    <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-string">'greater'</span>
+);
+
+confirmGreater(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">// 'greater'</span>
+confirmGreater(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>); <span class="hljs-comment">// undefined</span></code></pre>
+				<a href="#nextreturn" id="nextreturn" style="color: inherit; text-decoration: none;">
+					<h2>nextReturn()</h2>
+				</a>
+				<p>Constructs a next call that skips the rest of the chain and returns the given value.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextReturn } <span class="hljs-keyword">from</span> <span class="hljs-string">'call-thru'</span>;
+
+<span class="hljs-keyword">const</span> confirmGreater = callThru(
+    <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a &gt; b ? <span class="hljs-string">'greater'</span> : nextReturn(<span class="hljs-literal">false</span>),
+);
+
+confirmGreater(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">// 'greater'</span>
+confirmGreater(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>); <span class="hljs-comment">// false</span></code></pre>
+				<a href="#nextskip" id="nextskip" style="color: inherit; text-decoration: none;">
+					<h2>nextSkip()</h2>
+				</a>
+				<p>Constructs a next call that skips the rest of the chain.</p>
+				<p>This has the same effect as <code>nextReturn(undefined)</code>.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextSkip } <span class="hljs-keyword">from</span> <span class="hljs-string">'call-thru'</span>;
+
+<span class="hljs-keyword">const</span> confirmGreater = callThru(
+    <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a &gt; b ? <span class="hljs-string">'greater'</span> : nextSkip(),
+);
+
+confirmGreater(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">// 'greater'</span>
+confirmGreater(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>); <span class="hljs-comment">// undefined</span></code></pre>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/calloutcome.html">Call<wbr>Outcome</a>
+					</li>
+					<li class=" tsd-kind-module tsd-has-type-parameter">
+						<a href="modules/nextflat.html">Next<wbr>Flat</a>
+					</li>
+					<li class=" tsd-kind-module tsd-has-type-parameter">
+						<a href="modules/nextflateach.html">Next<wbr>Flat<wbr>Each</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/nextcall.html" class="tsd-kind-icon">Next<wbr>Call</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/passedthru.html" class="tsd-kind-icon">Passed<wbr>Thru</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/nextargs.html" class="tsd-kind-icon">Next<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/nextasync.html" class="tsd-kind-icon">Next<wbr>Async</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/nexteach.html" class="tsd-kind-icon">Next<wbr>Each</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/nextif.html" class="tsd-kind-icon">Next<wbr>If</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/nextreturn.html" class="tsd-kind-icon">Next<wbr>Return</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/nextskip.html" class="tsd-kind-icon">Next<wbr>Skip</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#asyncresult" class="tsd-kind-icon">Async<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#promised" class="tsd-kind-icon">Promised</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#skippedthru" class="tsd-kind-icon">Skipped<wbr>Thru</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#nextcall__symbol" class="tsd-kind-icon">Next<wbr>Call__symbol</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#nextcall_lastoutcome__symbol" class="tsd-kind-icon">Next<wbr>Call_<wbr>last<wbr>Outcome__symbol</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#passedthru__symbol" class="tsd-kind-icon">Passed<wbr>Thru__symbol</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#asis" class="tsd-kind-icon">asis</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#callthru" class="tsd-kind-icon">call<wbr>Thru</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#flatitems" class="tsd-kind-icon">flat<wbr>Items</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#foreachitem" class="tsd-kind-icon">for<wbr>Each<wbr>Item</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#isdefined" class="tsd-kind-icon">is<wbr>Defined</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#isnotpresent" class="tsd-kind-icon">is<wbr>Not<wbr>Present</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#ispresent" class="tsd-kind-icon">is<wbr>Present</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#isundefined" class="tsd-kind-icon">is<wbr>Undefined</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#lastitems" class="tsd-kind-icon">last<wbr>Items</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#nextargs" class="tsd-kind-icon">next<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#nextcall" class="tsd-kind-icon">next<wbr>Call</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#nexteach" class="tsd-kind-icon">next<wbr>Each</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#nextflateach" class="tsd-kind-icon">next<wbr>Flat<wbr>Each</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#nextreturn" class="tsd-kind-icon">next<wbr>Return</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#nextskip" class="tsd-kind-icon">next<wbr>Skip</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#noop" class="tsd-kind-icon">noop</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#passasync" class="tsd-kind-icon">pass<wbr>Async</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#passflat" class="tsd-kind-icon">pass<wbr>Flat</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#passif" class="tsd-kind-icon">pass<wbr>If</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#valueprovider" class="tsd-kind-icon">value<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#valuescloner" class="tsd-kind-icon">values<wbr>Cloner</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#valuesprovider" class="tsd-kind-icon">values<wbr>Provider</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
