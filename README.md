@@ -48,7 +48,7 @@ callThru(
 [npm-image]: https://img.shields.io/npm/v/call-thru.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/call-thru
 [ci-image]: https://img.shields.io/circleci/build/github/surol/call-thru?logo=circleci
-[ci-url]: https://img.shields.io/codecov/c/github/surol/call-thru?logo=codecov
+[ci-url]: https://circleci.com/gh/surol/call-thru
 [codecov-image]: https://codecov.io/gh/surol/call-thru/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/surol/call-thru
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
