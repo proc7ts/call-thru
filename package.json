@@ -20,7 +20,6 @@
   },
   "main": "dist/call-thru.js",
   "module": "dist/call-thru.mjs",
-  "esm5": "dist/call-thru.esm5.js",
   "typings": "index.d.ts",
   "dependencies": {
     "tslib": "^1.10.0"
