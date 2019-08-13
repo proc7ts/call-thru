@@ -7,7 +7,7 @@ import pkg from './package.json';
 export default [
   makeConfig({ tsconfig: 'tsconfig.module.json', file: pkg.module, format: 'esm' }),
   makeConfig({ tsconfig: 'tsconfig.main.json', file: pkg.main, format: 'cjs' }),
-]
+];
 
 function makeConfig({ tsconfig, file, format }) {
   return {
