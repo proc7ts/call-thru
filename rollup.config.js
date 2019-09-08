@@ -22,7 +22,6 @@ function makeConfig({ tsconfig, file, format }) {
       nodeResolve(),
       sourcemaps(),
     ],
-    external: Object.keys(pkg.dependencies),
     input: './src/index.ts',
     output: {
       file,
