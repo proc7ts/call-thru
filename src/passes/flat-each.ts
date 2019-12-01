@@ -61,12 +61,12 @@ export function nextFlatEach<NextItem, NextReturn>(items: Iterable<NextItem>): N
       callee => ({
         [Symbol.iterator]() {
           return flatItems(forEachItem(items, callee), 2);
-        }
+        },
       }),
       () => ({
         [Symbol.iterator]() {
           return lastItems(items);
-        }
+        },
       }),
   );
 }

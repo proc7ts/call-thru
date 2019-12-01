@@ -9,16 +9,16 @@ describe('nextEach', () => {
     expect([
       ...callThru(
           () => nextEach([1, 2, 3]),
-          n => n + 1
-      )()
+          n => n + 1,
+      )(),
     ]).toEqual([2, 3, 4]);
   });
   it('calls the next pass for each item when chained', () => {
     expect([
       ...callThru(
           nextEach([1, 2, 3]),
-          (n: number) => n + 1
-      )()
+          (n: number) => n + 1,
+      )(),
     ]).toEqual([2, 3, 4]);
   });
   it('returns the same items when returned from the last pass', () => {
@@ -45,7 +45,7 @@ describe('nextEach', () => {
         nextEach([
           nextArgs(1, 2),
           nextArgs(3, 4),
-        ])
+        ]),
     )();
 
     expect([...outcome]).toEqual([[1, 2], [3, 4]]);
@@ -64,12 +64,12 @@ describe('nextEach', () => {
 
     const passed: PassedThru<string, number> = {
       [PassedThru__symbol]: 'foo',
-      * [Symbol.iterator]() { yield 13; }
+      * [Symbol.iterator]() { yield 13; },
     };
     const outcome: Iterable<number> = callThru(
         nextEach([
           passed,
-        ])
+        ]),
     )();
 
     expect([...outcome]).toEqual([13]);

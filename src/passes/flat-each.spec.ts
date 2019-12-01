@@ -8,7 +8,7 @@ describe('nextFlatEach', () => {
       ...callThru(
           nextFlatEach([1, 2, 3]),
           (n: number) => Array<string>(n).fill(`${n}`),
-      )()
+      )(),
     ]).toEqual(['1', '2', '2', '3', '3', '3']);
   });
   it('returns the same items when returned from the last pass', () => {
@@ -22,7 +22,7 @@ describe('nextFlatEach', () => {
       ...callThru(
           nextFlatEach([nextArgs(0, 2), nextArgs(1, 3)]),
           (a, b) => Array<string>(a + b).fill(`${a + b}`),
-      )()
+      )(),
     ]).toEqual(['2', '2', '4', '4', '4', '4']);
   });
   it('returns an iterable of last outcomes when returned from the last pass', () => {
@@ -31,7 +31,7 @@ describe('nextFlatEach', () => {
           nextFlatEach([
             nextArgs(1, 2),
             nextArgs(3, 4),
-          ]))()
+          ]))(),
     ]).toEqual([[1, 2], [3, 4]]);
   });
 });

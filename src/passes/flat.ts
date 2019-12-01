@@ -52,7 +52,7 @@ function _passFlat<NextArgs extends any[], NextReturn>(...args: NextArgs): NextF
       callee => ({
         [Symbol.iterator]() {
           return flatItems(PassedThru.items(callee(...args)), 2);
-        }
+        },
       }),
       () => [],
   );
