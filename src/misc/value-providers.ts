@@ -35,5 +35,5 @@ export function valuesProvider<T extends readonly any[]>(...values: T): (this: v
  * @returns A function that returns a clone of `values` tuple.
  */
 export function valuesCloner<T extends any[]>(...values: T): (this: void) => T {
-  return () => [...values] as T;
+  return () => Array.from(values) as T;
 }
