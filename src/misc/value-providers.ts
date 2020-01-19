@@ -9,7 +9,7 @@
  * @returns A function that returns `value`.
  */
 export function valueProvider<T>(value: T): (this: void) => T {
-  return () => value;
+  return (): T => value;
 }
 
 /**
@@ -22,7 +22,7 @@ export function valueProvider<T>(value: T): (this: void) => T {
  * @returns A function that returns `values` tuple.
  */
 export function valuesProvider<T extends readonly any[]>(...values: T): (this: void) => T {
-  return () => values;
+  return (): T => values;
 }
 
 /**
@@ -35,5 +35,5 @@ export function valuesProvider<T extends readonly any[]>(...values: T): (this: v
  * @returns A function that returns a clone of `values` tuple.
  */
 export function valuesCloner<T extends any[]>(...values: T): (this: void) => T {
-  return () => Array.from(values) as T;
+  return (): T => Array.from(values) as T;
 }

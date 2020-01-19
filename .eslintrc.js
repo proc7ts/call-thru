@@ -1,0 +1,105 @@
+module.exports = {
+  root: true,
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    project: './tsconfig.json',
+  },
+  ignorePatterns: ['node_modules/', 'dist/', 'target/', 'd.ts/'],
+  overrides: [
+    {
+      files: ['*.js'],
+      parser: 'esprima',
+      "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+      },
+      rules: {
+        quotes: ['error', 'single'],
+      },
+      env: {
+        node: true,
+      },
+    },
+    {
+      files: ['*.ts'],
+      extends: [
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+        'plugin:jest/recommended',
+        'plugin:jest/style',
+      ],
+      rules: {
+        "@typescript-eslint/brace-style": ['error', '1tbs', { allowSingleLine: true }],
+        '@typescript-eslint/camelcase': ['error', { allow: ['^\\w+__\\w+$'] } ],
+        '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
+        '@typescript-eslint/no-use-before-define': ['error', { functions: false, classes: false }],
+        '@typescript-eslint/no-unused-vars': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-namespace': 'off',
+        //'@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
+        '@typescript-eslint/no-unnecessary-condition': 'error',
+        '@typescript-eslint/no-extra-semi': 'error',
+        '@typescript-eslint/no-useless-constructor': 'error',
+        '@typescript-eslint/no-unused-expressions': 'error',
+        '@typescript-eslint/quotes': ['error', 'single'],
+        '@typescript-eslint/prefer-for-of': 'error',
+        '@typescript-eslint/prefer-function-type': 'error',
+        '@typescript-eslint/prefer-readonly': 'error',
+        '@typescript-eslint/semi': ['error', 'always', { omitLastInOneLineBlock: false }],
+        '@typescript-eslint/space-before-function-paren': ['error', {
+          anonymous: 'always',
+          named: 'never',
+          asyncArrow: 'always',
+        }],
+        '@typescript-eslint/unbound-method': ['error', { ignoreStatic: true }],
+        '@typescript-eslint/unified-signatures': 'error',
+        'prefer-spread': 'off',
+        'space-before-function-paren': 'off',
+        'quotes': 'off',
+        'semi': 'off',
+      },
+      env: {
+        browser: true,
+        'jest/globals': true,
+      },
+    }
+  ],
+  plugins: [
+    '@typescript-eslint',
+    'jest',
+  ],
+  extends: [
+    'eslint:recommended',
+  ],
+  rules: {
+    'arrow-body-style': ['error', 'as-needed'],
+    'comma-dangle': ['error', 'always-multiline'],
+    'quotes': ['error', 'single'],
+    'quote-props': ['error', 'as-needed'],
+    'max-len': ['error', { code: 120, ignoreUrls: true, ignoreRegExpLiterals: true }],
+    'no-var': 'error',
+    'one-var': ['error', 'never'],
+    'operator-linebreak': ['error', 'before'],
+    'padded-blocks': ['error', { classes: 'always', switches: 'never' }],
+    'prefer-const': 'error',
+    'prefer-rest-params': 'error',
+    'rest-spread-spacing': ['error', 'never'],
+    'space-before-function-paren': ['error', {
+      anonymous: 'always',
+      named: 'never',
+      asyncArrow: 'always',
+    }],
+    'space-in-parens': 'error',
+    'space-infix-ops': 'error',
+    'space-unary-ops': 'error',
+    'spaced-comment': 'error',
+    'switch-colon-spacing': 'error',
+    'template-tag-spacing': 'error',
+    'unicode-bom': 'error',
+
+  },
+  env: {
+    es2017: true,
+  },
+};

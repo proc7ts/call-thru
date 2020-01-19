@@ -1,6 +1,7 @@
 /**
  * @module call-thru
  */
+import { valueProvider } from '../misc';
 import { NextCall, nextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
 
 declare module '../call-outcome' {
@@ -34,7 +35,7 @@ export interface NextReturn<NextArgs extends any[], Return, Out>
  */
 export function nextReturn<NextArgs extends any[], Return, Out>(result: Out): NextReturn<NextArgs, Return, Out> {
 
-  const returnResult = () => result;
+  const returnResult = valueProvider(result);
 
   return nextCall(returnResult, returnResult);
 }

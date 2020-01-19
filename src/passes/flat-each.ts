@@ -4,7 +4,7 @@
 import { NextCall, nextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
 import { PassedThru } from '../passed-thru';
 import { NextFlat } from './flat';
-import { flatItems, forEachItem, lastItems } from './iteration';
+import { flatItems, forEachItem, lastItems } from './iteration.impl';
 
 declare module '../call-outcome' {
   export namespace CallOutcome {

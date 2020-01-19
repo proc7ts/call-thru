@@ -1,3 +1,6 @@
+/**
+ * @module call-thru
+ */
 export * from './args';
 export * from './async';
 export * from './each';

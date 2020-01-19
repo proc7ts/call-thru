@@ -3,7 +3,7 @@
  */
 import { NextCall, nextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
 import { PassedThru } from '../passed-thru';
-import { forEachItem, lastItems } from './iteration';
+import { forEachItem, lastItems } from './iteration.impl';
 
 declare module '../call-outcome' {
   export namespace CallOutcome {
@@ -55,5 +55,6 @@ export function nextEach<NextItem, NextReturn>(items: Iterable<NextItem>): NextE
         [Symbol.iterator]() {
           return lastItems(items);
         },
-      }));
+      }),
+  );
 }

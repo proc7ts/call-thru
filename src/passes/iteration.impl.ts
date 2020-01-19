@@ -4,29 +4,43 @@
 import { NextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
 import { PassedThru } from '../passed-thru';
 
+/**
+ * @internal
+ */
 export function *forEachItem<NextItem, NextReturn>(
     items: Iterable<NextItem>,
-    callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => NextReturn) {
+    callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => NextReturn,
+): IterableIterator<any> {
   for (const item of items) {
     yield* PassedThru.items(
         NextCall.is(item)
             ? item[NextCall__symbol](callee)
-            : (callee as (arg: NextItem) => NextReturn)(item));
+            : (callee as (arg: NextItem) => NextReturn)(item),
+    );
   }
 }
 
-export function *lastItems<NextItem>(items: Iterable<NextItem>) {
+/**
+ * @internal
+ */
+export function *lastItems<NextItem>(
+    items: Iterable<NextItem>,
+): IterableIterator<any> {
   for (const item of items) {
     yield* PassedThru.items(
         NextCall.is(item)
             ? item[NextCall_lastOutcome__symbol]()
-            : item);
+            : item,
+    );
   }
 }
 
+/**
+ * @internal
+ */
 export function *flatItems<I>(items: Iterable<unknown>, depth: number): IterableIterator<any> {
   if (!depth) {
-    yield *items;
+    yield *items as Iterable<I>;
     return;
   }
   for (const item of items) {
@@ -38,6 +52,9 @@ export function *flatItems<I>(items: Iterable<unknown>, depth: number): Iterable
   }
 }
 
+/**
+ * @internal
+ */
 function isIterable<I>(value: any): value is Iterable<I> {
 
   const type = typeof value;

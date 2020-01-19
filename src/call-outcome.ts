@@ -10,7 +10,6 @@
  * To add another outcome detection algorithms augment the `CallOutcome.Map` and add new entry to it.
  */
 export namespace CallOutcome {
-
   /**
    * A kind of call chain outcome detection algorithm.
    *
@@ -33,12 +32,9 @@ export namespace CallOutcome {
    * @typeparam Out  A type of next call outcome.
    */
   export interface Map<Return, Out> {
-
     /**
      * Default outcome type. The same as the return one.
      */
     default(): Return;
-
   }
-
 }

@@ -5,7 +5,7 @@ import { nextEach } from './each';
 import { passIf } from './if';
 
 describe('nextEach', () => {
-  it('calls the next pass for each item when chained', () => {
+  it('calls the next pass for each item when result chained', () => {
     expect([
       ...callThru(
           () => nextEach([1, 2, 3]),
@@ -13,7 +13,7 @@ describe('nextEach', () => {
       )(),
     ]).toEqual([2, 3, 4]);
   });
-  it('calls the next pass for each item when chained', () => {
+  it('calls the next pass for each item when pass chained', () => {
     expect([
       ...callThru(
           nextEach([1, 2, 3]),

@@ -3,7 +3,7 @@
  */
 import { NextCall, nextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
 
-export interface NextArgs<Args extends any[], NextReturn>
+export interface NextArgs<Args extends unknown[], NextReturn>
     extends NextCall<'default', Args, NextReturn, NextReturn, Args> {
 
   (): NextArgs<Args, NextReturn>;

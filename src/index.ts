@@ -1,3 +1,6 @@
+/**
+ * @module call-thru
+ */
 export * from './call-outcome';
 export * from './call-thru';
 export * from './next-call';

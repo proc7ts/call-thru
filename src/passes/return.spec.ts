@@ -2,7 +2,7 @@ import { callThru } from '../call-thru';
 import { nextReturn } from './return';
 
 describe('nextReturn', () => {
-  it('returns provided value when used as a pass', () => {
+  it('returns provided value when used as a result', () => {
     expect(callThru((val: number) => nextReturn(val))(13)).toBe(13);
   });
   it('returns provided value when used as a pass', () => {
