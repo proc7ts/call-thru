@@ -59,5 +59,6 @@ function _passAsync<NextArgs extends any[], NextReturn>(...args: NextArgs): Next
   return nextCall(
       callee => new Promise<Promised<NextReturn>>((resolve: any) => resolve(callee.apply(undefined, args)))
           .then(PassedThru.get),
-      resolvePromise);
+      resolvePromise,
+  );
 }

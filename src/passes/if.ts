@@ -35,7 +35,7 @@ export interface NextIf<NextArgs extends any[], NextReturn>
  * @param test  A test function accepting this pass arguments and returning `true` to go on or `false` to abort.
  */
 export function passIf<NextArgs extends any[], NextReturn>(
-    test: (this: void, ...args: NextArgs) => boolean):
-    (this: void, ...args: NextArgs) => NextIf<NextArgs, NextReturn> {
+    test: (this: void, ...args: NextArgs) => boolean,
+): (this: void, ...args: NextArgs) => NextIf<NextArgs, NextReturn> {
   return (...args) => test.apply(undefined, args) ? nextCall(callee => callee.apply(undefined, args)) : nextSkip();
 }

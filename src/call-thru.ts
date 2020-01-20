@@ -170,8 +170,9 @@ export function callThru<
     fn7: (this: void, ...args: P7) => R7,
     fn8: (this: void, ...args: P8) => R8,
     fn9: (this: void, ...args: P9) => R9,
-    fn10: (this: void, ...args: P10) => Last<R10>):
-    (this: void, ...args: P1) => PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4,
+    fn10: (this: void, ...args: P10) => Last<R10>,
+): (this: void, ...args: P1) =>
+    PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4,
         Out<R5, Out<R6, Out<R7, Out<R8, Out<R9, R10>>>>>>>>>>;
 
 export function callThru<

@@ -24,6 +24,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.1",
     "@rollup/plugin-node-resolve": "^7.0.0",
+    "@surol/eslint-config": "^1.0.0",
     "@types/jest": "^24.9.0",
     "@typescript-eslint/eslint-plugin": "^2.16.0",
     "@typescript-eslint/parser": "^2.16.0",
@@ -54,7 +55,7 @@
     "doc:gh-pages": "gh-pages --dist target/typedoc --dotfiles",
     "doc:ci": "node ./build/doc-ci",
     "doc:publish": "run-s doc doc:ci \"doc:gh-pages {@}\" --",
-    "lint": "eslint src/**/* *.js",
+    "lint": "eslint . --ext .js,.ts",
     "rebuild": "run-s clean build",
     "test": "jest"
   }

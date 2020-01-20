@@ -31,7 +31,8 @@ describe('nextFlatEach', () => {
           nextFlatEach([
             nextArgs(1, 2),
             nextArgs(3, 4),
-          ]))(),
+          ]),
+      )(),
     ]).toEqual([[1, 2], [3, 4]]);
   });
 });

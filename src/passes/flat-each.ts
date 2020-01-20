@@ -29,8 +29,8 @@ export interface NextFlatEach<NextItem, NextReturn> extends NextCall<
   (): NextFlatEach<NextItem, NextReturn>;
 
   [NextCall__symbol](
-      callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => NextReturn):
-      NextFlatEach.Flattened<NextReturn>;
+      callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => NextReturn,
+  ): NextFlatEach.Flattened<NextReturn>;
 
   [NextCall_lastOutcome__symbol](): Iterable<PassedThru.Item<NextCall.LastOutcome<NextItem>>>;
 

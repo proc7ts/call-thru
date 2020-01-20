@@ -4,7 +4,7 @@
 /**
  * A key of a [[PassedThru]] property containing the actual outcome value.
  */
-export const PassedThru__symbol = /*#__PURE__*/ Symbol('passed-thru');
+export const PassedThru__symbol = (/*#__PURE__*/ Symbol('passed-thru'));
 
 /**
  * An chained pass outcome value wrapping the actual outcome.

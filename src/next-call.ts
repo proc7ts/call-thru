@@ -6,12 +6,12 @@ import { CallOutcome } from './call-outcome';
 /**
  * A key of a [[NextCall]] method responsible for calling the next function in chain.
  */
-export const NextCall__symbol = /*#__PURE__*/ Symbol('next-call');
+export const NextCall__symbol = (/*#__PURE__*/ Symbol('next-call'));
 
 /**
  * A key of a [[NextCall]] method responsible for returning the outcome of the las pass in chain.
  */
-export const NextCall_lastOutcome__symbol = /*#__PURE__*/ Symbol('next-call:last-outcome');
+export const NextCall_lastOutcome__symbol = (/*#__PURE__*/ Symbol('next-call:last-outcome'));
 
 /**
  * A call of the next function in chain.
@@ -118,7 +118,7 @@ export interface NextCall<
   /**
    * Returns itself to add it to functions chain.
    */
-  (): NextCall<OutKind, NextArgs, NextReturn, Out, Last>; // tslint:disable-line:callable-types
+  (): NextCall<OutKind, NextArgs, NextReturn, Out, Last>; // eslint-disable-line @typescript-eslint/prefer-function-type
 
 }
 
@@ -199,8 +199,8 @@ const firstArg: (...args: any[]) => any = (arg: any) => arg;
  */
 export function nextCall<OutKind extends CallOutcome.Kind, NextArgs extends any[], NextReturn, Out, Last>(
     callNext: (this: void, callee: (this: void, ...args: NextArgs) => NextReturn) => Out,
-    lastOutcome: (this: void) => Last):
-    NextCall<OutKind, NextArgs, NextReturn, Out, Last>;
+    lastOutcome: (this: void) => Last,
+): NextCall<OutKind, NextArgs, NextReturn, Out, Last>;
 
 /**
  * Constructs a call to the next function with default last pass outcome implementation.
@@ -212,13 +212,13 @@ export function nextCall<OutKind extends CallOutcome.Kind, NextArgs extends any[
  * @returns A next function call performed by the given `callNext` function.
  */
 export function nextCall<OutKind extends CallOutcome.Kind, NextArgs extends any[], NextReturn, Out>(
-    callNext: (this: void, callee: (this: void, ...args: NextArgs) => NextReturn) => Out):
-    NextCall<OutKind, NextArgs, NextReturn, Out>;
+    callNext: (this: void, callee: (this: void, ...args: NextArgs) => NextReturn) => Out,
+): NextCall<OutKind, NextArgs, NextReturn, Out>;
 
 export function nextCall<OutKind extends CallOutcome.Kind, NextArgs extends any[], NextReturn, Out, Last>(
     callNext: (this: void, callee: (this: void, ...args: NextArgs) => NextReturn) => Out,
-    lastOutcome: (this: void) => Last = () => callNext(firstArg) as any):
-    NextCall<OutKind, NextArgs, NextReturn, Out, Last> {
+    lastOutcome: (this: void) => Last = () => callNext(firstArg) as any,
+): NextCall<OutKind, NextArgs, NextReturn, Out, Last> {
 
   const result = (() => result) as NextCall<OutKind, NextArgs, NextReturn, Out, Last>;
 
