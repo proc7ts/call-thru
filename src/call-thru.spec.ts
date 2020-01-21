@@ -44,7 +44,7 @@ describe('callThru', () => {
     // noinspection JSMismatchedCollectionQueryUpdate
     const passed: PassedThru<string, number> = {
       [PassedThru__symbol]: 'foo',
-      * [Symbol.iterator]() { yield 13; },
+      *[Symbol.iterator]() { yield 13; },
     };
     const outcome: string = callThru(() => passed)();
 

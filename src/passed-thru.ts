@@ -72,7 +72,7 @@ export abstract class PassedThru<V, I = V> implements Iterable<I> {
       return outcome;
     }
     return {
-      * [Symbol.iterator]() {
+      *[Symbol.iterator]() {
         yield outcome as PassedThru.Item<V>;
       },
     };

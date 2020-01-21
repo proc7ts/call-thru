@@ -40,12 +40,12 @@ export function *lastItems<NextItem>(
  */
 export function *flatItems<I>(items: Iterable<unknown>, depth: number): IterableIterator<any> {
   if (!depth) {
-    yield *items as Iterable<I>;
+    yield* items as Iterable<I>;
     return;
   }
   for (const item of items) {
     if (isIterable(item)) {
-      yield *flatItems(item, depth - 1);
+      yield* flatItems(item, depth - 1);
     } else {
       yield item;
     }

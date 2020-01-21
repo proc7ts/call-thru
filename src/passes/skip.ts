@@ -32,7 +32,7 @@ export interface NextSkip<NextArgs extends any[], NextReturn>
 
 const SKIP: SkippedThru = {
   [PassedThru__symbol]: undefined,
-  * [Symbol.iterator](): Iterator<never> {}, // eslint-disable-line @typescript-eslint/no-empty-function
+  *[Symbol.iterator](): Iterator<never> {}, // eslint-disable-line @typescript-eslint/no-empty-function
 };
 
 function _skip(): SkippedThru {
