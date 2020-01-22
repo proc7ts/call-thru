@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module call-thru
  */
 import { valueProvider } from '../misc';

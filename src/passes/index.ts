@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module call-thru
  */
 export * from './args';

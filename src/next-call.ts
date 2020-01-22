@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module call-thru
  */
 import { CallOutcome } from './call-outcome';

@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module call-thru
  */
 import { nextCall, NextCall, NextCall__symbol } from '../next-call';
