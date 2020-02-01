@@ -2,295 +2,88 @@
  * @packageDocumentation
  * @module call-thru
  */
-import { NextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from './next-call';
-import { PassedThru } from './passed-thru';
-import Last = NextCall.LastResult;
-import Out = NextCall.Outcome;
-import Result = NextCall.CallResult;
+import { CallChain } from './call-chain';
+import { noop } from './misc';
+import { isNextCall, NextCall__symbol } from './next-call';
+import Args = CallChain.Args;
+import Out = CallChain.Out;
 
 /**
- * Constructs a function that invokes the chained passes.
+ * Constructs a function that invokes a call chain.
  *
- * Each pass is function accepts argument(s) passed from the previous one.
+ * Each pass in this chain is a function accepting argument(s) passed from the previous one.
  *
  * The value returned from the pass is treated the following way:
  *
- * - When a [[NextCall]] is returned, this instance is used to perform the next function call.
+ * - When a [[NextCall]] is returned, this instance is used to perform the class of the next pass.
  * - When plain value returned, this value is passed to the next function as the only argument.
- * - When a [[NextCall]] is returned by the last pass, it is used to construct the outcome.
- * - When a plain value is returned by the last pass, it is used as outcome.
+ * - When a [[NextCall]] returned by the last pass, it is used to construct the outcome.
+ * - When a plain value returned by the last pass, it is used as outcome.
+ * - When the last pass in chain is never called, an `undefined` is returned.
  *
  * A [[NextCall]] instance returned the pass is responsible for next function call and may modify the call outcome.
  */
-export function callThru<P extends any[], R>(
-    fn: (this: void, ...args: P) => Last<R>,
-): (this: void, ...args: P) =>
-    PassedThru.Value<R>;
+export function callThru<
+    Args1 extends any[], Return1
+    >(
+    pass1: (this: void, ...args1: Args1) => Return1,
+): (this: void, ...args1: Args1) => Out<Return1>;
 
 export function callThru<
-    P1 extends any[], R1 extends Result<P2>,
-    P2 extends any[], R2>(
-    fn1: (this: void, ...args: P1) => R1,
-    fn2: (this: void, ...args: P2) => Last<R2>,
-): (this: void, ...args: P1) =>
-    PassedThru.Value<Out<R1, R2>>;
+    Args1 extends any[], Return1,
+    Args2 extends Args<Return1>, Return2,
+    >(
+    pass1: (this: void, ...args1: Args1) => Return1,
+    pass2: (this: void, ...args2: Args2) => Return2,
+): (this: void, ...args1: Args1) => Out<Return2>;
 
 export function callThru<
-    P1 extends any[], R1 extends Result<P2>,
-    P2 extends any[], R2 extends Result<P3>,
-    P3 extends any[], R3>(
-    fn1: (this: void, ...args: P1) => R1,
-    fn2: (this: void, ...args: P2) => R2,
-    fn3: (this: void, ...args: P3) => Last<R3>,
-): (this: void, ...args: P1) =>
-    PassedThru.Value<Out<R1, Out<R2, R3>>>;
+    Args1 extends any[], Return1,
+    Args2 extends Args<Return1>, Return2,
+    Args3 extends Args<Return2>, Return3,
+    >(
+    pass1: (this: void, ...args1: Args1) => Return1,
+    pass2: (this: void, ...args2: Args2) => Return2,
+    pass3: (this: void, ...args3: Args3) => Return3,
+): (this: void, ...args1: Args1) => Out<Return3>;
 
-export function callThru<
-    P1 extends any[], R1 extends Result<P2>,
-    P2 extends any[], R2 extends Result<P3>,
-    P3 extends any[], R3 extends Result<P4>,
-    P4 extends any[], R4>(
-    fn1: (this: void, ...args: P1) => R1,
-    fn2: (this: void, ...args: P2) => R2,
-    fn3: (this: void, ...args: P3) => R3,
-    fn4: (this: void, ...args: P4) => Last<R4>,
-): (this: void, ...args: P1) =>
-    PassedThru.Value<Out<R1, Out<R2, Out<R3, R4>>>>;
+export function callThru(
+    ...passes: ((...args: any[]) => any)[]
+): (...args: any[]) => any {
 
-export function callThru<
-    P1 extends any[], R1 extends Result<P2>,
-    P2 extends any[], R2 extends Result<P3>,
-    P3 extends any[], R3 extends Result<P4>,
-    P4 extends any[], R4 extends Result<P5>,
-    P5 extends any[], R5>(
-    fn1: (this: void, ...args: P1) => R1,
-    fn2: (this: void, ...args: P2) => R2,
-    fn3: (this: void, ...args: P3) => R3,
-    fn4: (this: void, ...args: P4) => R4,
-    fn5: (this: void, ...args: P5) => Last<R5>,
-): (this: void, ...args: P1) =>
-    PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4, R5>>>>>;
+  const chain = (index: number, result: [any?]): CallChain => {
 
-export function callThru<
-    P1 extends any[], R1 extends Result<P2>,
-    P2 extends any[], R2 extends Result<P3>,
-    P3 extends any[], R3 extends Result<P4>,
-    P4 extends any[], R4 extends Result<P5>,
-    P5 extends any[], R5 extends Result<P6>,
-    P6 extends any[], R6>(
-    fn1: (this: void, ...args: P1) => R1,
-    fn2: (this: void, ...args: P2) => R2,
-    fn3: (this: void, ...args: P3) => R3,
-    fn4: (this: void, ...args: P4) => R4,
-    fn5: (this: void, ...args: P5) => R5,
-    fn6: (this: void, ...args: P6) => Last<R6>,
-): (this: void, ...args: P1) =>
-    PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4,
-        Out<R5, R6>>>>>>;
+    const lastPass = index >= passes.length;
 
-export function callThru<
-    P1 extends any[], R1 extends Result<P2>,
-    P2 extends any[], R2 extends Result<P3>,
-    P3 extends any[], R3 extends Result<P4>,
-    P4 extends any[], R4 extends Result<P5>,
-    P5 extends any[], R5 extends Result<P6>,
-    P6 extends any[], R6 extends Result<P7>,
-    P7 extends any[], R7>(
-    fn1: (this: void, ...args: P1) => R1,
-    fn2: (this: void, ...args: P2) => R2,
-    fn3: (this: void, ...args: P3) => R3,
-    fn4: (this: void, ...args: P4) => R4,
-    fn5: (this: void, ...args: P5) => R5,
-    fn6: (this: void, ...args: P7) => R6,
-    fn7: (this: void, ...args: P7) => Last<R7>,
-): (this: void, ...args: P1) =>
-    PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4,
-        Out<R5, Out<R6, R7>>>>>>>;
+    ++index;
 
-export function callThru<
-    P1 extends any[], R1 extends Result<P2>,
-    P2 extends any[], R2 extends Result<P3>,
-    P3 extends any[], R3 extends Result<P4>,
-    P4 extends any[], R4 extends Result<P5>,
-    P5 extends any[], R5 extends Result<P6>,
-    P6 extends any[], R6 extends Result<P7>,
-    P7 extends any[], R7 extends Result<P8>,
-    P8 extends any[], R8>(
-    fn1: (this: void, ...args: P1) => R1,
-    fn2: (this: void, ...args: P2) => R2,
-    fn3: (this: void, ...args: P3) => R3,
-    fn4: (this: void, ...args: P4) => R4,
-    fn5: (this: void, ...args: P5) => R5,
-    fn6: (this: void, ...args: P7) => R6,
-    fn7: (this: void, ...args: P7) => R7,
-    fn8: (this: void, ...args: P8) => Last<R8>,
-): (this: void, ...args: P1) =>
-    PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4,
-        Out<R5, Out<R6, Out<R7, R8>>>>>>>>;
-
-export function callThru<
-    P1 extends any[], R1 extends Result<P2>,
-    P2 extends any[], R2 extends Result<P3>,
-    P3 extends any[], R3 extends Result<P4>,
-    P4 extends any[], R4 extends Result<P5>,
-    P5 extends any[], R5 extends Result<P6>,
-    P6 extends any[], R6 extends Result<P7>,
-    P7 extends any[], R7 extends Result<P8>,
-    P8 extends any[], R8 extends Result<P9>,
-    P9 extends any[], R9>(
-    fn1: (this: void, ...args: P1) => R1,
-    fn2: (this: void, ...args: P2) => R2,
-    fn3: (this: void, ...args: P3) => R3,
-    fn4: (this: void, ...args: P4) => R4,
-    fn5: (this: void, ...args: P5) => R5,
-    fn6: (this: void, ...args: P7) => R6,
-    fn7: (this: void, ...args: P7) => R7,
-    fn8: (this: void, ...args: P8) => R8,
-    fn9: (this: void, ...args: P9) => Last<R9>,
-): (this: void, ...args: P1) =>
-    PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4,
-        Out<R5, Out<R6, Out<R7, Out<R8, R9>>>>>>>>>;
-
-export function callThru<
-    P1 extends any[], R1 extends Result<P2>,
-    P2 extends any[], R2 extends Result<P3>,
-    P3 extends any[], R3 extends Result<P4>,
-    P4 extends any[], R4 extends Result<P5>,
-    P5 extends any[], R5 extends Result<P6>,
-    P6 extends any[], R6 extends Result<P7>,
-    P7 extends any[], R7 extends Result<P8>,
-    P8 extends any[], R8 extends Result<P9>,
-    P9 extends any[], R9 extends Result<P10>,
-    P10 extends any[], R10>(
-    fn1: (this: void, ...args: P1) => R1,
-    fn2: (this: void, ...args: P2) => R2,
-    fn3: (this: void, ...args: P3) => R3,
-    fn4: (this: void, ...args: P4) => R4,
-    fn5: (this: void, ...args: P5) => R5,
-    fn6: (this: void, ...args: P7) => R6,
-    fn7: (this: void, ...args: P7) => R7,
-    fn8: (this: void, ...args: P8) => R8,
-    fn9: (this: void, ...args: P9) => R9,
-    fn10: (this: void, ...args: P10) => Last<R10>,
-): (this: void, ...args: P1) =>
-    PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4,
-        Out<R5, Out<R6, Out<R7, Out<R8, Out<R9, R10>>>>>>>>>>;
-
-export function callThru<
-    P1 extends any[], R1 extends Result<P2>,
-    P2 extends any[], R2 extends Result<P3>,
-    P3 extends any[], R3 extends Result<P4>,
-    P4 extends any[], R4 extends Result<P5>,
-    P5 extends any[], R5 extends Result<P6>,
-    P6 extends any[], R6 extends Result<P7>,
-    P7 extends any[], R7 extends Result<P8>,
-    P8 extends any[], R8 extends Result<P9>,
-    P9 extends any[], R9 extends Result<P10>,
-    P10 extends any[], R10 extends Result<P11>,
-    P11 extends any[], R11>(
-    fn1: (this: void, ...args: P1) => R1,
-    fn2: (this: void, ...args: P2) => R2,
-    fn3: (this: void, ...args: P3) => R3,
-    fn4: (this: void, ...args: P4) => R4,
-    fn5: (this: void, ...args: P5) => R5,
-    fn6: (this: void, ...args: P7) => R6,
-    fn7: (this: void, ...args: P7) => R7,
-    fn8: (this: void, ...args: P8) => R8,
-    fn9: (this: void, ...args: P9) => R9,
-    fn10: (this: void, ...args: P10) => R10,
-    fn11: (this: void, ...args: P11) => Last<R11>,
-): (this: void, ...args: P1) =>
-    PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4,
-        Out<R5, Out<R6, Out<R7, Out<R8, Out<R9,
-            Out<R10, R11>>>>>>>>>>>;
-
-export function callThru<
-    P1 extends any[], R1 extends Result<P2>,
-    P2 extends any[], R2 extends Result<P3>,
-    P3 extends any[], R3 extends Result<P4>,
-    P4 extends any[], R4 extends Result<P5>,
-    P5 extends any[], R5 extends Result<P6>,
-    P6 extends any[], R6 extends Result<P7>,
-    P7 extends any[], R7 extends Result<P8>,
-    P8 extends any[], R8 extends Result<P9>,
-    P9 extends any[], R9 extends Result<P10>,
-    P10 extends any[], R10 extends Result<P11>,
-    P11 extends any[], R11 extends Result<P12>,
-    P12 extends any[], R12>(
-    fn1: (this: void, ...args: P1) => R1,
-    fn2: (this: void, ...args: P2) => R2,
-    fn3: (this: void, ...args: P3) => R3,
-    fn4: (this: void, ...args: P4) => R4,
-    fn5: (this: void, ...args: P5) => R5,
-    fn6: (this: void, ...args: P7) => R6,
-    fn7: (this: void, ...args: P7) => R7,
-    fn8: (this: void, ...args: P8) => R8,
-    fn9: (this: void, ...args: P9) => R9,
-    fn10: (this: void, ...args: P10) => R10,
-    fn11: (this: void, ...args: P11) => R11,
-    fn12: (this: void, ...args: P12) => Last<R12>,
-): (this: void, ...args: P1) =>
-    PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4,
-        Out<R5, Out<R6, Out<R7, Out<R8, Out<R9,
-            Out<R10, Out<R11, R12>>>>>>>>>>>>;
-
-export function callThru<
-    P1 extends any[], R1 extends Result<P2>,
-    P2 extends any[], R2 extends Result<P3>,
-    P3 extends any[], R3 extends Result<P4>,
-    P4 extends any[], R4 extends Result<P5>,
-    P5 extends any[], R5 extends Result<P6>,
-    P6 extends any[], R6 extends Result<P7>,
-    P7 extends any[], R7 extends Result<P8>,
-    P8 extends any[], R8 extends Result<P9>,
-    P9 extends any[], R9 extends Result<P10>,
-    P10 extends any[], R10 extends Result<P11>,
-    P11 extends any[], R11 extends Result<P12>,
-    P12 extends any[], R12 extends Result<P13>,
-    P13 extends any[], R13>(
-    fn1: (this: void, ...args: P1) => R1,
-    fn2: (this: void, ...args: P2) => R2,
-    fn3: (this: void, ...args: P3) => R3,
-    fn4: (this: void, ...args: P4) => R4,
-    fn5: (this: void, ...args: P5) => R5,
-    fn6: (this: void, ...args: P7) => R6,
-    fn7: (this: void, ...args: P7) => R7,
-    fn8: (this: void, ...args: P8) => R8,
-    fn9: (this: void, ...args: P9) => R9,
-    fn10: (this: void, ...args: P10) => R10,
-    fn11: (this: void, ...args: P11) => R11,
-    fn12: (this: void, ...args: P12) => R12,
-    fn13: (this: void, ...args: P13) => Last<R13>,
-): (this: void, ...args: P1) =>
-    PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4,
-        Out<R5, Out<R6, Out<R7, Out<R8, Out<R9,
-            Out<R10, Out<R11, Out<R12, R13>>>>>>>>>>>>>;
-
-export function callThru<R>(...fns: ((...args: any[]) => any)[]): (...args: any[]) => R {
-
-  function callNext(idx: number, prev: any): any {
-
-    const len = fns.length;
-
-    if (idx < len) {
-      // There is a next pass in chain
-      if (!NextCall.is(prev)) {
-        return callNext(idx + 1, fns[idx].call(null, prev));
+    const pass = index < passes.length ? passes[index] : noop;
+    const handleResult = (callResult: any, arg: any): void => {
+      if (isNextCall(callResult)) {
+        callResult[NextCall__symbol](chain(index, result), pass);
+      } else if (lastPass) {
+        result[0] = arg;
+      } else {
+        chain(index, result).pass(pass, callResult);
       }
-      return prev[NextCall__symbol](function (this: any, ...args: any[]) {
-        return callNext(idx + 1, fns[idx].apply(this, args));
-      });
-    }
+    };
 
-    // Last in chain
-    if (!NextCall.is(prev)) {
-      return prev;
-    }
+    return ({
+      call<A extends any[]>(fn: (...args: A) => any, args: A): void {
+        handleResult(fn(...args), args);
+      },
+      pass<A>(fn: (arg: A) => any, arg: A): void {
+        handleResult(fn(arg), arg);
+      },
+    });
+  };
 
-    return prev[NextCall_lastOutcome__symbol]();
-  }
+  return (...args) => {
 
-  return function (this: any, ...args: any[]) {
-    return PassedThru.get(callNext(1, fns[0].apply(this, args)));
+    const result: [any?] = [];
+
+    chain(0, result).call(passes[0], args);
+
+    return result[0];
   };
 }

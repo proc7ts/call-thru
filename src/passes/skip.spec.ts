@@ -1,25 +1,39 @@
 import { callThru } from '../call-thru';
+import { nextArgs } from './args';
 import { nextSkip } from './skip';
 
-describe('nextSkip()', () => {
-  it('has undefined outcome', () => {
-    expect(callThru(nextSkip())()).toBeUndefined();
+describe('nextSkip', () => {
+  it('results to `undefined`', () => {
+
+    const result: undefined = callThru(nextSkip())();
+
+    expect(result).toBeUndefined();
   });
-  it('has undefined outcome when chained', () => {
-    expect(callThru(nextSkip())()).toBeUndefined();
+  it('results to `undefined` when used as a pass', () => {
+
+    const result: undefined = callThru(nextSkip)();
+
+    expect(result).toBeUndefined();
   });
-  it('prevents subsequent functions from being called', () => {
+  it('results to `undefined` when used in the middle of call chain', () => {
 
-    const nextSpy = jest.fn();
+    const result: string | undefined = callThru(
+        str => str + '!',
+        _str => nextSkip() as any,
+        (str: string) => str + '!!',
+    )('foo');
 
-    expect(callThru(() => nextSkip(), nextSpy)()).toBeUndefined();
-    expect(nextSpy).not.toHaveBeenCalled();
+    expect(result).toBeUndefined();
   });
-  it('prevents subsequent functions from being called when chained', () => {
+  it('results to `undefined` when used in condition', () => {
 
-    const nextSpy = jest.fn();
+    const fn = callThru(
+        str => str + '!',
+        (str: string) => str.length > 3 ? nextArgs<[string]>(str) : nextSkip,
+        (str: string) => str + '!!',
+    );
 
-    expect(callThru(nextSkip(), nextSpy)()).toBeUndefined();
-    expect(nextSpy).not.toHaveBeenCalled();
+    expect(fn('foo')).toBe('foo!!!');
+    expect(fn('fo')).toBeUndefined();
   });
 });

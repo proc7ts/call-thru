@@ -1,31 +1,31 @@
 import { callThru } from '../call-thru';
-import { NextCall__symbol } from '../next-call';
 import { nextArgs } from './args';
-import Mock = jest.Mock;
 
 describe('nextArgs', () => {
+  it('calls next pass with the given args', () => {
 
-  let mockCallee: Mock<string, [string, string, number]>;
+    const result: string | undefined = callThru(
+        (value: number) => nextArgs<[string, number]>(String(value), value),
+        (item: string, num: number) => new Array<string>(num).fill(item),
+        array => array.join(''),
+    )(5);
 
-  beforeEach(() => {
-    mockCallee = jest.fn((_arg0, _arg1, _arg2) => 'result');
+    expect(result).toBe('55555');
   });
+  it('returns a tuple from the last pass', () => {
 
-  it('calls the callee with the given arguments', () => {
-    expect(nextArgs('a', 'b', 3)[NextCall__symbol](mockCallee)).toBe('result');
-    expect(mockCallee).toHaveBeenCalledWith('a', 'b', 3);
+    const result: [string, number] | undefined = callThru(
+        str => nextArgs(str, str.length),
+    )('foo');
+
+    expect(result).toEqual(['foo', 3]);
   });
-  it('replaces arguments when chained', () => {
-    expect(callThru(
-        nextArgs('a', 'b', 3),
-        mockCallee,
-    )()).toBe('result');
-    expect(mockCallee).toHaveBeenCalledWith('a', 'b', 3);
-  });
-  it('returns arguments when last', () => {
-    expect(callThru(nextArgs('a', true, 9))()).toEqual(['a', true, 9]);
-  });
-  it('returns arguments when returned by last pass', () => {
-    expect(callThru((a: string) => nextArgs(a, true, 9))('a')).toEqual(['a', true, 9]);
+  it('can be used as a pass itself', () => {
+
+    const result: [string, string] | undefined = callThru(
+        nextArgs('foo', 'bar'),
+    )();
+
+    expect(result).toEqual(['foo', 'bar']);
   });
 });
