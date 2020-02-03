@@ -51,43 +51,41 @@ export function callThru<
 export function callThru(
     ...passes: ((...args: any[]) => any)[]
 ): (...args: any[]) => any {
-
-  const chain = (index: number, result: [any?]): CallChain => {
-
-    const lastPass = index >= passes.length;
-
-    ++index;
-
-    const pass = index < passes.length ? passes[index] : noop;
-    const handleResult = (callResult: any, arg: any): void => {
-      if (isNextCall(callResult)) {
-        callResult[NextCall__symbol](chain(index, result), pass);
-      } else if (lastPass) {
-        result[0] = arg;
-      } else {
-        chain(index, result).pass(pass, callResult);
-      }
-    };
-
-    return ({
-      call<A extends any[]>(fn: (...args: A) => any, args: A): void {
-        handleResult(fn(...args), args);
-      },
-      pass<A>(fn: (arg: A) => any, arg: A): void {
-        handleResult(fn(arg), arg);
-      },
-      skip(r?: any): void {
-        result[0] = r;
-      },
-    });
-  };
-
   return (...args) => {
 
-    const result: [any?] = [];
+    let result: any;
+    const chain = (index: number): CallChain => {
 
-    chain(0, result).call(passes[0], args);
+      const lastPass = index >= passes.length;
 
-    return result[0];
+      ++index;
+
+      const pass = index < passes.length ? passes[index] : noop;
+      const handleResult = (callResult: any, arg: any): void => {
+        if (isNextCall(callResult)) {
+          callResult[NextCall__symbol](chain(index), pass);
+        } else if (lastPass) {
+          result = arg;
+        } else {
+          chain(index).pass(pass, callResult);
+        }
+      };
+
+      return ({
+        call<A extends any[]>(fn: (...args: A) => any, args: A): void {
+          handleResult(fn(...args), args);
+        },
+        pass<A>(fn: (arg: A) => any, arg: A): void {
+          handleResult(fn(arg), arg);
+        },
+        skip(r?: any): void {
+          result = r;
+        },
+      });
+    };
+
+    chain(0).call(passes[0], args);
+
+    return result;
   };
 }

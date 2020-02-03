@@ -60,9 +60,11 @@ export namespace CallChain {
           : [Return]);
 
   export type CanSkip<Return, Or = never> =
-      (Return extends NextSkip<infer R> ? R : never) | Or;
+      | (Return extends NextSkip<infer R> ? R : never)
+      | Or;
 
   export type Out<Return, Or = never> =
-      (Return extends NextCall<any, any, any, infer A> ? A : Return) | Or;
+      | (Return extends NextCall<any, any, any, infer A> ? A : Return)
+      | Or;
 
 }
