@@ -13,7 +13,7 @@ import { nextCall, NextCall } from '../next-call';
 export type NextSkip<Result = undefined> = NextCall<CallChain, any, never, Result>;
 
 /**
- * Constructs a next call that skips the rest of the chain.
+ * Builds a next call that skips the rest of the chain.
  *
  * This has the same effect as {@link nextReturn `nextReturn(undefined)`}.
  */

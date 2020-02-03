@@ -6,7 +6,7 @@ import { CallChain } from '../call-chain';
 import { nextCall, NextCall } from '../next-call';
 
 /**
- * Constructs arguments for the next pass.
+ * Provides arguments for the next call chain pass.
  *
  * @typeparam NextArgs  A type of arguments tuple for the next pass.
  * @param args  Arguments for the next pass.
