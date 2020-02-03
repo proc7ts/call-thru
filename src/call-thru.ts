@@ -20,7 +20,8 @@ import CanSkip = CallChain.CanSkip;
  * - When plain value returned, this value is passed to the next function as the only argument.
  * - When a [[NextCall]] returned by the last pass, it is used to construct the outcome.
  * - When a plain value returned by the last pass, it is used as outcome.
- * - When the last pass in chain is never called, an `undefined` is returned.
+ * - When the last pass in chain is never called an `undefined` (when [[nextSkip]] applied), or predefined value
+ *   (when [[nextReturn]] applied) is returned.
  *
  * A [[NextCall]] instance returned the pass is responsible for next function call and may modify the call outcome.
  */

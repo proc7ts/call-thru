@@ -15,10 +15,9 @@ export interface CallChain {
   /**
    * Calls a pass in this chain with the given arguments.
    *
-   * When this is called for the last pass, the final result would be `args`.
+   * When this is called for the last pass, the final result would be an `args` tuple.
    *
    * @typeparam Args  Pass arguments tuple type.
-   * @typeparam Return Pass return type.
    * @param pass  A pass to call.
    * @param args  An array of arguments for the call.
    */
@@ -33,7 +32,6 @@ export interface CallChain {
    * When this is called for the last pass, the final result would be `arg`.
    *
    * @typeparam Args  Pass argument type.
-   * @typeparam Return Pass return type.
    * @param pass  A pass to call.
    * @param arg  Single argument for the call.
    */

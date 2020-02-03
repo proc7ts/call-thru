@@ -26,7 +26,7 @@ export const NextCall__symbol = (/*#__PURE__*/ Symbol('next-call'));
  */
 export interface NextCall<Chain extends CallChain, NextArgs extends any[], NextArg = NextArgs> {
 
-  readonly $?: NextArg;
+  readonly $?: NextArg; // Silence the TypeScript compiler, as `NextArg` is never read.
 
   /**
    * Calls the given pass of the call chain.
@@ -40,7 +40,9 @@ export interface NextCall<Chain extends CallChain, NextArgs extends any[], NextA
   ): void;
 
   /**
-   * Returns itself to use it as a pass of a call chain.
+   * Returns itself.
+   *
+   * Makes this call a valid no-arg pass of a call chain.
    */
   (): this; // eslint-disable-line @typescript-eslint/prefer-function-type
 
