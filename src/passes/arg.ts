@@ -15,6 +15,6 @@ import { nextCall, NextCall } from '../next-call';
  *
  * @return A call of the next pass with the given argument.
  */
-export function nextArg<NextArg>(arg: NextArg): NextCall<CallChain, any, [NextArg], NextArg> {
+export function nextArg<NextArg>(arg: NextArg): NextCall<CallChain, [NextArg], NextArg> {
   return nextCall((chain, pass) => chain.pass(pass, arg));
 }

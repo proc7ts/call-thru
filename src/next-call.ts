@@ -21,11 +21,10 @@ export const NextCall__symbol = (/*#__PURE__*/ Symbol('next-call'));
  * A [[nextCall]] function can be used to construct a next call.
  *
  * @typeparam Chain  A type of supported call chain.
- * @typeparam NextReturn  A type of result of the next pass.
  * @typeparam NextArgs  A type of arguments tuple of the next pass.
  * @typeparam NextArg  A type of single argument or arguments tuple of the next pass. The same as `NextArgs` by default.
  */
-export interface NextCall<Chain extends CallChain, NextReturn, NextArgs extends any[], NextArg = NextArgs> {
+export interface NextCall<Chain extends CallChain, NextArgs extends any[], NextArg = NextArgs> {
 
   readonly $?: NextArg;
 
@@ -37,7 +36,7 @@ export interface NextCall<Chain extends CallChain, NextReturn, NextArgs extends 
    */
   [NextCall__symbol](
       chain: Chain,
-      pass: (this: void, ...args: NextArgs) => NextReturn,
+      pass: (this: void, ...args: NextArgs) => void,
   ): void;
 
   /**
@@ -51,22 +50,21 @@ export interface NextCall<Chain extends CallChain, NextReturn, NextArgs extends 
  * Constructs a call of the next pass in chain.
  *
  * @typeparam Chain  A type of supported call chain.
- * @typeparam NextReturn  A type of result of the next pass.
  * @typeparam NextArgs  A type of argument tuple of the next pass.
  * @typeparam NextArg  A type of single argument or arguments tuple of the next pass. The same as `NextArgs` by default.
  * @param callNext  A next pass caller function.
  *
  * @returns Next pass call performed by the given function.
  */
-export function nextCall<Chain extends CallChain, NextReturn, NextArgs extends any[], NextArg>(
+export function nextCall<Chain extends CallChain, NextArgs extends any[], NextArg>(
     callNext: (
         this: void,
         chain: Chain,
-        fn: (this: void, ...args: NextArgs) => NextReturn,
+        fn: (this: void, ...args: NextArgs) => void,
     ) => void,
-): NextCall<Chain, NextReturn, NextArgs, NextArg> {
+): NextCall<Chain, NextArgs, NextArg> {
 
-  const result = (() => result) as NextCall<Chain, NextReturn, NextArgs, NextArg>;
+  const result = (() => result) as NextCall<Chain, NextArgs, NextArg>;
 
   result[NextCall__symbol] = (chain, fn) => callNext(chain, fn);
 
@@ -77,15 +75,14 @@ export function nextCall<Chain extends CallChain, NextReturn, NextArgs extends a
  * Checks whether the `target` value is a {@link NextCall next call}.
  *
  * @typeparam Chain  A type of supported call chain.
- * @typeparam NextReturn  A type of result of the next pass.
  * @typeparam NextArgs  A type of arguments tuple of the next pass.
  * @typeparam NextArg  A type of single argument or arguments tuple of the next pass.
  * @param target  A value to check.
  *
  * @returns `true` if the `target` value is a function with [[NextCall__symbol]] property, or `false` otherwise.
  */
-export function isNextCall<Chain extends CallChain, NextReturn, NextArgs extends any[], NextArg>(
+export function isNextCall<Chain extends CallChain, NextArgs extends any[], NextArg>(
     target: any,
-): target is NextCall<Chain, NextReturn, NextArgs, NextArg> {
+): target is NextCall<Chain, NextArgs, NextArg> {
   return typeof target === 'function' && NextCall__symbol in target;
 }

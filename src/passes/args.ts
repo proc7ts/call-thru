@@ -15,6 +15,6 @@ import { nextCall, NextCall } from '../next-call';
  */
 export function nextArgs<NextArgs extends any[]>(
     ...args: NextArgs
-): NextCall<CallChain, any, NextArgs, NextArgs> {
+): NextCall<CallChain, NextArgs, NextArgs> {
   return nextCall((chain, fn) => chain.call(fn, args));
 }

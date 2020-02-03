@@ -10,7 +10,7 @@ import { nextCall, NextCall } from '../next-call';
  *
  * @typeparam Result  Call chain result type.
  */
-export type NextSkip<Result = undefined> = NextCall<CallChain, any, never, Result>;
+export type NextSkip<Result = undefined> = NextCall<CallChain, never, Result>;
 
 /**
  * Builds a next call that skips the rest of the chain.

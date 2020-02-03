@@ -22,8 +22,8 @@ export interface CallChain {
    * @param pass  A pass to call.
    * @param args  An array of arguments for the call.
    */
-  call<Args extends any[], Return>(
-      pass: (this: void, ...args: Args) => Return,
+  call<Args extends any[]>(
+      pass: (this: void, ...args: Args) => void,
       args: Args,
   ): void;
 
@@ -37,8 +37,8 @@ export interface CallChain {
    * @param pass  A pass to call.
    * @param arg  Single argument for the call.
    */
-  pass<Arg, Return>(
-      pass: (this: void, arg: Arg) => Return,
+  pass<Arg>(
+      pass: (this: void, arg: Arg) => void,
       arg: Arg,
   ): void;
 
@@ -55,7 +55,7 @@ export namespace CallChain {
 
   export type Args<Return> = Return extends NextSkip<any>
       ? never
-      : (Return extends (NextCall<any, any, infer A, any>)
+      : (Return extends (NextCall<any, infer A, any>)
           ? A
           : [Return]);
 
@@ -64,7 +64,7 @@ export namespace CallChain {
       | Or;
 
   export type Out<Return, Or = never> =
-      | (Return extends NextCall<any, any, any, infer A> ? A : Return)
+      | (Return extends NextCall<any, any, infer A> ? A : Return)
       | Or;
 
 }
