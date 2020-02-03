@@ -7,6 +7,7 @@ import { noop } from './misc';
 import { isNextCall, NextCall__symbol } from './next-call';
 import Args = CallChain.Args;
 import Out = CallChain.Out;
+import CanSkip = CallChain.CanSkip;
 
 /**
  * Constructs a function that invokes a call chain.
@@ -35,7 +36,7 @@ export function callThru<
     >(
     pass1: (this: void, ...args1: Args1) => Return1,
     pass2: (this: void, ...args2: Args2) => Return2,
-): (this: void, ...args1: Args1) => Out<Return2>;
+): (this: void, ...args1: Args1) => Out<Return2, CanSkip<Return1>>;
 
 export function callThru<
     Args1 extends any[], Return1,
@@ -45,7 +46,7 @@ export function callThru<
     pass1: (this: void, ...args1: Args1) => Return1,
     pass2: (this: void, ...args2: Args2) => Return2,
     pass3: (this: void, ...args3: Args3) => Return3,
-): (this: void, ...args1: Args1) => Out<Return3>;
+): (this: void, ...args1: Args1) => Out<Return3, CanSkip<Return2, CanSkip<Return1>>>;
 
 export function callThru(
     ...passes: ((...args: any[]) => any)[]

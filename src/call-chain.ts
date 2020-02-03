@@ -3,6 +3,7 @@
  * @module call-thru
  */
 import { NextCall } from './next-call';
+import { NextSkip } from './passes';
 
 /**
  * A call chain.
@@ -45,10 +46,16 @@ export interface CallChain {
 
 export namespace CallChain {
 
-  export type Args<Return> = Return extends NextCall<any, any, infer A> ? A : [Return];
+  export type Args<Return> = Return extends NextSkip<any>
+      ? never
+      : (Return extends (NextCall<any, any, infer A, any>)
+          ? A
+          : [Return]);
 
-  export type Out<Return> =
-      | undefined
-      | (Return extends NextCall<any, any, any, infer A> ? A : Return);
+  export type CanSkip<Return, Or = never> =
+      (Return extends NextSkip<infer R> ? R : never) | Or;
+
+  export type Out<Return, Or = never> =
+      (Return extends NextCall<any, any, any, infer A> ? A : Return) | Or;
 
 }

@@ -19,8 +19,8 @@ describe('nextSkip', () => {
 
     const result: string | undefined = callThru(
         str => str + '!',
-        _str => nextSkip() as any,
-        (str: string) => str + '!!',
+        _str => nextSkip(),
+        str => str + '!!',
     )('foo');
 
     expect(result).toBeUndefined();
@@ -29,7 +29,7 @@ describe('nextSkip', () => {
 
     const fn = callThru(
         str => str + '!',
-        (str: string) => str.length > 3 ? nextArgs<[string]>(str) : nextSkip,
+        (str: string) => str.length > 3 ? nextArgs(str) : nextSkip,
         (str: string) => str + '!!',
     );
 
