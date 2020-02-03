@@ -32,8 +32,10 @@ describe('nextSkip', () => {
         (str: string) => str.length > 3 ? nextArgs(str) : nextSkip,
         (str: string) => str + '!!',
     );
+    const result1: string | undefined = fn('foo');
+    const result2: string | undefined = fn('fo');
 
-    expect(fn('foo')).toBe('foo!!!');
-    expect(fn('fo')).toBeUndefined();
+    expect(result1).toBe('foo!!!');
+    expect(result2).toBeUndefined();
   });
 });

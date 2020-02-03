@@ -28,7 +28,7 @@ export interface CallChain {
   ): void;
 
   /**
-   * Call a pass in this chain with the given argument.
+   * Calls a pass in this chain with the given argument.
    *
    * When this is called for the last pass, the final result would be `arg`.
    *
@@ -41,6 +41,13 @@ export interface CallChain {
       pass: (this: void, arg: Arg) => Return,
       arg: Arg,
   ): void;
+
+  /**
+   * Skips the rest of the passes.
+   *
+   * @param result  Call chain result.
+   */
+  skip(result?: any): void;
 
 }
 

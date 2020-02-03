@@ -76,6 +76,9 @@ export function callThru(
       pass<A>(fn: (arg: A) => any, arg: A): void {
         handleResult(fn(arg), arg);
       },
+      skip(r?: any): void {
+        result[0] = r;
+      },
     });
   };
 
