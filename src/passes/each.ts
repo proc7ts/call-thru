@@ -2,60 +2,23 @@
  * @packageDocumentation
  * @module call-thru
  */
-import { NextCall, nextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
-import { PassedThru } from '../passed-thru';
-import { forEachItem, lastItems } from './iteration.impl';
-
-declare module '../call-outcome' {
-  export namespace CallOutcome {
-    export interface Map<Return, Out> {
-
-      /**
-       * Iterable outcome type.
-       */
-      each(): Iterable<PassedThru.Item<NextCall.Callee.Return<Return>>>;
-
-    }
-  }
-}
-
-export interface NextEach<NextItem, NextReturn> extends NextCall<
-    'each',
-    NextCall.Callee.Args<NextItem>,
-    NextReturn,
-    Iterable<PassedThru.Item<NextCall.Callee.Return<NextReturn>>>,
-    Iterable<PassedThru.Item<NextCall.LastOutcome<NextItem>>>> {
-
-  (): NextEach<NextItem, NextReturn>;
-
-  [NextCall__symbol](callee: (this: void, ...args: NextCall.Callee.Args<NextItem>) => NextReturn):
-      Iterable<PassedThru.Item<NextCall.Callee.Return<NextReturn>>>;
-
-  [NextCall_lastOutcome__symbol](): Iterable<PassedThru.Item<NextCall.LastOutcome<NextItem>>>;
-
-}
+import { CallChain } from '../call-chain';
+import { nextCall, NextCall } from '../next-call';
 
 /**
- * Creates an next call that invokes subsequent passes for each item in the given iterable.
+ * Builds a next chained call that passes each provided element to the next pass.
  *
- * If `items` are [[NextCall]] implementations, then the next pass will be processed by them.
+ * Note that default [[CallChain]] supported by [[callThru]] would return only the last element.
  *
- * When returned from the last pass, the chain outcome will be an iterable of the last pass outcomes of the `items`.
- * Or an iterable of `items` if they are not implementing [[NextCall]].
+ * @typeparam T  A type of element to pass down the chain.
+ * @param elements  An iterable of elements to pass down the chain.
  *
- * @param items  An iterable of items to invoke the passes for.
+ * @returns A multi-call of the next pass with each element.
  */
-export function nextEach<NextItem, NextReturn>(items: Iterable<NextItem>): NextEach<NextItem, NextReturn> {
-  return nextCall(
-      callee => ({
-        [Symbol.iterator]() {
-          return forEachItem(items, callee);
-        },
-      }),
-      () => ({
-        [Symbol.iterator]() {
-          return lastItems(items);
-        },
-      }),
-  );
+export function nextEach<T>(elements: Iterable<T>): NextCall<CallChain, [T], T> {
+  return nextCall((chain, pass) => {
+    for (const element of elements) {
+      chain.pass(pass, element);
+    }
+  });
 }

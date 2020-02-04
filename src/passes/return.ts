@@ -2,41 +2,18 @@
  * @packageDocumentation
  * @module call-thru
  */
-import { valueProvider } from '../misc';
-import { NextCall, nextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
-
-declare module '../call-outcome' {
-  export namespace CallOutcome {
-    export interface Map<Return, Out> {
-
-      /**
-       * Value return pass outcome type.
-       */
-      return(): Out;
-
-    }
-  }
-}
-
-export interface NextReturn<NextArgs extends any[], Return, Out>
-    extends NextCall<'return', NextArgs, Return, Out, Out> {
-
-  (): NextReturn<NextArgs, Return, Out>;
-
-  [NextCall__symbol](callee: (this: void, ...args: NextArgs) => Return): Out;
-
-  [NextCall_lastOutcome__symbol](): Out;
-
-}
+import { nextCall } from '../next-call';
+import { NextSkip } from './skip';
 
 /**
- * Constructs a next call that skips the rest of the chain and returns the given value.
+ * Builds a next call that skips the rest of the chain and returns the given value as call chain result.
  *
- * @param result  A result to return.
+ * Not every call chain returns a result. In that case a [[nextSkip]] is better choice.
+ *
+ * @param result  Call chain result.
+ *
+ * @returns Next call skipping the rest of the passes.
  */
-export function nextReturn<NextArgs extends any[], Return, Out>(result: Out): NextReturn<NextArgs, Return, Out> {
-
-  const returnResult = valueProvider(result);
-
-  return nextCall(returnResult, returnResult);
+export function nextReturn<Result>(result: Result): NextSkip<Result> {
+  return nextCall(chain => chain.skip(result));
 }

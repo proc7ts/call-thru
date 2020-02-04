@@ -2,28 +2,19 @@
  * @packageDocumentation
  * @module call-thru
  */
-import { NextCall, nextCall, NextCall__symbol, NextCall_lastOutcome__symbol } from '../next-call';
-
-export interface NextArgs<Args extends unknown[], NextReturn>
-    extends NextCall<'default', Args, NextReturn, NextReturn, Args> {
-
-  (): NextArgs<Args, NextReturn>;
-
-  [NextCall__symbol](callee: (this: void, ...args: Args) => NextReturn): NextReturn;
-
-  [NextCall_lastOutcome__symbol](): Args;
-
-}
+import { CallChain } from '../call-chain';
+import { nextCall, NextCall } from '../next-call';
 
 /**
- * Constructs arguments for the next function call.
+ * Provides arguments for the next call chain pass.
  *
- * When returned from the lass pass, the outcome will contain a tuple containing `args`.
+ * @typeparam NextArgs  A type of arguments tuple for the next pass.
+ * @param args  Arguments for the next pass.
  *
- * @param args  Next function call arguments.
- *
- * @return A next function call with the given arguments.
+ * @return A call of the next pass with the given arguments.
  */
-export function nextArgs<Args extends any[], NextReturn>(...args: Args): NextArgs<Args, NextReturn> {
-  return nextCall(callee => callee.apply(undefined, args), () => args);
+export function nextArgs<NextArgs extends any[]>(
+    ...args: NextArgs
+): NextCall<CallChain, NextArgs, NextArgs> {
+  return nextCall((chain, fn) => chain.call(fn, args));
 }
