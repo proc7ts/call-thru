@@ -296,10 +296,10 @@ export function callThru(
       };
 
       return ({
-        call<A extends any[]>(fn: (...args: A) => void, args: A): void {
+        call<A extends any[]>(fn: (...args: A) => any, args: A): void {
           handleResult(fn(...args), args);
         },
-        pass<A>(fn: (arg: A) => void, arg: A): void {
+        pass<A>(fn: (arg: A) => any, arg: A): void {
           handleResult(fn(arg), arg);
         },
         skip(r?: any): void {

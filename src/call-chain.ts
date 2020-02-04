@@ -22,7 +22,7 @@ export interface CallChain {
    * @param args  An array of arguments for the call.
    */
   call<Args extends any[]>(
-      pass: (this: void, ...args: Args) => void,
+      pass: (this: void, ...args: Args) => any,
       args: Args,
   ): void;
 
@@ -36,7 +36,7 @@ export interface CallChain {
    * @param arg  Single argument for the call.
    */
   pass<Arg>(
-      pass: (this: void, arg: Arg) => void,
+      pass: (this: void, arg: Arg) => any,
       arg: Arg,
   ): void;
 
