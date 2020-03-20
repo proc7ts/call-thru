@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module call-thru
+ * @module @proc7ts/call-thru
  */
 import { CallChain } from './call-chain';
 

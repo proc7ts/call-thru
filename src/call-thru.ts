@@ -1,13 +1,13 @@
 /**
  * @packageDocumentation
- * @module call-thru
+ * @module @proc7ts/call-thru
  */
 import { CallChain } from './call-chain';
 import { noop } from './misc';
 import { isNextCall, NextCall__symbol } from './next-call';
 import Args = CallChain.Args;
-import Out = CallChain.Out;
 import OrSkip = CallChain.OrSkip;
+import Out = CallChain.Out;
 
 /**
  * Constructs a function that invokes a call chain.

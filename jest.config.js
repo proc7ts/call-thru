@@ -22,7 +22,7 @@ module.exports = {
     [
       'jest-junit',
       {
-        suiteName: 'call-thru',
+        suiteName: '@proc7ts/call-thru',
         outputDirectory: './target/test-results',
         classNameTemplate: '{classname}: {title}',
         titleTemplate: '{classname}: {title}',

@@ -1,4 +1,8 @@
 {
+  "exclude": [
+    "**/*.ts",
+    "**/index.ts"
+  ],
   "excludeNotExported": true,
   "mode": "file",
   "name": "Functions chaining library",
