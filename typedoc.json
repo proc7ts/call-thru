@@ -1,6 +1,6 @@
 {
   "exclude": [
-    "**/*.ts",
+    "**/*.spec.ts",
     "**/index.ts"
   ],
   "excludeNotExported": true,

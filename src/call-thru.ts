@@ -5,8 +5,11 @@
 import { CallChain } from './call-chain';
 import { noop } from './misc';
 import { isNextCall, NextCall__symbol } from './next-call';
+/** @hidden */
 import Args = CallChain.Args;
+/** @hidden */
 import OrSkip = CallChain.OrSkip;
+/** @hidden */
 import Out = CallChain.Out;
 
 /**
