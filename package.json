@@ -1,6 +1,6 @@
 {
   "name": "@proc7ts/call-thru",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Function chaining library",
   "keywords": [
     "chain",
