@@ -84,7 +84,7 @@ export function nextCall<Chain extends CallChain, NextArgs extends any[], NextAr
  * @returns `true` if the `target` value is a function with [[NextCall__symbol]] property, or `false` otherwise.
  */
 export function isNextCall<Chain extends CallChain, NextArgs extends any[], NextArg>(
-    target: any,
+    target: unknown,
 ): target is NextCall<Chain, NextArgs, NextArg> {
   return typeof target === 'function' && NextCall__symbol in target;
 }

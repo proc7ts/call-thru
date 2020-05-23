@@ -26,7 +26,7 @@ export function lazyValue<T>(provider: (this: void) => T): (this: void) => T {
 
   let get = (): T => (get = valueProvider(provider()))();
 
-  return () => get();
+  return (): T => get();
 }
 
 /**

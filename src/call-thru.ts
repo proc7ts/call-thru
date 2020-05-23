@@ -278,7 +278,7 @@ export function callThru<
 export function callThru(
     ...passes: ((...args: any[]) => any)[]
 ): (...args: any[]) => any {
-  return (...args) => {
+  return (...args): any => {
 
     let result: any;
     const chain = (index: number): CallChain => {
@@ -292,6 +292,7 @@ export function callThru(
         if (isNextCall(callResult)) {
           callResult[NextCall__symbol](chain(index), pass);
         } else if (lastPass) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           result = arg;
         } else {
           chain(index).pass(pass, callResult);
@@ -306,6 +307,7 @@ export function callThru(
           handleResult(fn(arg), arg);
         },
         skip(r?: any): void {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           result = r;
         },
       });
@@ -313,6 +315,7 @@ export function callThru(
 
     chain(0).call(passes[0], args);
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return result;
   };
 }
