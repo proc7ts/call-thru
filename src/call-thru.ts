@@ -2,8 +2,8 @@
  * @packageDocumentation
  * @module @proc7ts/call-thru
  */
+import { noop } from '@proc7ts/primitives';
 import { CallChain } from './call-chain';
-import { noop } from './misc';
 import { isNextCall, NextCall__symbol } from './next-call';
 /** @hidden */
 import Args = CallChain.Args;
