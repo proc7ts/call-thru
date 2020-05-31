@@ -71,7 +71,7 @@
 					</div>
 					<p>This is basically a function with additional method, which is treated specially by call chaining functions.
 						When previous pass in chain returns a <a href="NextCall.html">NextCall</a> instance, it will be used to call the next pass in chain.
-					Otherwise the next pass will be called with value returned as its <a href="../modules/CallChain.html#pass">single argument</a>.</p>
+					Otherwise the next pass will be called with value returned as its {@link CallChain.pass single argument}.</p>
 					<p>A <a href="NextCall.html">NextCall</a> is a function returning itself. So it can be chained like any other pass.</p>
 					<p>A <a href="../globals.html#nextCall">nextCall</a> function can be used to construct a next call.</p>
 				</div>
@@ -80,7 +80,7 @@
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
-						<h4>Chain<span class="tsd-signature-symbol">: </span><a href="../modules/CallChain.html" class="tsd-signature-type">CallChain</a></h4>
+						<h4>Chain<span class="tsd-signature-symbol">: </span><a href="../modules/reflection-792.reflection-793.html" class="tsd-signature-type"></a></h4>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
 								<p>A type of supported call chain.</p>
@@ -122,7 +122,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/proc7ts/call-thru/blob/19635db/src/next-call.ts#L40">next-call.ts:40</a></li>
+								<li>Defined in <a href="https://github.com/proc7ts/call-thru/blob/155e560/src/next-call.ts#L40">next-call.ts:40</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -142,7 +142,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="NextCall.html#$" class="tsd-kind-icon">$</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="NextCall.html#_" class="tsd-kind-icon">$</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -157,12 +157,12 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="$" class="tsd-anchor"></a>
+					<a name="_" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> $</h3>
 					<div class="tsd-signature tsd-kind-icon">$<span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type">NextArg</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/call-thru/blob/19635db/src/next-call.ts#L29">next-call.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/call-thru/blob/155e560/src/next-call.ts#L29">next-call.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -179,7 +179,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/call-thru/blob/19635db/src/next-call.ts#L37">next-call.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/call-thru/blob/155e560/src/next-call.ts#L37">next-call.ts:37</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -245,7 +245,7 @@
 						<a href="NextCall.html" class="tsd-kind-icon">Next<wbr>Call</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="NextCall.html#$" class="tsd-kind-icon">$</a>
+								<a href="NextCall.html#_" class="tsd-kind-icon">$</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="NextCall.html#_NextCall__symbol_" class="tsd-kind-icon">[<wbr>Next<wbr>Call__symbol]</a>
@@ -264,28 +264,10 @@
 						<a href="../globals.html#nextSkip" class="tsd-kind-icon">next<wbr>Skip</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#asis" class="tsd-kind-icon">asis</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="../globals.html#callThru" class="tsd-kind-icon">call<wbr>Thru</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#isDefined" class="tsd-kind-icon">is<wbr>Defined</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="../globals.html#isNextCall" class="tsd-kind-icon">is<wbr>Next<wbr>Call</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#isNotPresent" class="tsd-kind-icon">is<wbr>Not<wbr>Present</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#isPresent" class="tsd-kind-icon">is<wbr>Present</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#isUndefined" class="tsd-kind-icon">is<wbr>Undefined</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#lazyValue" class="tsd-kind-icon">lazy<wbr>Value</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="../globals.html#nextArg" class="tsd-kind-icon">next<wbr>Arg</a>
@@ -301,24 +283,6 @@
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="../globals.html#nextReturn" class="tsd-kind-icon">next<wbr>Return</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#noop" class="tsd-kind-icon">noop</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#valueByRecipe" class="tsd-kind-icon">value<wbr>ByRecipe</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#valueProvider" class="tsd-kind-icon">value<wbr>Provider</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#valueRecipe" class="tsd-kind-icon">value<wbr>Recipe</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#valuesCloner" class="tsd-kind-icon">values<wbr>Cloner</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#valuesProvider" class="tsd-kind-icon">values<wbr>Provider</a>
 					</li>
 				</ul>
 			</nav>
