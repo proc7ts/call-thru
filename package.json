@@ -1,6 +1,6 @@
 {
   "name": "@proc7ts/call-thru",
-  "version": "3.0.2",
+  "version": "4.0.0",
   "description": "Function chaining library",
   "keywords": [
     "chain",
@@ -21,6 +21,9 @@
   "main": "dist/call-thru.js",
   "module": "dist/call-thru.mjs",
   "typings": "index.d.ts",
+  "dependencies": {
+    "@proc7ts/primitives": "^1.0.0"
+  },
   "devDependencies": {
     "@proc7ts/eslint-config": "^2.0.0",
     "@rollup/plugin-commonjs": "^12.0.0",
