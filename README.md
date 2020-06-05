@@ -2,7 +2,7 @@ Functions chaining library
 ==========================
 
 [![NPM][npm-image]][npm-url]
-[![CircleCI][ci-image]][ci-url]
+[![Build Status][build-status-img]][build-status-link]
 [![codecov][codecov-image]][codecov-url]
 [![GitHub Project][github-image]][github-url]
 [![API Documentation][api-docs-image]][api-docs-url]
@@ -47,8 +47,8 @@ callThru(
 
 [npm-image]: https://img.shields.io/npm/v/@proc7ts/call-thru.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/@proc7ts/call-thru
-[ci-image]: https://img.shields.io/circleci/build/github/proc7ts/call-thru?logo=circleci
-[ci-url]: https://circleci.com/gh/proc7ts/call-thru
+[build-status-img]: https://github.com/proc7ts/call-thru/workflows/Build/badge.svg
+[build-status-link]: https://github.com/proc7ts/call-thru/actions?query=workflow%3ABuild
 [codecov-image]: https://codecov.io/gh/proc7ts/call-thru/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/proc7ts/call-thru
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
