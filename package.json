@@ -22,7 +22,7 @@
   "module": "dist/call-thru.mjs",
   "typings": "index.d.ts",
   "dependencies": {
-    "@proc7ts/primitives": "^1.0.0"
+    "@proc7ts/primitives": "^1.0.3"
   },
   "devDependencies": {
     "@proc7ts/eslint-config": "^2.0.0",
