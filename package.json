@@ -20,7 +20,7 @@
   },
   "main": "dist/call-thru.js",
   "module": "dist/call-thru.mjs",
-  "typings": "index.d.ts",
+  "types": "index.d.ts",
   "dependencies": {
     "@proc7ts/primitives": "^1.0.3"
   },
