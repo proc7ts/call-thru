@@ -21,8 +21,14 @@
   "main": "dist/call-thru.js",
   "module": "dist/call-thru.mjs",
   "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/call-thru.mjs",
+      "require": "./dist/call-thru.js"
+    }
+  },
   "dependencies": {
-    "@proc7ts/primitives": "^1.1.0"
+    "@proc7ts/primitives": "^1.2.0"
   },
   "devDependencies": {
     "@proc7ts/eslint-config": "^2.0.4",
