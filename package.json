@@ -18,13 +18,14 @@
   "bugs": {
     "url": "https://github.com/proc7ts/call-thru/issues"
   },
-  "main": "dist/call-thru.js",
-  "module": "dist/call-thru.mjs",
+  "type": "module",
+  "main": "dist/call-thru.cjs",
+  "module": "dist/call-thru.js",
   "types": "index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/call-thru.mjs",
-      "require": "./dist/call-thru.js"
+      "import": "./dist/call-thru.js",
+      "require": "./dist/call-thru.cjs"
     }
   },
   "dependencies": {
