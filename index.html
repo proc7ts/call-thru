@@ -73,7 +73,7 @@
 				<p>A <code>callThru()</code> function chains several passes. Each pass is a function to call. Each pass produces arguments for the
 				next function call.</p>
 				<p>Normally, the value returned from function call is passed as a single argument to the next one:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/call-thru'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/call-thru&#x27;</span>;
 
 callThru(
     <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a + b,
@@ -82,57 +82,57 @@ callThru(
 				<p>Additionally, a pass may return a <code>NextCall</code> instance that is responsible for calling the next pass.</p>
 				<p>There are several <code>NextCall</code> implementations available. For example, a <code>nextArgs()</code> one can be used to pass multiple
 				arguments to the next function:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextArgs } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/call-thru'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextArgs } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/call-thru&#x27;</span>;
 
 callThru(
     <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> nextArgs(b, a),
     <span class="hljs-function">(<span class="hljs-params">b, a</span>) =&gt;</span> [b, a]
-)(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>); <span class="hljs-comment">// ['bar', 'foo']</span></code></pre>
+)(<span class="hljs-string">&#x27;foo&#x27;</span>, <span class="hljs-string">&#x27;bar&#x27;</span>); <span class="hljs-comment">// [&#x27;bar&#x27;, &#x27;foo&#x27;]</span></code></pre>
 				<p>A <code>NextCall</code> instance is a no-arg function returning itself. Thus it can be chained as a pass:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextArgs } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/call-thru'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextArgs } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/call-thru&#x27;</span>;
 
 callThru(
-    nextArgs(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>),
+    nextArgs(<span class="hljs-string">&#x27;foo&#x27;</span>, <span class="hljs-string">&#x27;bar&#x27;</span>),
     <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> [a, b]
-)(); <span class="hljs-comment">// ['foo', 'bar']</span></code></pre>
+)(); <span class="hljs-comment">// [&#x27;foo&#x27;, &#x27;bar&#x27;]</span></code></pre>
 				<a href="#nextargs" id="nextargs" style="color: inherit; text-decoration: none;">
 					<h2>nextArgs()</h2>
 				</a>
 				<p>Constructs arguments for the next function call.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextArgs } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/call-thru'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextArgs } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/call-thru&#x27;</span>;
 
 callThru(
-    <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> nextArgs(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>),
+    <span class="hljs-function">() =&gt;</span> nextArgs(<span class="hljs-string">&#x27;foo&#x27;</span>, <span class="hljs-string">&#x27;bar&#x27;</span>),
     <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> [a, b]
-)(); <span class="hljs-comment">// ['foo', 'bar']</span></code></pre>
+)(); <span class="hljs-comment">// [&#x27;foo&#x27;, &#x27;bar&#x27;]</span></code></pre>
 				<a href="#passasync" id="passasync" style="color: inherit; text-decoration: none;">
 					<h2>passAsync()</h2>
 				</a>
 				<p>Constructs asynchronous call chain pass.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, passAsync } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/call-thru'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, passAsync } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/call-thru&#x27;</span>;
 
 callThru(
     passAsync(),
-    <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
-      <span class="hljs-keyword">throw</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Failed'</span>)
+    <span class="hljs-function">() =&gt;</span> {
+      <span class="hljs-keyword">throw</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&#x27;Failed&#x27;</span>)
     }
 )().catch(<span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(e));</code></pre>
 				<a href="#nexteach" id="nexteach" style="color: inherit; text-decoration: none;">
 					<h2>nextEach()</h2>
 				</a>
 				<p>Creates an next call that invokes subsequent passes for each item in the given iterable.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextEach } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/call-thru'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextEach } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/call-thru&#x27;</span>;
 
-<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> n of callThru(
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> n <span class="hljs-keyword">of</span> callThru(
     <span class="hljs-function">(<span class="hljs-params">...args</span>) =&gt;</span> nextEach(args),
     <span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> n * n,
   )(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)) {
   <span class="hljs-built_in">console</span>.log(n); <span class="hljs-comment">// 1, 4, 9</span>
 }</code></pre>
 				<p>This can be combined with e.g. <a href="#passif">passIf()</a>:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextEach, passIf } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/call-thru'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextEach, passIf } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/call-thru&#x27;</span>;
 
-<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> n of callThru(
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> n <span class="hljs-keyword">of</span> callThru(
     <span class="hljs-function">(<span class="hljs-params">...args</span>) =&gt;</span> nextEach(args),
     passIf(<span class="hljs-function">(<span class="hljs-params">n: <span class="hljs-built_in">number</span></span>) =&gt;</span> n &gt; <span class="hljs-number">1</span>),
     <span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> n * n,
@@ -144,14 +144,14 @@ callThru(
 				</a>
 				<p>Constructs flattening call chain pass.</p>
 				<p>The next pass is expected to return an iterable of iterables. This pass then converts it to plain iterable.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextEach, passFlat } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/call-thru'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextEach, passFlat } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/call-thru&#x27;</span>;
 
-<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> n of callThru(
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> n <span class="hljs-keyword">of</span> callThru(
     passFlat(),
     <span class="hljs-function">(<span class="hljs-params">...args</span>) =&gt;</span> nextEach(args),
     <span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> <span class="hljs-built_in">Array</span>&lt;<span class="hljs-built_in">string</span>&gt;(n).fill(<span class="hljs-string">`<span class="hljs-subst">${n}</span>`</span>)
   )(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)) {
-  <span class="hljs-built_in">console</span>.log(n); <span class="hljs-comment">// '1', '2', '2'</span>
+  <span class="hljs-built_in">console</span>.log(n); <span class="hljs-comment">// &#x27;1&#x27;, &#x27;2&#x27;, &#x27;2&#x27;</span>
 }</code></pre>
 				<a href="#nextflateach" id="nextflateach" style="color: inherit; text-decoration: none;">
 					<h2>nextFlatEach()</h2>
@@ -159,13 +159,13 @@ callThru(
 				<p>Creates a next call that invokes subsequent passes for each item in the given iterable and flattens the result.</p>
 				<p>The next pass is expected to return an iterable for each of the <code>items</code>.</p>
 				<p>This is an equivalent of <code>passFlat()</code> followed by a pass returning <code>nextEach()</code>.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextFlatEach } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/call-thru'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextFlatEach } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/call-thru&#x27;</span>;
 
-<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> n of callThru(
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> n <span class="hljs-keyword">of</span> callThru(
     <span class="hljs-function">(<span class="hljs-params">...args</span>) =&gt;</span> nextFlatEach(args),
     <span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> <span class="hljs-built_in">Array</span>&lt;<span class="hljs-built_in">string</span>&gt;(n).fill(<span class="hljs-string">`<span class="hljs-subst">${n}</span>`</span>)
   )(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)) {
-  <span class="hljs-built_in">console</span>.log(n); <span class="hljs-comment">// '1', '2', '2'</span>
+  <span class="hljs-built_in">console</span>.log(n); <span class="hljs-comment">// &#x27;1&#x27;, &#x27;2&#x27;, &#x27;2&#x27;</span>
 }</code></pre>
 				<a href="#passif" id="passif" style="color: inherit; text-decoration: none;">
 					<h2>passIf()</h2>
@@ -173,39 +173,39 @@ callThru(
 				<p>Constructs conditional call chain pass.</p>
 				<p>If the given <code>test</code> function fails the rest of the passes in chain would be skipped and the final call chain outcome
 				will be <code>undefined</code>. Otherwise the next pass in chain will be called with the same arguments.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, passIf } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/call-thru'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, passIf } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/call-thru&#x27;</span>;
 
 <span class="hljs-keyword">const</span> confirmGreater = callThru(
     passIf(<span class="hljs-function">(<span class="hljs-params">a: <span class="hljs-built_in">number</span>, b: <span class="hljs-built_in">number</span></span>) =&gt;</span> a &gt; b),
-    <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-string">'greater'</span>
+    <span class="hljs-function">() =&gt;</span> <span class="hljs-string">&#x27;greater&#x27;</span>
 );
 
-confirmGreater(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">// 'greater'</span>
+confirmGreater(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">// &#x27;greater&#x27;</span>
 confirmGreater(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>); <span class="hljs-comment">// undefined</span></code></pre>
 				<a href="#nextreturn" id="nextreturn" style="color: inherit; text-decoration: none;">
 					<h2>nextReturn()</h2>
 				</a>
 				<p>Constructs a next call that skips the rest of the chain and returns the given value.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextReturn } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/call-thru'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextReturn } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/call-thru&#x27;</span>;
 
 <span class="hljs-keyword">const</span> confirmGreater = callThru(
-    <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a &gt; b ? <span class="hljs-string">'greater'</span> : nextReturn(<span class="hljs-literal">false</span>),
+    <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a &gt; b ? <span class="hljs-string">&#x27;greater&#x27;</span> : nextReturn(<span class="hljs-literal">false</span>),
 );
 
-confirmGreater(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">// 'greater'</span>
+confirmGreater(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">// &#x27;greater&#x27;</span>
 confirmGreater(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>); <span class="hljs-comment">// false</span></code></pre>
 				<a href="#nextskip" id="nextskip" style="color: inherit; text-decoration: none;">
 					<h2>nextSkip()</h2>
 				</a>
 				<p>Constructs a next call that skips the rest of the chain.</p>
 				<p>This has the same effect as <code>nextReturn(undefined)</code>.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextSkip } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/call-thru'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { callThru, nextSkip } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/call-thru&#x27;</span>;
 
 <span class="hljs-keyword">const</span> confirmGreater = callThru(
-    <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a &gt; b ? <span class="hljs-string">'greater'</span> : nextSkip(),
+    <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a &gt; b ? <span class="hljs-string">&#x27;greater&#x27;</span> : nextSkip(),
 );
 
-confirmGreater(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">// 'greater'</span>
+confirmGreater(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">// &#x27;greater&#x27;</span>
 confirmGreater(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>); <span class="hljs-comment">// undefined</span></code></pre>
 			</div>
 		</div>
@@ -276,6 +276,5 @@ confirmGreater(<span class="hljs-number">1</span>, <span class="hljs-number">2</
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
