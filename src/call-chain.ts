@@ -17,13 +17,13 @@ export interface CallChain {
    *
    * When this is called for the last pass, the final result would be an `args` tuple.
    *
-   * @typeparam Args  Pass arguments tuple type.
+   * @typeParam TArgs  Pass arguments tuple type.
    * @param pass  A pass to call.
    * @param args  An array of arguments for the call.
    */
-  call<Args extends any[]>(
-      pass: (this: void, ...args: Args) => any,
-      args: Args,
+  call<TArgs extends any[]>(
+      pass: (this: void, ...args: TArgs) => any,
+      args: TArgs,
   ): void;
 
   /**
@@ -31,13 +31,13 @@ export interface CallChain {
    *
    * When this is called for the last pass, the final result would be `arg`.
    *
-   * @typeparam Args  Pass argument type.
+   * @typeParam TArgs  Pass argument type.
    * @param pass  A pass to call.
    * @param arg  Single argument for the call.
    */
-  pass<Arg>(
-      pass: (this: void, arg: Arg) => any,
-      arg: Arg,
+  pass<TArg>(
+      pass: (this: void, arg: TArg) => any,
+      arg: TArg,
   ): void;
 
   /**
@@ -51,18 +51,18 @@ export interface CallChain {
 
 export namespace CallChain {
 
-  export type Args<Return> = Return extends NextSkip<any>
+  export type Args<TReturn> = TReturn extends NextSkip<any>
       ? never
-      : (Return extends (NextCall<any, infer A, any>)
-          ? A
-          : [Return]);
+      : (TReturn extends (NextCall<any, infer TNextArgs, any>)
+          ? TNextArgs
+          : [TReturn]);
 
-  export type OrSkip<Return, Or = never> =
-      | (Return extends NextSkip<infer R> ? R : never)
-      | Or;
+  export type OrSkip<TReturn, TOr = never> =
+      | (TReturn extends NextSkip<infer TResult> ? TResult : never)
+      | TOr;
 
-  export type Out<Return, Or = never> =
-      | (Return extends NextCall<any, any, infer A> ? A : Return)
-      | Or;
+  export type Out<TReturn, TOr = never> =
+      | (TReturn extends NextCall<any, any, infer TNextArg> ? TNextArg : TReturn)
+      | TOr;
 
 }

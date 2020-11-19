@@ -20,13 +20,14 @@ export const NextCall__symbol = (/*#__PURE__*/ Symbol('next-call'));
  *
  * A {@link nextCall} function can be used to construct a next call.
  *
- * @typeparam Chain  A type of supported call chain.
- * @typeparam NextArgs  A type of arguments tuple of the next pass.
- * @typeparam NextArg  A type of single argument or arguments tuple of the next pass. The same as `NextArgs` by default.
+ * @typeParam TChain  A type of supported call chain.
+ * @typeParam TNextArgs  A type of arguments tuple of the next pass.
+ * @typeParam TNextArg  A type of single argument or arguments tuple of the next pass.
+ * The same as `TNextArgs` by default.
  */
-export interface NextCall<Chain extends CallChain, NextArgs extends any[], NextArg = NextArgs> {
+export interface NextCall<TChain extends CallChain, TNextArgs extends any[], TNextArg = TNextArgs> {
 
-  readonly $?: NextArg; // Silence the TypeScript compiler, as `NextArg` is never read.
+  readonly $?: TNextArg; // Silence the TypeScript compiler, as `NextArg` is never read.
 
   /**
    * Calls the given pass of the call chain.
@@ -35,8 +36,8 @@ export interface NextCall<Chain extends CallChain, NextArgs extends any[], NextA
    * @param pass  A pass in call chain to call.
    */
   [NextCall__symbol](
-      chain: Chain,
-      pass: (this: void, ...args: NextArgs) => void,
+      chain: TChain,
+      pass: (this: void, ...args: TNextArgs) => void,
   ): void;
 
   /**
@@ -44,29 +45,30 @@ export interface NextCall<Chain extends CallChain, NextArgs extends any[], NextA
    *
    * Makes this call a valid no-arg pass of a call chain.
    */
-  (): this; // eslint-disable-line @typescript-eslint/prefer-function-type
+  (): this;
 
 }
 
 /**
  * Constructs a call of the next pass in chain.
  *
- * @typeparam Chain  A type of supported call chain.
- * @typeparam NextArgs  A type of argument tuple of the next pass.
- * @typeparam NextArg  A type of single argument or arguments tuple of the next pass. The same as `NextArgs` by default.
+ * @typeParam TChain  A type of supported call chain.
+ * @typeParam TNextArgs  A type of argument tuple of the next pass.
+ * @typeParam TNextArg  A type of single argument or arguments tuple of the next pass.
+ * The same as `TNextArgs` by default.
  * @param callNext  A next pass caller function.
  *
  * @returns Next pass call performed by the given function.
  */
-export function nextCall<Chain extends CallChain, NextArgs extends any[], NextArg>(
+export function nextCall<TChain extends CallChain, TNextArgs extends any[], TNextArg>(
     callNext: (
         this: void,
-        chain: Chain,
-        fn: (this: void, ...args: NextArgs) => void,
+        chain: TChain,
+        fn: (this: void, ...args: TNextArgs) => void,
     ) => void,
-): NextCall<Chain, NextArgs, NextArg> {
+): NextCall<TChain, TNextArgs, TNextArg> {
 
-  const result = (() => result) as NextCall<Chain, NextArgs, NextArg>;
+  const result = (() => result) as NextCall<TChain, TNextArgs, TNextArg>;
 
   result[NextCall__symbol] = (chain, fn) => callNext(chain, fn);
 
@@ -76,15 +78,15 @@ export function nextCall<Chain extends CallChain, NextArgs extends any[], NextAr
 /**
  * Checks whether the `target` value is a {@link NextCall next call}.
  *
- * @typeparam Chain  A type of supported call chain.
- * @typeparam NextArgs  A type of arguments tuple of the next pass.
- * @typeparam NextArg  A type of single argument or arguments tuple of the next pass.
+ * @typeParam TChain  A type of supported call chain.
+ * @typeParam TNextArgs  A type of arguments tuple of the next pass.
+ * @typeParam TNextArg  A type of single argument or arguments tuple of the next pass.
  * @param target  A value to check.
  *
  * @returns `true` if the `target` value is a function with {@link NextCall__symbol} property, or `false` otherwise.
  */
-export function isNextCall<Chain extends CallChain, NextArgs extends any[], NextArg>(
+export function isNextCall<TChain extends CallChain, TNextArgs extends any[], TNextArg>(
     target: unknown,
-): target is NextCall<Chain, NextArgs, NextArg> {
+): target is NextCall<TChain, TNextArgs, TNextArg> {
   return typeof target === 'function' && NextCall__symbol in target;
 }

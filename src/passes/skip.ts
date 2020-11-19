@@ -8,9 +8,9 @@ import { nextCall, NextCall } from '../next-call';
 /**
  * A special {@link NextCall} indicating the rest of the steps are skipped.
  *
- * @typeparam Result  Call chain result type.
+ * @typeParam TResult  Call chain result type.
  */
-export type NextSkip<Result = undefined> = NextCall<CallChain, never, Result>;
+export type NextSkip<TResult = undefined> = NextCall<CallChain, never, TResult>;
 
 /**
  * Builds a next call that skips the rest of the chain.
