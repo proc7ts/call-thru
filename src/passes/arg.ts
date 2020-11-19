@@ -8,7 +8,7 @@ import { nextCall, NextCall } from '../next-call';
 /**
  * Provides a single argument for the next call chain pass.
  *
- * The returned [[NextCall]] implementation does the same as if the `arg` returned from the call chain pass.
+ * The returned {@link NextCall} implementation does the same as if the `arg` returned from the call chain pass.
  *
  * @typeparam NextArg  A type of argument for the next pass.
  * @param arg  Argument for the next pass.

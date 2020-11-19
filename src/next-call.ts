@@ -5,7 +5,7 @@
 import { CallChain } from './call-chain';
 
 /**
- * A key of a [[NextCall]] method responsible for calling the next pass in chain.
+ * A key of a {@link NextCall} method responsible for calling the next pass in chain.
  */
 export const NextCall__symbol = (/*#__PURE__*/ Symbol('next-call'));
 
@@ -13,12 +13,12 @@ export const NextCall__symbol = (/*#__PURE__*/ Symbol('next-call'));
  * A call of the next pass in chain.
  *
  * This is basically a function with additional method, which is treated specially by call chaining functions.
- * When previous pass in chain returns a [[NextCall]] instance, it will be used to call the next pass in chain.
+ * When previous pass in chain returns a {@link NextCall} instance, it will be used to call the next pass in chain.
  * Otherwise the next pass will be called with value returned as its {@link CallChain.pass single argument}.
  *
- * A [[NextCall]] is a function returning itself. So it can be chained like any other pass.
+ * A {@link NextCall} is a function returning itself. So it can be chained like any other pass.
  *
- * A [[nextCall]] function can be used to construct a next call.
+ * A {@link nextCall} function can be used to construct a next call.
  *
  * @typeparam Chain  A type of supported call chain.
  * @typeparam NextArgs  A type of arguments tuple of the next pass.
@@ -81,7 +81,7 @@ export function nextCall<Chain extends CallChain, NextArgs extends any[], NextAr
  * @typeparam NextArg  A type of single argument or arguments tuple of the next pass.
  * @param target  A value to check.
  *
- * @returns `true` if the `target` value is a function with [[NextCall__symbol]] property, or `false` otherwise.
+ * @returns `true` if the `target` value is a function with {@link NextCall__symbol} property, or `false` otherwise.
  */
 export function isNextCall<Chain extends CallChain, NextArgs extends any[], NextArg>(
     target: unknown,

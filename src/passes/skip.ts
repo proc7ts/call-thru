@@ -6,7 +6,7 @@ import { CallChain } from '../call-chain';
 import { nextCall, NextCall } from '../next-call';
 
 /**
- * A special [[NextCall]] indicating the rest of the steps are skipped.
+ * A special {@link NextCall} indicating the rest of the steps are skipped.
  *
  * @typeparam Result  Call chain result type.
  */

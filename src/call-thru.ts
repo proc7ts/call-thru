@@ -19,14 +19,14 @@ import Out = CallChain.Out;
  *
  * The value returned from the pass is treated the following way:
  *
- * - When a [[NextCall]] is returned, this instance is used to perform the class of the next pass.
+ * - When a {@link NextCall} is returned, this instance is used to perform the class of the next pass.
  * - When plain value returned, this value is passed to the next function as the only argument.
- * - When a [[NextCall]] returned by the last pass, it is used to construct the outcome.
+ * - When a {@link NextCall} returned by the last pass, it is used to construct the outcome.
  * - When a plain value returned by the last pass, it is used as outcome.
- * - When the last pass in chain is never called an `undefined` (when [[nextSkip]] applied), or predefined value
- *   (when [[nextReturn]] applied) is returned.
+ * - When the last pass in chain is never called an `undefined` (when {@link nextSkip} applied), or predefined value
+ *   (when {@link nextReturn} applied) is returned.
  *
- * A [[NextCall]] instance returned the pass is responsible for next function call and may modify the call outcome.
+ * A {@link NextCall} instance returned the pass is responsible for next function call and may modify the call outcome.
  */
 export function callThru<
     Args1 extends any[], Return1

@@ -8,7 +8,7 @@ import { NextSkip } from './passes';
 /**
  * A call chain.
  *
- * This is passed to [[NextCall]] to perform the call.
+ * This is passed to {@link NextCall} to perform the call.
  */
 export interface CallChain {
 
