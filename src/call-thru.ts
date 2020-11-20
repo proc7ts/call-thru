@@ -2,7 +2,6 @@
  * @packageDocumentation
  * @module @proc7ts/call-thru
  */
-import { noop } from '@proc7ts/primitives';
 import { CallChain } from './call-chain';
 import { isNextCall, NextCall__symbol } from './next-call';
 /** @hidden */
@@ -287,7 +286,7 @@ export function callThru(
 
       ++index;
 
-      const pass = index < passes.length ? passes[index] : noop;
+      const pass = index < passes.length ? passes[index] : callThru$noop;
       const handleResult = (callResult: any, arg: any): void => {
         if (isNextCall(callResult)) {
           callResult[NextCall__symbol](chain(index), pass);
@@ -318,4 +317,11 @@ export function callThru(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return result;
   };
+}
+
+/**
+ * @internal
+ */
+function callThru$noop(..._args: any[]): void {
+  /* noop */
 }

@@ -26,9 +26,6 @@
     "import": "./dist/call-thru.js",
     "require": "./dist/call-thru.cjs"
   },
-  "dependencies": {
-    "@proc7ts/primitives": "^1.4.0"
-  },
   "devDependencies": {
     "@proc7ts/eslint-config": "^2.0.5",
     "@proc7ts/rollup-helpers": "^1.1.0",
