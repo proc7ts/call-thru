@@ -24,9 +24,9 @@ export default {
   output: [
     {
       dir: 'dist',
-      entryFileNames: '[name].cjs',
       format: 'cjs',
       sourcemap: true,
+      entryFileNames: '[name].cjs',
     },
     {
       dir: '.',
