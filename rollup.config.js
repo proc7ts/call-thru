@@ -1,25 +1,21 @@
 import { externalModules } from '@proc7ts/rollup-helpers';
+import flatDts from '@proc7ts/rollup-plugin-flat-dts';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
-import ts from '@wessberg/rollup-plugin-ts';
 import sourcemaps from 'rollup-plugin-sourcemaps';
+import ts from 'rollup-plugin-typescript2';
 import typescript from 'typescript';
-import pkg from './package.json';
 
 export default {
-  input: './src/index.ts',
+  input: {
+    'call-thru': './src/index.ts',
+  },
   plugins: [
     commonjs(),
     ts({
       typescript,
       tsconfig: 'tsconfig.main.json',
-      hook: {
-        outputPath(path, kind) {
-          if (kind === 'declaration') {
-            return './index.d.ts';
-          }
-        },
-      },
+      cacheRoot: 'target/.rts2_cache',
     }),
     nodeResolve(),
     sourcemaps(),
@@ -27,14 +23,21 @@ export default {
   external: externalModules(),
   output: [
     {
-      file: pkg.main,
+      dir: 'dist',
+      entryFileNames: '[name].cjs',
       format: 'cjs',
       sourcemap: true,
     },
     {
-      file: pkg.module,
+      dir: '.',
       format: 'esm',
       sourcemap: true,
+      entryFileNames: 'dist/[name].js',
+      plugins: [
+        flatDts({
+          tsconfig: 'tsconfig.main.json',
+        }),
+      ],
     },
   ],
 };
