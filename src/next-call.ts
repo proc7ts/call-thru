@@ -20,9 +20,9 @@ export const NextCall__symbol = (/*#__PURE__*/ Symbol('next-call'));
  *
  * A {@link nextCall} function can be used to construct a next call.
  *
- * @typeParam TChain  A type of supported call chain.
- * @typeParam TNextArgs  A type of arguments tuple of the next pass.
- * @typeParam TNextArg  A type of single argument or arguments tuple of the next pass.
+ * @typeParam TChain - A type of supported call chain.
+ * @typeParam TNextArgs - A type of arguments tuple of the next pass.
+ * @typeParam TNextArg - A type of single argument or arguments tuple of the next pass.
  * The same as `TNextArgs` by default.
  */
 export interface NextCall<TChain extends CallChain, TNextArgs extends any[], TNextArg = TNextArgs> {
@@ -52,9 +52,9 @@ export interface NextCall<TChain extends CallChain, TNextArgs extends any[], TNe
 /**
  * Constructs a call of the next pass in chain.
  *
- * @typeParam TChain  A type of supported call chain.
- * @typeParam TNextArgs  A type of argument tuple of the next pass.
- * @typeParam TNextArg  A type of single argument or arguments tuple of the next pass.
+ * @typeParam TChain - A type of supported call chain.
+ * @typeParam TNextArgs - A type of argument tuple of the next pass.
+ * @typeParam TNextArg - A type of single argument or arguments tuple of the next pass.
  * The same as `TNextArgs` by default.
  * @param callNext - A next pass caller function.
  *
@@ -78,9 +78,9 @@ export function nextCall<TChain extends CallChain, TNextArgs extends any[], TNex
 /**
  * Checks whether the `target` value is a {@link NextCall next call}.
  *
- * @typeParam TChain  A type of supported call chain.
- * @typeParam TNextArgs  A type of arguments tuple of the next pass.
- * @typeParam TNextArg  A type of single argument or arguments tuple of the next pass.
+ * @typeParam TChain - A type of supported call chain.
+ * @typeParam TNextArgs - A type of arguments tuple of the next pass.
+ * @typeParam TNextArg - A type of single argument or arguments tuple of the next pass.
  * @param target - A value to check.
  *
  * @returns `true` if the `target` value is a function with {@link NextCall__symbol} property, or `false` otherwise.
