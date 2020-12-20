@@ -18,8 +18,8 @@ export interface CallChain {
    * When this is called for the last pass, the final result would be an `args` tuple.
    *
    * @typeParam TArgs  Pass arguments tuple type.
-   * @param pass  A pass to call.
-   * @param args  An array of arguments for the call.
+   * @param pass - A pass to call.
+   * @param args - An array of arguments for the call.
    */
   call<TArgs extends any[]>(
       pass: (this: void, ...args: TArgs) => any,
@@ -32,8 +32,8 @@ export interface CallChain {
    * When this is called for the last pass, the final result would be `arg`.
    *
    * @typeParam TArgs  Pass argument type.
-   * @param pass  A pass to call.
-   * @param arg  Single argument for the call.
+   * @param pass - A pass to call.
+   * @param arg - Single argument for the call.
    */
   pass<TArg>(
       pass: (this: void, arg: TArg) => any,
@@ -43,7 +43,7 @@ export interface CallChain {
   /**
    * Skips the rest of the passes.
    *
-   * @param result  Call chain result.
+   * @param result - Call chain result.
    */
   skip(result?: any): void;
 

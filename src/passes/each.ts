@@ -11,7 +11,7 @@ import { nextCall, NextCall } from '../next-call';
  * Note that default {@link CallChain} supported by {@link callThru} would return only the last element.
  *
  * @typeParam T  A type of element to pass down the chain.
- * @param elements  An iterable of elements to pass down the chain.
+ * @param elements - An iterable of elements to pass down the chain.
  *
  * @returns A multi-call of the next pass with each element.
  */

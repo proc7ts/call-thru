@@ -32,8 +32,8 @@ export interface NextCall<TChain extends CallChain, TNextArgs extends any[], TNe
   /**
    * Calls the given pass of the call chain.
    *
-   * @param chain  Target call chain.
-   * @param pass  A pass in call chain to call.
+   * @param chain - Target call chain.
+   * @param pass - A pass in call chain to call.
    */
   [NextCall__symbol](
       chain: TChain,
@@ -56,7 +56,7 @@ export interface NextCall<TChain extends CallChain, TNextArgs extends any[], TNe
  * @typeParam TNextArgs  A type of argument tuple of the next pass.
  * @typeParam TNextArg  A type of single argument or arguments tuple of the next pass.
  * The same as `TNextArgs` by default.
- * @param callNext  A next pass caller function.
+ * @param callNext - A next pass caller function.
  *
  * @returns Next pass call performed by the given function.
  */
@@ -81,7 +81,7 @@ export function nextCall<TChain extends CallChain, TNextArgs extends any[], TNex
  * @typeParam TChain  A type of supported call chain.
  * @typeParam TNextArgs  A type of arguments tuple of the next pass.
  * @typeParam TNextArg  A type of single argument or arguments tuple of the next pass.
- * @param target  A value to check.
+ * @param target - A value to check.
  *
  * @returns `true` if the `target` value is a function with {@link NextCall__symbol} property, or `false` otherwise.
  */

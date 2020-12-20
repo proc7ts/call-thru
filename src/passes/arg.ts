@@ -11,7 +11,7 @@ import { nextCall, NextCall } from '../next-call';
  * The returned {@link NextCall} implementation does the same as if the `arg` returned from the call chain pass.
  *
  * @typeParam TNextArg  A type of argument for the next pass.
- * @param arg  Argument for the next pass.
+ * @param arg - Argument for the next pass.
  *
  * @return A call of the next pass with the given argument.
  */
