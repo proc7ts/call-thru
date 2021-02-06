@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/call-thru
- */
 import { NextCall } from './next-call';
 import { NextSkip } from './passes';
 

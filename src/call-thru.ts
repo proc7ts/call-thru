@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/call-thru
- */
 import { CallChain } from './call-chain';
 import { isNextCall, NextCall__symbol } from './next-call';
 /** @hidden */
