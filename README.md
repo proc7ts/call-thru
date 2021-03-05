@@ -3,7 +3,6 @@ Functions chaining library
 
 [![NPM][npm-image]][npm-url]
 [![Build Status][build-status-img]][build-status-link]
-[![codecov][codecov-image]][codecov-url]
 [![GitHub Project][github-image]][github-url]
 [![API Documentation][api-docs-image]][api-docs-url]
 
@@ -49,8 +48,6 @@ callThru(
 [npm-url]: https://www.npmjs.com/package/@proc7ts/call-thru
 [build-status-img]: https://github.com/proc7ts/call-thru/workflows/Build/badge.svg
 [build-status-link]: https://github.com/proc7ts/call-thru/actions?query=workflow%3ABuild
-[codecov-image]: https://codecov.io/gh/proc7ts/call-thru/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/proc7ts/call-thru
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
 [github-url]: https://github.com/proc7ts/call-thru
 [api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
