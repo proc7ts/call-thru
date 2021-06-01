@@ -3,6 +3,8 @@ Functions chaining library
 
 [![NPM][npm-image]][npm-url]
 [![Build Status][build-status-img]][build-status-link]
+[![Code Quality][quality-img]][quality-link]
+[![Coverage][coverage-img]][coverage-link]
 [![GitHub Project][github-image]][github-url]
 [![API Documentation][api-docs-image]][api-docs-url]
 
@@ -47,7 +49,11 @@ callThru(
 [npm-image]: https://img.shields.io/npm/v/@proc7ts/call-thru.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/@proc7ts/call-thru
 [build-status-img]: https://github.com/proc7ts/call-thru/workflows/Build/badge.svg
-[build-status-link]: https://github.com/proc7ts/call-thru/actions?query=workflow%3ABuild
+[build-status-link]: https://github.com/proc7ts/call-thru/actions?query=workflow:Build
+[quality-img]: https://app.codacy.com/project/badge/Grade/985b01edf2864db2b731a1656b59dde0
+[quality-link]: https://www.codacy.com/gh/proc7ts/call-thru/dashboard?utm_source=github.com&utm_medium=referral&utm_content=proc7ts/call-thru&utm_campaign=Badge_Grade
+[coverage-img]: https://app.codacy.com/project/badge/Coverage/985b01edf2864db2b731a1656b59dde0
+[coverage-link]: https://www.codacy.com/gh/proc7ts/call-thru/dashboard?utm_source=github.com&utm_medium=referral&utm_content=proc7ts/call-thru&utm_campaign=Badge_Coverage
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
 [github-url]: https://github.com/proc7ts/call-thru
 [api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
