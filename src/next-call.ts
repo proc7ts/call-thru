@@ -23,7 +23,7 @@ export const NextCall__symbol = (/*#__PURE__*/ Symbol('next-call'));
  */
 export interface NextCall<TChain extends CallChain, TNextArgs extends any[], TNextArg = TNextArgs> {
 
-  readonly $?: TNextArg; // Silence the TypeScript compiler, as `NextArg` is never read.
+  readonly $?: TNextArg | undefined; // Silence the TypeScript compiler, as `NextArg` is never read.
 
   /**
    * Calls the given pass of the call chain.
