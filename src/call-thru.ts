@@ -24,7 +24,7 @@ import Out = CallChain.Out;
  * A {@link NextCall} instance returned the pass is responsible for next function call and may modify the call outcome.
  */
 export function callThru<
-    TArgs1 extends any[], TReturn1
+    TArgs1 extends any[], TReturn1,
     >(
     pass1: (this: void, ...args1: TArgs1) => TReturn1,
 ): (this: void, ...args1: TArgs1) => Out<TReturn1>;
