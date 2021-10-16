@@ -20,6 +20,6 @@ describe('nextEach', () => {
         nextEach([1, 2, 3]),
     )();
 
-    expect(result).toEqual(3);
+    expect(result).toBe(3);
   });
 });
