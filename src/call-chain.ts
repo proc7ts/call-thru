@@ -41,7 +41,7 @@ export interface CallChain {
    *
    * @param result - Call chain result.
    */
-  skip(result?: any): void;
+  skip(result?: unknown): void;
 
 }
 

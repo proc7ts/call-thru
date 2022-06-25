@@ -271,11 +271,11 @@ export function callThru<
     OrSkip<TReturn4, OrSkip<TReturn3, OrSkip<TReturn2, OrSkip<TReturn1>>>>>>>>>>>>>;
 
 export function callThru(
-    ...passes: ((...args: any[]) => any)[]
-): (...args: any[]) => any {
-  return (...args): any => {
+    ...passes: ((...args: unknown[]) => any)[]
+): (...args: unknown[]) => unknown {
+  return (...args): unknown => {
 
-    let result: any;
+    let result: unknown;
     const chain = (index: number): CallChain => {
 
       const lastPass = index >= passes.length;
@@ -283,7 +283,7 @@ export function callThru(
       ++index;
 
       const pass = index < passes.length ? passes[index] : callThru$noop;
-      const handleResult = (callResult: any, arg: any): void => {
+      const handleResult = (callResult: unknown, arg: unknown): void => {
         if (isNextCall(callResult)) {
           callResult[NextCall__symbol](chain(index), pass);
         } else if (lastPass) {
@@ -301,7 +301,7 @@ export function callThru(
         pass<TArg>(fn: (arg: TArg) => any, arg: TArg): void {
           handleResult(fn(arg), arg);
         },
-        skip(r?: any): void {
+        skip(r?: unknown): void {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           result = r;
         },
@@ -318,6 +318,6 @@ export function callThru(
 /**
  * @internal
  */
-function callThru$noop(..._args: any[]): void {
+function callThru$noop(..._args: unknown[]): void {
   /* noop */
 }
