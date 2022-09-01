@@ -10,7 +10,7 @@ import { nextCall, NextCall } from '../next-call';
  * @return A call of the next pass with the given arguments.
  */
 export function nextArgs<TNextArgs extends any[]>(
-    ...args: TNextArgs
+  ...args: TNextArgs
 ): NextCall<CallChain, TNextArgs, TNextArgs> {
   return nextCall((chain, fn) => chain.call(fn, args));
 }

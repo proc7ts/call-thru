@@ -3,7 +3,7 @@ import { CallChain } from './call-chain';
 /**
  * A key of a {@link NextCall} method responsible for calling the next pass in chain.
  */
-export const NextCall__symbol = (/*#__PURE__*/ Symbol('next-call'));
+export const NextCall__symbol = /*#__PURE__*/ Symbol('next-call');
 
 /**
  * A call of the next pass in chain.
@@ -22,7 +22,6 @@ export const NextCall__symbol = (/*#__PURE__*/ Symbol('next-call'));
  * The same as `TNextArgs` by default.
  */
 export interface NextCall<TChain extends CallChain, TNextArgs extends any[], TNextArg = TNextArgs> {
-
   readonly $?: TNextArg | undefined; // Silence the TypeScript compiler, as `NextArg` is never read.
 
   /**
@@ -31,10 +30,7 @@ export interface NextCall<TChain extends CallChain, TNextArgs extends any[], TNe
    * @param chain - Target call chain.
    * @param pass - A pass in call chain to call.
    */
-  [NextCall__symbol](
-      chain: TChain,
-      pass: (this: void, ...args: TNextArgs) => void,
-  ): void;
+  [NextCall__symbol](chain: TChain, pass: (this: void, ...args: TNextArgs) => void): void;
 
   /**
    * Returns itself.
@@ -42,7 +38,6 @@ export interface NextCall<TChain extends CallChain, TNextArgs extends any[], TNe
    * Makes this call a valid no-arg pass of a call chain.
    */
   (): this;
-
 }
 
 /**
@@ -57,13 +52,8 @@ export interface NextCall<TChain extends CallChain, TNextArgs extends any[], TNe
  * @returns Next pass call performed by the given function.
  */
 export function nextCall<TChain extends CallChain, TNextArgs extends any[], TNextArg>(
-    callNext: (
-        this: void,
-        chain: TChain,
-        fn: (this: void, ...args: TNextArgs) => void,
-    ) => void,
+  callNext: (this: void, chain: TChain, fn: (this: void, ...args: TNextArgs) => void) => void,
 ): NextCall<TChain, TNextArgs, TNextArg> {
-
   const result = (() => result) as NextCall<TChain, TNextArgs, TNextArg>;
 
   result[NextCall__symbol] = (chain, fn) => callNext(chain, fn);
@@ -82,7 +72,7 @@ export function nextCall<TChain extends CallChain, TNextArgs extends any[], TNex
  * @returns `true` if the `target` value is a function with {@link NextCall__symbol} property, or `false` otherwise.
  */
 export function isNextCall<TChain extends CallChain, TNextArgs extends any[], TNextArg>(
-    target: unknown,
+  target: unknown,
 ): target is NextCall<TChain, TNextArgs, TNextArg> {
   return typeof target === 'function' && NextCall__symbol in target;
 }

@@ -13,4 +13,4 @@ export type NextSkip<TResult = undefined> = NextCall<CallChain, never, TResult>;
  *
  * This has the same effect as {@link nextReturn `nextReturn(undefined)`}.
  */
-export const nextSkip: NextSkip = (/*#__PURE__*/ nextCall(chain => chain.skip()));
+export const nextSkip: NextSkip = /*#__PURE__*/ nextCall(chain => chain.skip());

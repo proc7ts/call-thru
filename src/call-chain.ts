@@ -7,7 +7,6 @@ import { NextSkip } from './passes';
  * This is passed to {@link NextCall} to perform the call.
  */
 export interface CallChain {
-
   /**
    * Calls a pass in this chain with the given arguments.
    *
@@ -17,10 +16,7 @@ export interface CallChain {
    * @param pass - A pass to call.
    * @param args - An array of arguments for the call.
    */
-  call<TArgs extends any[]>(
-      pass: (this: void, ...args: TArgs) => any,
-      args: TArgs,
-  ): void;
+  call<TArgs extends any[]>(pass: (this: void, ...args: TArgs) => any, args: TArgs): void;
 
   /**
    * Calls a pass in this chain with the given argument.
@@ -31,10 +27,7 @@ export interface CallChain {
    * @param pass - A pass to call.
    * @param arg - Single argument for the call.
    */
-  pass<TArg>(
-      pass: (this: void, arg: TArg) => any,
-      arg: TArg,
-  ): void;
+  pass<TArg>(pass: (this: void, arg: TArg) => any, arg: TArg): void;
 
   /**
    * Skips the rest of the passes.
@@ -42,23 +35,20 @@ export interface CallChain {
    * @param result - Call chain result.
    */
   skip(result?: unknown): void;
-
 }
 
 export namespace CallChain {
-
   export type Args<TReturn> = TReturn extends NextSkip<any>
-      ? never
-      : (TReturn extends (NextCall<any, infer TNextArgs, any>)
-          ? TNextArgs
-          : [TReturn]);
+    ? never
+    : TReturn extends NextCall<any, infer TNextArgs, any>
+    ? TNextArgs
+    : [TReturn];
 
   export type OrSkip<TReturn, TOr = never> =
-      | (TReturn extends NextSkip<infer TResult> ? TResult : never)
-      | TOr;
+    | (TReturn extends NextSkip<infer TResult> ? TResult : never)
+    | TOr;
 
   export type Out<TReturn, TOr = never> =
-      | (TReturn extends NextCall<any, any, infer TNextArg> ? TNextArg : TReturn)
-      | TOr;
-
+    | (TReturn extends NextCall<any, any, infer TNextArg> ? TNextArg : TReturn)
+    | TOr;
 }
