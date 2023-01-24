@@ -1,6 +1,0 @@
-{
-  "entryPoints": ["src/index.ts"],
-  "name": "Functions chaining library",
-  "out": "./target/typedoc",
-  "tsconfig": "tsconfig.main.json"
-}
